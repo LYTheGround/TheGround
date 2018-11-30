@@ -13,7 +13,7 @@ class Premium extends Model
     /**
      * @var array
      */
-    protected $fillable = ['sold', 'range', 'limit', 'category_id', 'status_id'];
+    protected $fillable = ['sold', 'range', 'limit', 'category_id', 'update_status', 'status_id'];
 
     /**
      * @var string

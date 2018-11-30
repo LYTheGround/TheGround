@@ -5,8 +5,15 @@
         <h3 class="account-title">{{ __($page . 'login') }}</h3>
         <div class="account-box">
             <div class="account-wrapper">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <div class="account-logo">
-                    <a href="{{ route('home') }}"><img src="{{ asset('img/logo.png') }}" alt="Preadmin"></a>
+                    <a href="{{ route('home') }}">
+                        <img src="{{ asset('img/logo2.png') }}" alt="Preadmin">
+                    </a>
                 </div>
                 {{ Form::open(['method'=>'POST','url'=>route('login')]) }}
                 <div class="form-group">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -56,5 +57,30 @@ class LoginController extends Controller
     public function username()
     {
         return 'login';
+    }
+
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        // vérifier si ce user est active
+        $status = $user->member->premium->status;
+        // si oui redirect ver default path
+        if($status->status == 'active'){
+            return redirect('/');
+        }
+        // si non déconnecté le et affiché un message d'errure
+        else{
+            $this->guard()->logout();
+            $request->session()->invalidate();
+            session()->flash('status',trans("pages.auth.login.don't active"));
+            return back()->withInput($request->only('email'));
+        }
     }
 }

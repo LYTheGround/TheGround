@@ -16,26 +16,27 @@
 
     <!-- Styles -->
     @if(\Illuminate\Support\Facades\App::isLocale('ar'))
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/bootstrap.rtl.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/font-awesome.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/fullcalendar.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/dataTables.bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/select2.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/bootstrap.rtl.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/fullcalendar.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/dataTables.bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/select2.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/bootstrap-datetimepicker.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('plugins/morris/morris.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/style.css') }}">
     @else
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.rtl.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/fullcalendar.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/select2.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/bootstrap.rtl.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/fullcalendar.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/dataTables.bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/select2.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/bootstrap-datetimepicker.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('plugins/morris/morris.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/style.css') }}">
         @endif
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
     <!--[if lt IE 9]>
         <script src="{{ asset('js/html5shiv.min.js') }}"></script>
         <script src="{{ asset('js/respond.min.js') }}"></script>
@@ -70,5 +71,6 @@
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/translate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bc.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/tmpl.js') }}"></script>
 </body>
 </html>

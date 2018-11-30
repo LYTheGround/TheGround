@@ -10,18 +10,6 @@
                 {{ Form::open(['method' => 'POST', 'url' => route('register'),'class' => 'form-horizontal']) }}
                 <div class="card-box">
                     <div class="row m-b-30">
-                        <div class="col-md-6">
-                            <input type="file" name="face" class="form-control">
-                            @if($errors->has('face'))
-                                <span class="text-danger">{{ $errors->first('face') }}</span>
-                            @endif
-                        </div>
-                        <div class="col-md-6">
-                            <input type="text" name="cin" placeholder="cin" class="form-control">
-                            @if($errors->has('cin'))
-                                <span class="text-danger">{{ $errors->first('cin') }}</span>
-                            @endif
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -156,6 +144,15 @@
                                     {{ Form::text('token', null, ['class' => 'form-control', 'placeholder' => __('validation.attributes.token'), 'required', 'minlenght' => '10']) }}
                                     @if($errors->has('token'))
                                         <span class="text-warning">{{ $errors->first('token') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ Form::label('cin',__('validation.attributes.cin'),['class' => 'col-lg-3 control-label']) }}
+                                <div class="col-md-9">
+                                    {{ Form::text('cin', null, ['class' => 'form-control', 'placeholder' => __('validation.attributes.cin')]) }}
+                                    @if($errors->has('cin'))
+                                        <span class="text-danger">{{ $errors->first('cin') }}</span>
                                     @endif
                                 </div>
                             </div>

@@ -13,13 +13,13 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700" rel="stylesheet">
     @if(\Illuminate\Support\Facades\App::isLocale('ar'))
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/font-awesome.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css_rtl/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/style.css') }}">
     @else
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/font-awesome.min.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/style.css') }}">
         @endif
     <!--[if lt IE 9]>
         <script src="{{ asset('js/html5shiv.min.js') }}"></script>

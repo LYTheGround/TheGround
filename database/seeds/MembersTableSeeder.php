@@ -17,6 +17,7 @@ class MembersTableSeeder extends Seeder
         foreach ($tokens as $token) {
             $user = \App\User::create([
                 'login'      => $token->category->category,
+                'email'     => $token->category->category . '@ly.ly',
                 'password'  => bcrypt('066145392mM')
             ]);
             $date = (int) $token->range;

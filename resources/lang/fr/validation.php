@@ -152,7 +152,16 @@ return [
         'birth'                 => 'date de naissance',
         'identity'              => 'identité',
         'token'                 => 'token',
-        'speaker'               => 'speaker'
+        'speaker'               => 'speaker',
+        'cin'                   => 'cin',
+        'birth-minor'           => 'vous ête mineur',
+        'action'                => 'action',
+        'create'                => 'Créer',
+        'edit'                  => 'Modifier',
+        'delete'                => 'Supprimé',
+        'submit'                => 'Soumettre',
+        'tva'                   => 'tva',
+        'image'                 => 'image'
     ],
 
 ];

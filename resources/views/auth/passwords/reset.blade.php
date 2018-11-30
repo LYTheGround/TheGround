@@ -1,64 +1,53 @@
-@extends('layouts.app')
+@extends('layouts.guest')
 
+@section('title_page')
+    {{ __('pages.auth.pswr.reset.title') }}
+@stop
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+    <h3 class="account-title">{{ __('pages.auth.pswr.reset.title') }}</h3>
+    <div class="account-box">
+        <div class="account-wrapper">
+            <div class="account-logo">
+                <p>{{ __('pages.auth.pswr.reset.text') }}</p>
+            </div>
+            {{ Form::open(['method'=>'POST','url'=>route('password.update')  ]) }}
+            <input type="hidden" name="token" value="{{ $token }}">
+            <div class="form-group row">
+                <div class="form-focus">
+                    {{ Form::label('email',__('validation.attributes.email'),['class'=>'control-label']) }}
+                    {{ Form::email('email',null,['class'=> 'form-control floating','required','maxlength'=>'50','minlength' => '3']) }}
+                </div>
+                @if($errors->has('email'))
+                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                @endif
+            </div>
+            <div class="form-group row">
+                <div class="form-focus">
+                    {{ Form::label('password',__('validation.attributes.password'),['class'=>'control-label']) }}
+                    {{ Form::password('password',['class' => 'form-control', 'placeholder' => __('validation.attributes.password'),'required','minlenght' => '6','maxlenght' => '80']) }}
+                    @if($errors->has('password'))
+                        <span class="text-warning">{{ $errors->first('password') }}</span>
+                    @endif
                 </div>
             </div>
+
+            <div class="form-group row">
+                <div class="form-focus">
+                    {{ Form::label('password_confirmation',__('validation.attributes.password_confirmation'),['class'=>'control-label']) }}
+                    {{ Form::password('password_confirmation',['class' => 'form-control', 'placeholder' => __('validation.attributes.password_confirmation'),'required','minlenght' => '6','maxlenght' => '80']) }}
+                    @if($errors->has('password_confirmation'))
+                        <span
+                            class="text-warning">{{ $errors->first('password_confirmation') }}</span>
+                    @endif
+                </div>
+            </div>
+
+
+            <div class="form-group text-center">
+                <button class="btn btn-primary btn-block account-btn" type="submit">{{ __('pages.auth.pswr.reset.btn') }}</button>
+            </div>
+            {{ Form::close() }}
         </div>
     </div>
 </div>

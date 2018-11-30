@@ -140,7 +140,7 @@
                         </a>
                     </li>
                     <li class="text-center">
-                        <a href="#">params</a>
+                        <a href="{{ route('member.params') }}">params</a>
                     </li>
                     <li class="text-center">
                         <a href="{{ route('logout') }}"
@@ -180,7 +180,7 @@
                         <span>{{ auth()->user()->member->name }}</span>
                     </a>
                 </li>
-                <li class="text-center"><a href="#">params</a></li>
+                <li class="text-center"><a href="{{ route('member.params') }}">params</a></li>
                 <li class="text-center">
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault();

@@ -16,6 +16,13 @@ class Position extends Model
     protected $fillable = ['position', 'info_id', 'member_id', 'company_id'];
 
     /**
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'position';
+    }
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function company()

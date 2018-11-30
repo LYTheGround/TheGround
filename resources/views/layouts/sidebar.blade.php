@@ -15,7 +15,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" style="display: none;">
-                        <li><a href="#">Tokens</a></li>
+                        <li><a href="{{ route('token.index') }}">Tokens</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -24,8 +24,8 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" style="display: none;">
-                        <li><a href="#">Members</a></li>
-                        <li><a href="#">positions</a></li>
+                        <li><a href="{{ route('member.list') }}">Members</a></li>
+                        <li><a href="{{ route('position.index') }}">positions</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -34,7 +34,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" style="display: none;">
-                        <li><a href="#">Products</a></li>
+                        <li><a href="{{ route('product.index') }}">Products</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -43,8 +43,8 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" style="display: none;">
-                        <li><a href="#">Providers</a></li>
-                        <li><a href="#">Clients</a></li>
+                        <li><a href="{{ route('provider.index') }}">Providers</a></li>
+                        <li><a href="{{ route('Client.index') }}">Clients</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -53,8 +53,8 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" style="display: none;">
-                        <li><a href="#">Trade</a></li>
-                        <li><a href="#">Buy</a></li>
+                        <li><a href="{{ route('trade') }}">Trade</a></li>
+                        <li><a href="{{ route('buy.index') }}">Buy</a></li>
                         <li><a href="#">Sale</a></li>
                     </ul>
                 </li>
