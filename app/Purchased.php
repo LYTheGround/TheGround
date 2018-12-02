@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Purchased extends Model
 {
-    protected $fillable = ['slug', 'qt', 'store_qt', 'offer_qt', 'product_id', 'accounting_id', 'buy_order_id'];
+    protected $fillable = ['slug', 'qt', 'store_qt', 'offer_qt', 'product_id','month_id', 'accounting_id', 'buy_order_id'];
 
     public function buy_order()
     {
@@ -26,5 +26,10 @@ class Purchased extends Model
     public function accounting()
     {
         return $this->belongsTo(Accounting::class);
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
     }
 }

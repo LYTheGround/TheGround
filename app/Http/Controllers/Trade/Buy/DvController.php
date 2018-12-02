@@ -17,7 +17,7 @@ class DvController extends Controller
     private $ht = 0;
     private $tva = 0;
     private $ttc = 0;
-    
+
     /**
      * Affichage du devi d'achat.
      * @param Buy $buy
@@ -69,7 +69,7 @@ class DvController extends Controller
         }
         // ajouter un nouveau dv
         $dv = $buy->dvs()->create([
-            'provider_id' => $request->provider
+            'provider_id' => $request->provider,
         ]);
         $this->selected($buy,$dv);
         // ajouter tous les orders avec la fonction [$this->orders($request->all())]

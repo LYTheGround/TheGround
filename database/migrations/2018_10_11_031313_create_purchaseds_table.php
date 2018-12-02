@@ -20,6 +20,7 @@ class CreatePurchasedsTable extends Migration
             $table->string('store_qt');
             $table->string('offer_qt');
             $table->integer('product_id')->unsigned()->index();
+            $table->integer('month_id')->unsigned()->index()->nullable();
             $table->integer('accounting_id')->unsigned()->index()->nullable();
             $table->integer('buy_order_id')->unsigned()->index()->nullable();
             $table->timestamps();

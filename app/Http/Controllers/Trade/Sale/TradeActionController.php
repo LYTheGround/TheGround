@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Trade\Sale;
 
+use App\Accounting;
+use App\Month;
 use App\Sale;
 use App\Trade_action;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class TradeActionController extends Controller
 {
@@ -22,8 +26,8 @@ class TradeActionController extends Controller
         ]);
         // offer and store_qt in purchased
         $this->purchased_store_qt($sale);
-        // ajouter les valuers sur le accounting
         $accounting = $sale->company->accounting;
+        // ajouter les valuers sur le accounting
         $accounting->update([
             'tva'       => $accounting->tva + $sale->tva_payed,
             'taxes'     => $accounting->taxes + $sale->taxes,
@@ -31,8 +35,31 @@ class TradeActionController extends Controller
             'taxes_after_unload'    => $accounting->taxes_after_unload + $sale->taxes,
             'tva_after_unload'      => $accounting->tva_after_unload + $sale->tva_payed
         ]);
-        // rediriger show sale
+        // ajouter le sold
+        $this->sold($sale,$accounting);
+        // month
+        $month = Month::month();
+        $month->update([
+            'tva'       => $month->tva + $sale->tva_payed,
+            'taxes'     => $month->taxes + $sale->taxes,
+            'profit'    => $month->profit + $sale->profit_after_taxes,
+            'taxes_after_unload'    => $month->taxes_after_unload + $sale->taxes,
+            'tva_after_unload'      => $month->tva_after_unload + $sale->tva_payed
+        ]);
+        // redirect show sale
         return redirect()->route('sale.show',compact('sale'));
+    }
+
+    private function sold(Sale $sale,Accounting $accounting)
+    {
+        foreach ($sale->dv->orders as $order) {
+            $sold = $order->sold()->create([
+                'qt'    => $order->bc->qt,
+                'product_id' => $order->bc->purchased->product_id,
+                'accounting_id' => $accounting->id,
+            ]);
+            $sold->update(['slug' => 'SOLD-' . $sold->id]);
+        }
     }
 
     public function purchased_store_qt($sale)

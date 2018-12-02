@@ -18,6 +18,7 @@ class CreateSoldsTable extends Migration
             $table->string('slug')->nullable();
             $table->string('qt');
             $table->integer('product_id')->unsigned()->index();;
+            $table->integer('month_id')->unsigned()->index()->nullable();
             $table->integer('accounting_id')->unsigned()->index();;
             $table->integer('sale_order_id')->unsigned()->index();;
             $table->timestamps();

@@ -6,12 +6,13 @@ use App\Buy;
 use App\Buy_dv;
 use App\Buy_order;
 use App\Http\Controllers\Controller;
+use App\Month;
 use App\Purchased;
 use Carbon\Carbon;
 
 class TradeActionController extends Controller
 {
-
+    private $tva = 0;
     public function done(Buy $buy)
     {
         // vérifier
@@ -20,16 +21,29 @@ class TradeActionController extends Controller
         $dv = $buy->dvs->where('selected', true)->first();
         $orders = $dv->orders;
         // marquer comme acheter dans le purchased
+        $month = Month::month();
         foreach ($orders as $order){
+            $this->tva += $order->tva;
             $order->purchased()->create([
                 'slug'          => $buy->slug,
                 'qt'            => $order->bc->qt,
                 'store_qt'      => $order->bc->qt,
                 'offer_qt'      => $order->bc->qt,
                 'product_id'    => $order->bc->product_id,
-                'accounting_id' => $buy->company->accounting->id
+                'accounting_id' => $buy->company->accounting->id,
+                'month_id'      => $month->id
             ]);
         }
+        // accounting
+        $accounting = $buy->company->accounting;
+        $accounting->update([
+            'tva' => $accounting->tva + $this->tva
+        ]);
+        // month
+        $month->update([
+            'tva' => $month->tva + $this->tva,
+            'tva_after_unload' => $month->tva_after_unload + $this->tva,
+        ]);
         // marquez comme done dans trade_action
         $buy->trade_action->update([
             'done'              => true,

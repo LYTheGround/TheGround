@@ -12,4 +12,9 @@ class Unload extends Model
     {
         return $this->belongsTo(Accounting::class);
     }
+
+    public function months()
+    {
+        return $this->belongsToMany(Month::class);
+    }
 }

@@ -46,4 +46,9 @@ class Accounting extends Model
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function months()
+    {
+        return $this->hasMany(Month::class);
+    }
 }
