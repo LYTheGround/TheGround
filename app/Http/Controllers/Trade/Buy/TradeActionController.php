@@ -25,6 +25,7 @@ class TradeActionController extends Controller
                 'slug'          => $buy->slug,
                 'qt'            => $order->bc->qt,
                 'store_qt'      => $order->bc->qt,
+                'offer_qt'      => $order->bc->qt,
                 'product_id'    => $order->bc->product_id,
                 'accounting_id' => $buy->company->accounting->id
             ]);
@@ -65,6 +66,12 @@ class TradeActionController extends Controller
             'store_member_id'    => auth()->user()->member->id,
             'store_time'         => Carbon::now(),
             'tasks'             => json_encode(['next' => ['name' => 'finish','url'=> route('buy.show',compact('buy')) . '/tasks/finish'],'progress' => 75]),
+        ]);
+        // ajouter les valuers sur le accounting
+        $accounting = $buy->company->accounting;
+        $accounting->update([
+            'tva'                   => $accounting->tva + $buy->tva_payed,
+            'tva_after_unload'      => $accounting->tva_after_unload + $buy->tva_payed
         ]);
         return redirect()->route('buy.show',compact('buy'));
     }

@@ -16,6 +16,13 @@ class Product extends Model
     protected $fillable = ['slug', 'name', 'ref', 'tva', 'size', 'description', 'qt', 'company_id'];
 
     /**
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function company()

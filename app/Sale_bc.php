@@ -17,4 +17,9 @@ class Sale_bc extends Model
     {
         return $this->belongsTo(Purchased::class);
     }
+
+    public function order()
+    {
+        return $this->hasOne(Sale_order::class);
+    }
 }

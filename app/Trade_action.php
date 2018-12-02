@@ -60,6 +60,6 @@ class Trade_action extends Model
 
     public function sale()
     {
-        $this->hasOne(Sale::class);
+        return $this->hasOne(Sale::class);
     }
 }

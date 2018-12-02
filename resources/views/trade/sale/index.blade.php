@@ -11,12 +11,9 @@
                         <h4>Sales</h4>
                     </div>
                     <div class="col-xs-5 text-right">
-                        <a href="#" class="btn btn-success" onclick="event.preventDefault();getElementById('create-sale').submit();">
+                        <a href="{{ route('sale.create') }}" class="btn btn-success">
                             <i class="fa fa-plus"></i> Create
                         </a>
-                        <form action="{{ route('sale.store') }}" id="create-sale" method="POST" style="display: none;">
-                            @csrf
-                        </form>
                     </div>
                 </div>
                 <ul class="nav nav-tabs">

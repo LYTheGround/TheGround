@@ -17,6 +17,7 @@ class DvController extends Controller
     private $ht = 0;
     private $tva = 0;
     private $ttc = 0;
+    
     /**
      * Affichage du devi d'achat.
      * @param Buy $buy
@@ -84,6 +85,7 @@ class DvController extends Controller
         // returner une redirection vers le show buy en lui transmettant la variable buy
         return redirect()->route('buy.show',compact('buy'));
     }
+
     private function validated(DvRequest $request, Buy $buy)
     {
         foreach ($buy->bcs as $bc){

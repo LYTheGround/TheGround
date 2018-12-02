@@ -55,7 +55,7 @@
                     <ul class="list-unstyled" style="display: none;">
                         <li><a href="{{ route('trade') }}">Trade</a></li>
                         <li><a href="{{ route('buy.index') }}">Buy</a></li>
-                        <li><a href="#">Sale</a></li>
+                        <li><a href="{{ route('sale.index') }}">Sale</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
@@ -65,7 +65,7 @@
                     </a>
                     <ul class="list-unstyled" style="display: none;">
                         <li><a href="#">Finance</a></li>
-                        <li><a href="#">Accounting</a></li>
+                        <li><a href="{{ route('accounting.index') }}">Accounting</a></li>
                         <li><a href="#">unload</a></li>
                         <li><a href="#">Wags</a></li>
                     </ul>

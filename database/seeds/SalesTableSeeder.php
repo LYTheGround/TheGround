@@ -106,7 +106,8 @@ class SalesTableSeeder extends Seeder
             ]);
             $purchased = $bc->purchased;
             $bc->purchased()->update([
-                'store_qt' => $purchased->store_qt - $bc->qt
+                'store_qt' => $purchased->store_qt - $bc->qt,
+                'offer_qt' => $purchased->store_qt - $bc->qt
             ]);
             $sold = $order->sold()->create([
                 'qt'    => $bc->qt,

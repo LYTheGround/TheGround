@@ -116,6 +116,7 @@ class BuysTableSeeder extends Seeder
                 'slug'      => 'buy-' . $i,
                 'qt'        => $bc->qt,
                 'store_qt'  => $bc->qt,
+                'offer_qt'  => $bc->qt,
                 'product_id'=> $bc->product_id,
                 'accounting_id' => 1
             ]);

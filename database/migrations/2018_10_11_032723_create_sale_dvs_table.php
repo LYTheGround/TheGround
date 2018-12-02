@@ -15,7 +15,7 @@ class CreateSaleDvsTable extends Migration
     {
         Schema::create('sale_dvs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->integer('sale_id')->unsigned()->index();;
             $table->integer('client_id')->unsigned()->index();;
             $table->timestamps();
