@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sold extends Model
 {
-    protected $fillable = ['slug', 'qt', 'product_id','month_id', 'accounting_id', 'sale_order_id'];
+    protected $fillable = ['slug', 'qt', 'product_id', 'month_id', 'accounting_id', 'sale_order_id'];
 
-    public function orders()
+    public function order()
     {
-        return $this->belongsTo(Sale_order::class);
+        return $this->belongsTo(Sale_order::class,'sale_order_id');
     }
 
 

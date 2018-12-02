@@ -86,7 +86,18 @@ Route::middleware('auth')->group(function () {
             return false;
         });
     });
+// money
+    //accounting
+    Route::get('accounting','Money\AccountingController@index')->name('accounting.index');
+    Route::get('accounting/{month}','Money\AccountingController@show')->name('accounting.show');
+    // unload
+    Route::resource('unload','Money\UnloadController');
 
-    Route::resource('accounting','Money\AccountingController');
-
+    //todo : lisner tradeAction archived
+    //todo : lisner tradeAction archived
+    //todo : list released sale
+    //todo : agenda
+    //todo : list purchased
+    //todo : list sold
+    //todo : administration
 });

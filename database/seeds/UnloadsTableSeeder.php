@@ -13,9 +13,10 @@ class UnloadsTableSeeder extends Seeder
     {
         $accounting = \App\Accounting::where('id',1)->first();
         $accounting->unloads()->create([
-            'join' => 'join.jpg',
+            'justify' => 'join.jpg',
             'prince' => 1000,
-            'tva' => true
+            'tva' => true,
+            'month_id' => 1
         ]);
         $accounting->update([
             'tva_after_unload' => $accounting->tva_after_unload - 1000

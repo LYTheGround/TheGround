@@ -24,14 +24,6 @@ class CreateMonthsTable extends Migration
             $table->date('date');
             $table->timestamps();
         });
-        Schema::create('month_unload', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('month_id');
-            $table->integer('unload_id');
-            $table->integer('tva');
-            $table->integer('taxes');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -42,6 +34,5 @@ class CreateMonthsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('months');
-        Schema::dropIfExists('month_unload');
     }
 }

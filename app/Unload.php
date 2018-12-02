@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unload extends Model
 {
-    protected $fillable = ['join', 'prince', 'taxes', 'tva', 'accounting_id'];
+    protected $fillable = ['justify', 'prince', 'taxes', 'tva', 'accounting_id','month_id'];
 
     public function accounting()
     {
@@ -15,6 +15,6 @@ class Unload extends Model
 
     public function months()
     {
-        return $this->belongsToMany(Month::class);
+        return $this->belongsTo(Month::class);
     }
 }

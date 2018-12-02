@@ -11,7 +11,7 @@ class Month extends Model
 
     public function unloads()
     {
-        return $this->belongsToMany(Unload::class);
+        return $this->hasMany(Unload::class);
     }
 
     public function accounting()
@@ -60,5 +60,51 @@ class Month extends Model
             }
         }
         return false;
+    }
+
+    public static function date(Month $month)
+    {
+        $date = new \DateTime($month->date);
+        $m = $date->format('m');
+        $y = $date->format('Y');
+        switch ($m){
+            case 1:
+            return 'Janvier' . $y;
+            break;
+            case 2:
+            return 'Février' . $y;
+            break;
+            case 3:
+            return 'Mars' . $y;
+            break;
+            case 4:
+            return 'Avril' . $y;
+            break;
+            case 5:
+            return 'Mai' . $y;
+            break;
+            case 6:
+            return 'Juin ' . $y;
+            break;
+            case 7:
+            return 'Juillet ' . $y;
+            break;
+            case 8:
+            return 'Août ' . $y;
+            break;
+            case 9:
+            return 'September ' . $y;
+            break;
+            case 10:
+            return 'October ' . $y;
+            break;
+            case 11:
+            return 'November ' . $y;
+            break;
+            case 12:
+            return 'December ' . $y;
+            break;
+        }
+
     }
 }

@@ -15,11 +15,12 @@ class CreateUnloadsTable extends Migration
     {
         Schema::create('unloads', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('join')->unique();
+            $table->string('justify')->unique();
             $table->string('prince');
             $table->boolean('taxes')->default(0);
             $table->boolean('tva')->default(0);
             $table->integer('accounting_id')->unsigned()->index();
+            $table->integer('month_id')->unsigned()->index();
             $table->timestamps();
         });
     }

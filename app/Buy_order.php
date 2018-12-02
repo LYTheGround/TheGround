@@ -18,9 +18,9 @@ class Buy_order extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function dvs()
+    public function dv()
     {
-        return $this->belongsTo(Buy_dv::class);
+        return $this->belongsTo(Buy_dv::class,'buy_dv_id');
     }
 
     /**

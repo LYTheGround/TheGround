@@ -15,7 +15,7 @@ class Sale_order extends Model
 
     public function dv()
     {
-        return $this->belongsTo(Sale_dv::class);
+        return $this->belongsTo(Sale_dv::class,'sale_dv_id');
     }
 
     public function sold()

@@ -36,9 +36,9 @@ class TradeActionController extends Controller
             'tva_after_unload'      => $accounting->tva_after_unload + $sale->tva_payed
         ]);
         // ajouter le sold
-        $this->sold($sale,$accounting);
-        // month
+            // month
         $month = Month::month();
+        $this->sold($sale,$accounting,$month);
         $month->update([
             'tva'       => $month->tva + $sale->tva_payed,
             'taxes'     => $month->taxes + $sale->taxes,
@@ -50,13 +50,14 @@ class TradeActionController extends Controller
         return redirect()->route('sale.show',compact('sale'));
     }
 
-    private function sold(Sale $sale,Accounting $accounting)
+    private function sold(Sale $sale,Accounting $accounting,Month $month)
     {
         foreach ($sale->dv->orders as $order) {
             $sold = $order->sold()->create([
                 'qt'    => $order->bc->qt,
                 'product_id' => $order->bc->purchased->product_id,
                 'accounting_id' => $accounting->id,
+                'month_id'  => $month->id
             ]);
             $sold->update(['slug' => 'SOLD-' . $sold->id]);
         }
