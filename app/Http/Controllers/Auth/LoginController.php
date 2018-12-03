@@ -69,6 +69,9 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        if(isset($user->admins[0])){
+            return redirect()->route('company.index');
+        }
         // vérifier si ce user est active
         $status = $user->member->premium->status;
         // si oui redirect ver default path

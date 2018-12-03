@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('accounting','Money\AccountingController@index')->name('accounting.index');
     Route::get('accounting/{month}','Money\AccountingController@show')->name('accounting.show');
     // unload
+    // todo : update chargeOn
     Route::resource('unload','Money\UnloadController');
 
     //todo : lisner tradeAction archived
@@ -100,4 +101,8 @@ Route::middleware('auth')->group(function () {
     //todo : list purchased
     //todo : list sold
     //todo : administration
+    //todo : documentation
+    Route::prefix('admin')->group(function (){
+       Route::resource('company','Admin\CompanyController');
+    });
 });
