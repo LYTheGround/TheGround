@@ -17,7 +17,7 @@
                     <h2>{{ '2018' }}</h2>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-xs-12">
                         <div class="card-box">
                             <div class="card-block">
                                 <div class="table-responsive">

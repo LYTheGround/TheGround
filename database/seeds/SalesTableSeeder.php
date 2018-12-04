@@ -111,6 +111,7 @@ class SalesTableSeeder extends Seeder
             ]);
             $sold = $order->sold()->create([
                 'qt'    => $bc->qt,
+                'month_id' => 1,
                 'product_id' => $bc->purchased->product_id,
                 'accounting_id' => 1
             ]);
@@ -124,6 +125,14 @@ class SalesTableSeeder extends Seeder
                 'profit'    => $accounting->profit + 108.8,
                 'taxes_after_unload' => $accounting->taxes_after_unload + 51.2,
                 'tva_after_unload' => $accounting->tva_after_unload + 40,
+            ]);
+            $month = \App\Month::first();
+            $month->update([
+                'tva'    =>   $month->tva + 40,
+                'taxes'  =>  $month->taxes + 51.2,
+                'profit'    => $month->profit + 108.8,
+                'taxes_after_unload' => $month->taxes_after_unload + 51.2,
+                'tva_after_unload' => $month->tva_after_unload + 40,
             ]);
 
         }

@@ -84,6 +84,18 @@ class BuysTableSeeder extends Seeder
     {
         $tva = ($ht * 20) / 100;
         $ttc = $tva + $ht;
+        if($i == 1){
+            \App\Month::create([
+                'profit'                => 0,
+                'tva'                   => $tva,
+                'tva_after_unload'      => $tva,
+                'taxes'                 => 0,
+                'taxes_after_unload'    => 0,
+                'accounting_id'         => 1,
+                'date'                  => Carbon\Carbon::now()
+            ]);
+        }
+
         return $buy->dvs()->create([
             'slug'          => 'DV-' . $i,
             'provider_id'   => $provider,
@@ -106,6 +118,7 @@ class BuysTableSeeder extends Seeder
             'ttc'       => $ttc,
             'buy_bc_id' => $bc->id,
         ]);
+
         if($dv->id == 1){
             $accounting = \App\Accounting::first();
             $accounting->update([
@@ -118,7 +131,8 @@ class BuysTableSeeder extends Seeder
                 'store_qt'  => $bc->qt,
                 'offer_qt'  => $bc->qt,
                 'product_id'=> $bc->product_id,
-                'accounting_id' => 1
+                'accounting_id' => 1,
+                'month_id'  => 1
             ]);
         }
     }

@@ -1,9 +1,53 @@
 @extends('layouts.app')
 @section('page-title')
-    {title}
+
 @stop
 @section('content')
     <div class="content container-fluid">
-        list unload
+        <div class="row">
+            <div class="col-xs-7">
+                <h1>unload</h1>
+            </div>
+            <div class="col-xs-5 text-right">
+                <a href="{{ route('unload.create') }}" class="btn btn-success">Create</a>
+            </div>
+        </div>
+        <div class="card-box">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card-block">
+                        <div class="table-responsive">
+                            <table class="display datatable table table-stripped">
+                                <thead>
+                                <tr>
+                                    <th>Month</th>
+                                    <th>user</th>
+                                    <th>name</th>
+                                    <th>prince</th>
+                                    <th>ChargeOn</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                @if(isset($unloads[0]))
+                                    @foreach($unloads as $unload)
+                                        <tr>
+                                            <td><a href="{{ route('unload.show',compact('unload')) }}">{{ \App\Month::date($unload->month) }}</a></td>
+                                            <td>{{ $unload->member->name }}</td>
+                                            <td>{{ $unload->name }}</td>
+                                            <td>{{ $unload->prince }}</td>
+                                            <td>{{ ($unload->taxes) ? 'TAXES' : 'TVA' }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    {{__('pages.client.no_result')}}
+                                @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @stop

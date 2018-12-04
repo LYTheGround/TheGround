@@ -25,6 +25,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/bootstrap-datetimepicker.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('plugins/morris/morris.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl/style.css') }}">
+
     @else
         <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/bootstrap.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/ltr/bootstrap.rtl.min.css') }}">
@@ -48,8 +49,13 @@
     @include('layouts.sidebar')
     <div class="page-wrapper">
         @if (session('status'))
-            <div class="alert alert-success" role="alert">
+            <div class="alert alert-success m-t-10" role="alert">
                 {{ session('status') }}
+            </div>
+        @endif
+        @if (session('danger'))
+            <div class="alert alert-danger m-t-10" role="alert">
+                {{ session('danger') }}
             </div>
         @endif
         @yield('content')

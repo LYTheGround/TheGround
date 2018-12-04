@@ -70,4 +70,9 @@ class Member extends Model
     {
         return $this->belongsTo(Premium::class);
     }
+
+    public function unloads()
+    {
+        return $this->hasMany(Unload::class);
+    }
 }

@@ -12,8 +12,8 @@
                                                                            aria-hidden="true"></i></a>
     @endauth
     <ul class="nav navbar-nav navbar-right user-menu pull-right">
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle user-link" data-toggle="dropdown">
+        <li class="dropdown hidden-xs">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img style="padding-bottom: 3px;"
                      src="{{ asset((\Illuminate\Support\Facades\App::isLocale('ar')) ? 'img/flags/ar.png':'img/flags/fr.png') }}"
                      width="20"
@@ -30,8 +30,12 @@
                 @endif
             </ul>
         </li>
+        <form id="language" method="POST"
+              style="display: none;">
+            {{ csrf_field() }}
+        </form>
         @auth
-            <li class="dropdown hidden-xs">
+            <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span
                         class="badge bg-primary pull-right">3</span></a>
                 <div class="dropdown-menu notifications">
@@ -113,12 +117,9 @@
                     </div>
                 </div>
             </li>
-            <li class="dropdown hidden-xs">
-                <a href="javascript:;" id="open_msg_box" class="hasnotifications"><i class="fa fa-comment-o"></i> <span
-                        class="badge bg-primary pull-right">8</span></a>
-            </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle user-link" data-toggle="dropdown" title="{{ auth()->user()->member->name }}">
+                <a href="#" class="dropdown-toggle user-link" data-toggle="dropdown"
+                   title="{{ auth()->user()->member->name }}">
                     <span class="user-img">
                         <img class="img-circle" src="{{ asset('img/user.jpg') }}" width="40"
                              alt="{{ auth()->user()->member->name }}">
@@ -140,13 +141,13 @@
                         </a>
                     </li>
                     <li class="text-center">
-                        <a href="{{ route('member.params') }}">params</a>
+                        <a href="#">{{ __('pages.rh.user.params') }}</a>
                     </li>
                     <li class="text-center">
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
+                            {{ __('pages.auth.logout') }}
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -160,32 +161,30 @@
                 <li><a href="{{ route('register') }}">{{ __('pages.auth.register.register') }}</a></li>
                 @endauth
     </ul>
-    <form id="language" method="POST"
-          style="display: none;">
-        {{ csrf_field() }}
-    </form>
     <div class="dropdown mobile-user-menu pull-right">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
                 class="fa fa-ellipsis-v"></i></a>
         <ul class="dropdown-menu pull-right">
             @auth
-
                 <li class="text-left">
                     <a href="#" class="user-link">
                             <span class="user-img m-r-15">
-                                <img class="img-circle" src="{{ asset('face.jpg') }}" width="40"
+                                <img class="img-circle"
+                                     src="{{ (auth()->user()->member->info->face) ? asset('storage/' . auth()->user()->member->info->face) : asset('img/user.jpg') }}"
+                                     width="40"
                                      alt="{{ auth()->user()->member->name }}">
                                 <span class="status online"></span>
                             </span>
                         <span>{{ auth()->user()->member->name }}</span>
                     </a>
                 </li>
-                <li class="text-center"><a href="{{ route('member.params') }}">params</a></li>
+                <li class="text-center"><a href="#">{{ __('pages.rh.user.params') }}</a></li>
+                <li class="text-center btn-mobil"><a href="#">{{ __('Notifications') }}</a></li>
                 <li class="text-center">
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
+                        {{ __('pages.auth.logout') }}
                     </a>
 
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -16,7 +16,7 @@ class Month extends Model
 
     public function accounting()
     {
-        return $this->belongsToMany(Accounting::class);
+        return $this->belongsTo(Accounting::class);
     }
 
     public function solds()
@@ -53,8 +53,8 @@ class Month extends Model
         if(isset($accounting->months[0])){
             foreach ($accounting->months as $month){
                 $date = new \DateTime($month->date);
-                $m = $date->format('m');
-                if($m == gmdate('m')){
+                $m = $date->format('Y-m');
+                if($m == gmdate('Y-m')){
                     return $month;
                 }
             }
