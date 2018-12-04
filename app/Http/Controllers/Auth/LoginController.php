@@ -69,7 +69,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if(isset($user->admins[0])){
+        if(isset($user->admin)){
             return redirect()->route('company.index');
         }
         // vérifier si ce user est active

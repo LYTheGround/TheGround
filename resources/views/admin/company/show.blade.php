@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.admin')
 @section('page-title')
     {{ $company->info_box->name }}
 @stop
@@ -10,7 +10,7 @@
             </div>
             <div class="col-xs-5 text-right">
                 <a href="{{ route('company.edit',compact('company')) }}" class="btn btn-success">Update</a>
-                <a href="#" class="btn btn-primary">Sold</a>
+                <a href="{{ route('company.sold',compact('company')) }}" class="btn btn-primary">Sold</a>
                 <a href="#" class="btn btn-danger">Status</a>
             </div>
         </div>

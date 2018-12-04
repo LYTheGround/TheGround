@@ -25,7 +25,7 @@ class CompaniesTableSeeder extends Seeder
             'floor'     => '5',
             'apt_nbr'   => '23',
             'zip'       => '20000',
-            'city_id'   => 1
+            'city_id'   => 1,
         ]);
         // email
         $info_box->emails()->create([
@@ -48,7 +48,8 @@ class CompaniesTableSeeder extends Seeder
         // company
         $company = $premium->company()->create([
             'slug'      => str_slug('company S.A.R.L'),
-            'info_box_id'   => $info_box->id
+            'info_box_id'   => $info_box->id,
+            'user_id'   => 7
         ]);
         // pdg
         $company->tokens()->create([

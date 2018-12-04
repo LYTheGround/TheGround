@@ -6,11 +6,11 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h1>Create</h1>
+                <h1>{{ $company->info_box->name }}</h1>
             </div>
         </div>
         <div class="card-box">
-            {{ Form::open(['method' => 'POST', 'url' => route('company.store'),'enctype' => 'multipart/form-data' ]) }}
+            {{ Form::model($company->info_box,['method' => 'PUT', 'url' => route('company.update',compact('company')),'enctype' => 'multipart/form-data' ]) }}
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -26,7 +26,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         {{ Form::label('email','E-mail : ',['class' => 'control-label']) }}
-                        {{ Form::email('email',null,['class' => 'form-control','placeholder' => 'E-mail :','required']) }}
+                        {{ Form::email('email',$company->info_box->emails[0]->email,['class' => 'form-control','placeholder' => 'E-mail :','required']) }}
                         @if($errors->has('email'))
                             <span class="text-danger">
                                 {{ $errors->first('email') }}
@@ -39,7 +39,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         {{ Form::label('tel','Tel :',['class' => 'control-label']) }}
-                        {{ Form::tel('tel',null,['class'=>'form-control','placeholder' => 'Fixe','required']) }}
+                        {{ Form::tel('tel',$company->info_box->tels[0]->tel,['class'=>'form-control','placeholder' => 'Fixe','required']) }}
                         @if($errors->has('tel'))
                             <span class="text-danger">
                                 {{ $errors->first('tel') }}
@@ -85,7 +85,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         {{ Form::label('turnover','Turnover :',['class' => 'control-label']) }}
-                        {{ Form::number('turnover',null,['class' => 'form-control','placeholder'=>'Turnover','required']) }}
+                        {{ Form::number('turnover',null,['class' => 'form-control','step'=> '100','placeholder'=>'Turnover','required']) }}
                         @if($errors->has('turnover'))
                             <span class="text-danger">
                                 {{ $errors->first('turnover') }}
@@ -178,7 +178,7 @@
                                 {{ $errors->first('city') }}
                             </span>
                         @endif
-                      </div>
+                    </div>
                 </div>
             </div>
             <div class="row">

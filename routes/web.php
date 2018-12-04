@@ -104,5 +104,11 @@ Route::middleware('auth')->group(function () {
     //todo : documentation
     Route::prefix('admin')->group(function (){
        Route::resource('company','Admin\CompanyController');
+       Route::get('company/{company}/sold','Admin\CompanyController@sold')->name('company.sold');
+       Route::put('company/{company}/sold','Admin\CompanyController@updateSold')->name('company.updateSold');
+       Route::get('company/{company}/status','Admin\CompanyController@status')->name('company.status');
+       Route::put('company/{company}/status','Admin\CompanyController@updateStatus')->name('company.updateStatus');
+
+        Route::resource('admin','Admin\AdminController');
     });
 });

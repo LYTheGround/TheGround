@@ -23,6 +23,10 @@ class CreateCompaniesTable extends Migration
 
             $table->integer('info_box_id')->unsigned()->unique()->index();
             $table->foreign('info_box_id')->references('id')->on('info_boxes');
+
+            $table->integer('user_id')->unsigned()->unique()->index();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->timestamps();
         });
     }

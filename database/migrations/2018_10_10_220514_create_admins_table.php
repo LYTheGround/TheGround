@@ -16,10 +16,15 @@ class CreateAdminsTable extends Migration
         Schema::create('admins', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('type')->unique()->index();
+            $table->string('type')->index();
 
             $table->integer('user_id')->unsigned()->unique()->index();
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->integer('city_id')->unsigned()->index();
+            $table->foreign('city_id')->references('id')->on('cities');
+
+            $table->timestamps();
         });
     }
 

@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'login', 'password', 'updated_at'
+        'login', 'email', 'password', 'updated_at'
     ];
 
     /**
@@ -31,11 +31,11 @@ class User extends Authenticatable
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function admins()
+    public function admin()
     {
-        return $this->hasMany(Admin::class);
+        return $this->hasOne(Admin::class);
     }
 
     /**

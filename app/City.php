@@ -28,4 +28,9 @@ class City extends Model
     {
         return $this->hasMany(Info_box::class);
     }
+
+    public function admins()
+    {
+        return $this->hasMany(Admin::class);
+    }
 }

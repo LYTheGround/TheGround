@@ -6,6 +6,7 @@ use App\Http\Requests\Premium\RangeRequest;
 use App\Http\Requests\Premium\StatusRequest;
 use App\Http\Requests\RH\InfoRequest;
 use App\Member;
+use App\Premium;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
@@ -63,7 +64,7 @@ class MemberController extends Controller
             }
             return view('rh.member.range',compact('member'));
         }
-        session()->flash('status','cette acton est interdite ce compte est archiver');
+        session()->flash('status','cette action est interdite ce compte est archiver');
         return back();
     }
 
@@ -124,78 +125,12 @@ class MemberController extends Controller
 
     }
 
-    public function updateStatus(StatusRequest $request, Member $member)
+    public function updateStatus(StatusRequest $request, Member $member,Premium $premium)
     {
-        $premium = $member->premium;
         $status = $request->status;
-        $company = $member->company;
-        if($this->canUpdateStatus($premium)){
-            if($status != $premium->status_id){
-                if($premium->status_id == 1){
-                    if($request->status == 2){
-                        $premium->update([
-                            'range' => 0,
-                            'limit' => $this->addDate($premium->range,date('Y-m-d')),
-                            'status_id' => 2
-                        ]);
-                    }
-                    elseif ($request->status == 3){
-                        $company->premium->update([
-                            'sold' => $company->premium->sold + $premium->range
-                        ]);
-                        $premium->update([
-                            'range' => 0,
-                            'status_id' => 3,
-                            'update_status' => gmdate('Y-m-d',strtotime("+20 days"))
-                        ]);
-                    }
-                }
-                elseif($premium->status_id == 2){
-                    if($request->status == 1){
-                        $end = strtotime($premium->limit);
-                        $start = strtotime(gmdate('Y-m-d'));
-                        $diff = $end - $start;
-                        $days = $diff / (60 * 60 * 24);
-                        $premium->update([
-                            'range' => $days,
-                            'limit' => null,
-                            'status_id' => 1,
-                            'update_status' => gmdate('Y-m-d',strtotime("+7 days"))
-                        ]);
-                    }
-                    elseif($request->status == 3){
-                        $end = strtotime($premium->limit);
-                        $start = strtotime(gmdate('Y-m-d'));
-                        $diff = $end - $start;
-                        $days = $diff / (60 * 60 * 24);
-                        $company->premium->update([
-                            'sold'  => $company->premium->sold + $days
-                        ]);
-                        $premium->update([
-                            'limit' => null,
-                            'status_id' => 3,
-                            'update_status' => gmdate('Y-m-d',strtotime("+20 days"))
-                        ]);
-                    }
-                }
-                elseif($premium->status_id == 3){
-                    $company->premium->update([
-                        'sold'  => $company->premium->sold - 1
-                    ]);
-                    if($request->status == 1){
-                        $premium->update([
-                            'range' => 1,
-                            'status_id' => 1,
-                            'update_status' => gmdate('Y-m-d',strtotime("+7 days"))
-                        ]);
-                    }
-                    elseif ($request->status == 2){
-                        $premium->update([
-                            'limit' => $this->addDate(1,date('Y-m-d')),
-                            'status_id' => 2
-                        ]);
-                    }
-                }
+        if($this->canUpdateStatus($member->premium)){
+            if($status != $member->premium->status_id){
+                $premium->updateStatusMember($status,$member->company,$premium);
             }
         }
 

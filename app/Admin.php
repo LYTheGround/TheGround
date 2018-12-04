@@ -19,7 +19,7 @@ class Admin extends Model
      * </p>
      * @var array
      */
-    protected $fillable = ['type', 'user_id'];
+    protected $fillable = ['type', 'user_id','city_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -27,5 +27,9 @@ class Admin extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function city()
+    {
+        return $this->belongsTo(City::class);
     }
 }
