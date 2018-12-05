@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Trade\Buy;
 use App\Buy;
 use App\Buy_dv;
 use App\Buy_order;
+use App\Http\Controllers\Admin\ArchiveTradeController;
 use App\Http\Controllers\Controller;
 use App\Month;
 use App\Purchased;
@@ -96,10 +97,12 @@ class TradeActionController extends Controller
         // verifier si il ya déjà un store
             // si oui modifier trade_action en suppriment tous les taches sauf bc et dv et done et delivery
             // si non marquez comme dv supprimé tous les taches sauf bc et dv et done et delivery et store
-        $buy->trade_action->update([
+        $trade = $buy->trade_action;
+        $trade->update([
             'tasks'             => json_encode(['next' => null,'progress' => 100]),
             'status'            => 'finish'
         ]);
+
         return redirect()->route('buy.show',compact('buy'));
     }
 

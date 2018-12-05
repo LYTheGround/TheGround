@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Trade\Sale;
 
 use App\Accounting;
+use App\Http\Controllers\Admin\ArchiveTradeController;
 use App\Month;
 use App\Sale;
 use App\Trade_action;
@@ -108,7 +109,8 @@ class TradeActionController extends Controller
 
     public function finish(Sale $sale)
     {
-        $sale->trade_action->update([
+        $trade = $sale->trade_action;
+        $trade->update([
             'tasks'             => json_encode(['next' => null,'progress' => 100]),
             'status'            => 'finish'
         ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -72,17 +73,16 @@ class LoginController extends Controller
         if(isset($user->admin)){
             return redirect()->route('company.index');
         }
-        // vérifier si ce user est active
-        $status = $user->member->premium->status;
-        // si oui redirect ver default path
-        if($status->status == 'active'){
-            return redirect('/');
+        $plan = new PlanController();
+        // la vérification de la date limit et le status du compte
+        $p = $plan->UserPlan(auth()->user());
+        if($p){
+            return redirect()->route('home');
         }
         // si non déconnecté le et affiché un message d'errure
         else{
             $this->guard()->logout();
             $request->session()->invalidate();
-            session()->flash('status',trans("pages.auth.login.don't active"));
             return back()->withInput($request->only('email'));
         }
     }
