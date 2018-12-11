@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content modal-md">
             <div class="modal-header">
-                <h4 class="modal-title">{{ $provider->name}}</h4>
+                <h4 class="modal-title">{{ $provider->info_box->name}}</h4>
             </div>
             <div class="modal-body card-box">
                 <p>{{ __('pages.diver.sure') }}</p>

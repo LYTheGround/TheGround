@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Buy;
 use App\Client;
 use App\Member;
 use App\Policies\Deal\ClientPolicy;
@@ -11,6 +12,7 @@ use App\Policies\Premium\TokenPolicy;
 use App\Policies\Rh\MemberPolicy;
 use App\Policies\Rh\PositionPolicy;
 use App\Policies\Store\ProductPolicy;
+use App\Policies\Trade\BuyPolicy;
 use App\Policies\UserPolicy;
 use App\Position;
 use App\Premium;
@@ -35,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Provider::class => ProviderPolicy::class,
         Client::class => ClientPolicy::class,
+        Buy::class => BuyPolicy::class,
     ];
 
     /**

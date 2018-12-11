@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
     });
 
     // Trade
-    Route::prefix('Trade')->group(function () {
+    Route::prefix('trade')->group(function () {
         // Trade
         Route::get('/', 'Trade\TradeController')->name('trade');
         // Buy

@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section('title')
+@section('page-title')
     {{ ucfirst(__('pages.deal.provider.edit.title'))}}
 @stop
 @section('content')

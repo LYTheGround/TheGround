@@ -35,17 +35,17 @@
                 </li>
                 <li class="menu-title">Deals</li>
                 <li class="{{ (request()->is('provider/*') || request()->is('provider')) ? 'active' : '' }}">
-                    <a href="{{ route('provider.index') }}"><i class="fa fa-users"></i> Providers</a>
+                    <a href="{{ route('provider.index') }}"><i class="fa fa-users"></i> {{ ucfirst(__('pages.deal.provider.index.title')) }}</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-address-card"></i> Clients</a>
+                <li class="{{ (request()->is('client/*') || request()->is('client')) ? 'active' : '' }}">
+                    <a href="{{ route('client.index') }}"><i class="fa fa-address-card"></i> {{ ucfirst(__('pages.deal.client.index.title')) }}</a>
                 </li>
                 <li class="menu-title">Trade</li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Buys</a>
+                <li class="{{ (request()->is('trade/buy/*') || request()->is('trade/buy')) ? 'active' : '' }}">
+                    <a href="{{ route('buy.index') }}"><i class="fa fa-credit-card"></i> Buys</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Sales</a>
+                    <a href="#"><i class="fa fa-dollar"></i> Sales</a>
                 </li>
                 <li class="menu-title">Money</li>
                 <li>

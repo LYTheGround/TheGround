@@ -83,6 +83,5 @@ class ProviderController extends Controller
         }
         session()->flash('danger', __('pages.deal.provider.delete.danger'));
         return back();
-
     }
 }

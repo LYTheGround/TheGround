@@ -116,6 +116,39 @@ return [
                 'success'  => 'Le Fournisseur a été supprimé avec succès',
                 'modal_delete'  => '<p>La suppression de ce fournisseur sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
                 ],
+            ],
+        'client' => [
+            'index' => ['title' => 'clients'],
+            'create' => [
+                'title'     => 'création d\'un nouveau Client',
+                'success'   => 'un nouveau Client a été ajouté avec succès'
+                ],
+            'edit' => [
+                'title'     => 'Mis a jour ce Client',
+                'success'   => 'le client a été mise a jour avec succès'
+            ],
+            'delete' => [
+                'danger'  => 'Ce Client ne peux pas être supprimé il est engagé dans un (des) historique(s) de(s) vente(s)',
+                'success'  => 'Le Client a été supprimé avec succès',
+                'modal_delete'  => '<p>La suppression de ce client sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
+                ],
             ]
+    ],
+    'trade' => [
+        'in progress' => 'encours',
+        'finish' => 'fini',
+        'archived' => 'archivez',
+        'buy' => [
+            'index' => ['title' => 'achats'],
+            'create' => [
+                'title'     => 'création d\'un nouveau Achat',
+                'success'   => 'un nouveau achat a été ajouté avec succès'
+            ],
+            'delete' => [
+                'danger'  => 'Vous avez pas les autorisation nécessaire pour supprimé cette achat',
+                'success'  => 'L\'Achat a été supprimé avec succès',
+                'modal_delete'  => '<p>La suppression de cet achat sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
+            ],
+        ],
     ]
 ];
