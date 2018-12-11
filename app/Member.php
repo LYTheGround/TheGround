@@ -75,4 +75,21 @@ class Member extends Model
     {
         return $this->hasMany(Unload::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function identity($user)
+    {
+        $info = $this->info;
+        if($user->login == $info->emails[0]->email){
+            return 'email';
+        }
+        if($user->login == $info->tels[0]->tel){
+            return 'tel';
+        }
+        return 'name';
+    }
 }

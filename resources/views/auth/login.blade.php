@@ -1,8 +1,10 @@
 @extends('layouts.guest')
-@section('title_page'){{ __($page . 'login') }}@stop
+@section('title_page')
+    {{ __($page . 'login') }}
+@stop
 @section('content')
     <div class="container">
-        <h3 class="account-title">{{ __($page . 'login') }}</h3>
+        <h3 class="account-title">{{ ucfirst(__($page . 'login')) }}</h3>
         <div class="account-box">
             <div class="account-wrapper">
                 @if (session('status'))

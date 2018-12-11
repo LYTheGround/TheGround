@@ -17,17 +17,17 @@ class CreateInfoBoxesTable extends Migration
             $table->increments('id');
 
             $table->string('brand')->unique()->nullable();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('licence')->nullable();
             $table->unsignedDecimal('turnover')->nullable();
             $table->unsignedDecimal('taxes')->nullable();
-            $table->string('fax')->nullable()->unique();
-            $table->string('speaker')->nullable();
-            $table->string('address')->nullable();
-            $table->unsignedDecimal('build')->nullable();
-            $table->unsignedDecimal('floor')->nullable();
-            $table->unsignedDecimal('apt_nbr')->nullable();
-            $table->unsignedDecimal('zip')->nullable();
+            $table->string('fax')->nullable();
+            $table->string('speaker');
+            $table->string('address');
+            $table->string('build');
+            $table->string('floor')->nullable();
+            $table->string('apt_nbr')->nullable();
+            $table->string('zip')->nullable();
 
             $table->integer('city_id')->unsigned()->index();
             $table->foreign('city_id')->references('id')->on('cities');

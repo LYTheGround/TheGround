@@ -198,4 +198,13 @@ class Premium extends Model
         }
         $this->updateStatusCompany($status,$company->premium);
     }
+
+    public static function diffDaysLimit($limit)
+    {
+
+        $end = strtotime($limit);
+        $start = strtotime(gmdate('Y-m-d'));
+        $diff = $end - $start;
+        return $diff / (60 * 60 * 24);
+    }
 }

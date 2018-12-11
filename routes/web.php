@@ -1,5 +1,9 @@
 <?php
 // Auth
+
+
+use Illuminate\Support\Facades\Route;
+
 Auth::routes();
 
 // Change Language
@@ -9,41 +13,53 @@ Route::post('language/', array('before' => 'csrf', 'as' => 'language-chooser', '
 Route::get('/', 'HomeController@index')->name('home');
 // auth APP
 Route::middleware('auth')->group(function () {
-    // Position
-    Route::resource('position', 'Rh\PositionController');
+    // Dashboard
+    Route::get('dashboard', 'Dashboard\DashboardController')->name('dashboard');
+
     // Members
-    Route::namespace('Rh')->group(function () {
+    Route::namespace('Rh')->group(function () {;
         Route::prefix('member')->group(function () {
             Route::get('/', 'MemberController@index')->name('member.list');
-            Route::get('/{member}', 'MemberController@show')->name('member.show');
-        });
+            // prefix member
+            Route::prefix('{member}')->middleware('can:view,member')->group(function () {
+                // profile member
+                Route::get('/', 'MemberController@show')->name('member.show');
 
+                Route::middleware('can:range,member')->group(function (){
+                    // range member
+                    Route::get('/range', 'MemberController@range')->name('member.range');
+                    Route::put('/range', 'MemberController@updateRange')->name('member.range.update');
+                    // status member
+                    Route::get('/status', 'MemberController@status')->name('member.status');
+                    Route::put('/status', 'MemberController@updateStatus')->name('member.status.update');
+
+                });
+            });
+        });
+        // params members
         Route::get('/params', 'MemberController@params')->name('member.params');
         Route::put('/params', 'MemberController@updateParams')->name('member.params.update');
 
-        Route::prefix('{member}')->middleware('can:view,member')->middleware('can:range,member')->group(function () {
-            Route::get('/range', 'MemberController@range')->name('member.range');
-            Route::put('/range', 'MemberController@updateRange')->name('member.range.update');
-
-            Route::get('/status', 'MemberController@status')->name('member.status');
-            Route::put('/status', 'MemberController@updateStatus')->name('member.status.update');
-        });
+        // Position
+        Route::resource('position', 'PositionController');
     });
 
     // Tokens
     Route::resource('token', 'Token\TokenController')->except(['edit', 'update', 'show']);
     // product
-    Route::resource('product', 'Store\ProductController');
-    Route::get('DestroyImg/{img}', 'Store\ProductController@destroyImg')->name('product.destroyImg');
+    Route::namespace('Store')->group(function (){
+        Route::resource('product', 'ProductController');
+        Route::get('DestroyImg/{img}', 'ProductController@destroyImg')->name('product.destroyImg');
+    });
     // Deals
     Route::namespace('Deal')->group(function () {
         //provider
         Route::resource('provider', 'ProviderController');
         // client
-        Route::resource('Client', 'ClientController');
+        Route::resource('client', 'clientController');
     });
 
-// Trade
+    // Trade
     Route::prefix('Trade')->group(function () {
         // Trade
         Route::get('/', 'Trade\TradeController')->name('trade');
@@ -86,13 +102,13 @@ Route::middleware('auth')->group(function () {
             return false;
         });
     });
-// money
-    //accounting
-    Route::get('accounting','Money\AccountingController@index')->name('accounting.index');
-    Route::get('accounting/{month}','Money\AccountingController@show')->name('accounting.show');
+    // money
+        //accounting
+    Route::get('accounting', 'Money\AccountingController@index')->name('accounting.index');
+    Route::get('accounting/{month}', 'Money\AccountingController@show')->name('accounting.show');
     // unload
     // todo : update chargeOn
-    Route::resource('unload','Money\UnloadController');
+    Route::resource('unload', 'Money\UnloadController');
 
     //todo : lisner tradeAction archived
     //todo : lisner tradeAction archived
@@ -102,13 +118,13 @@ Route::middleware('auth')->group(function () {
     //todo : list sold
     //todo : administration
     //todo : documentation
-    Route::prefix('admin')->group(function (){
-       Route::resource('company','Admin\CompanyController');
-       Route::get('company/{company}/sold','Admin\CompanyController@sold')->name('company.sold');
-       Route::put('company/{company}/sold','Admin\CompanyController@updateSold')->name('company.updateSold');
-       Route::get('company/{company}/status','Admin\CompanyController@status')->name('company.status');
-       Route::put('company/{company}/status','Admin\CompanyController@updateStatus')->name('company.updateStatus');
+    Route::prefix('admin')->group(function () {
+        Route::resource('company', 'Admin\CompanyController');
+        Route::get('company/{company}/sold', 'Admin\CompanyController@sold')->name('company.sold');
+        Route::put('company/{company}/sold', 'Admin\CompanyController@updateSold')->name('company.updateSold');
+        Route::get('company/{company}/status', 'Admin\CompanyController@status')->name('company.status');
+        Route::put('company/{company}/status', 'Admin\CompanyController@updateStatus')->name('company.updateStatus');
 
-        Route::resource('admin','Admin\AdminController');
+        Route::resource('admin', 'Admin\AdminController');
     });
 });

@@ -13,7 +13,7 @@ class Provider extends Model
     /**
      * @var array
      */
-    protected $fillable = ['slug', 'description', 'company_id', 'info_box_id'];
+    protected $fillable = ['slug', 'description', 'company_id', 'user_id', 'info_box_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -37,5 +37,15 @@ class Provider extends Model
     public function dvs()
     {
         return $this->hasMany(Buy_dv::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

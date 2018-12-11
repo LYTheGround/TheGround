@@ -60,12 +60,16 @@ class ProductPolicy
             // être mentionner dans le accounting
             //
         if($product->qt == 0){
-            $sold = Sold::where('product_id',$product->id)->first();
-            if($sold){
+            if(isset($product->solds[0])){
                 return false;
+            }else{
+                if(isset($product->purchaseds[0])){
+                    return false;
+                }
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     /**

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Client;
 use App\Member;
+use App\Policies\Deal\ClientPolicy;
+use App\Policies\Deal\ProviderPolicy;
 use App\Policies\Premium\PremiumPolicy;
 use App\Policies\Premium\TokenPolicy;
 use App\Policies\Rh\MemberPolicy;
@@ -12,6 +15,7 @@ use App\Policies\UserPolicy;
 use App\Position;
 use App\Premium;
 use App\Product;
+use App\Provider;
 use App\Token;
 use App\User;
 use Illuminate\Support\Facades\Gate;
@@ -29,6 +33,8 @@ class AuthServiceProvider extends ServiceProvider
         Member::class => MemberPolicy::class,
         Token::class => TokenPolicy::class,
         Product::class => ProductPolicy::class,
+        Provider::class => ProviderPolicy::class,
+        Client::class => ClientPolicy::class,
     ];
 
     /**

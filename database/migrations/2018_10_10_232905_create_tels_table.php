@@ -15,7 +15,7 @@ class CreateTelsTable extends Migration
     {
         Schema::create('tels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tel')->unique();
+            $table->string('tel');
             $table->boolean('default')->default(0);
 
             $table->integer('info_id')->unsigned()->index()->nullable();

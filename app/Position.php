@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\FormController;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -20,7 +21,7 @@ class Position extends Model
      */
     public function getRouteKeyName()
     {
-        return 'position';
+        return 'id';
     }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

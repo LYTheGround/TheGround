@@ -6,16 +6,19 @@ namespace App\Http\Controllers\Store;
 use App\Http\Requests\Store\ProductRequest;
 use App\Product;
 use App\Product_img;
+use App\Rules\TvaRule;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
+
     public function index()
     {
         $this->authorize('view',auth()->user()->member);
@@ -29,12 +32,16 @@ class ProductController extends Controller
         return view('store.product.create');
     }
 
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
         $this->authorize('view',auth()->user()->member);
-        $product = auth()->user()->member->company->products()->create($request->all());
+        $validator = $this->validator($request->all());
+        if($validator->fails()){
+            return redirect()->route('product.create')->withErrors($validator)->withInput();
+        }
+        $product = auth()->user()->member->company->products()->create($request->all(['name','tva','description','size','qt_min']));
         $product->slug = str_slug($request->name . ' ' .$product->id, '-');
-        $product->ref = 'PROD-' . $product->id;
+        $product->ref = '#PROD-' . $product->id;
         $product->save();
         if(request()->img){
             foreach ($request->img as $file){
@@ -43,7 +50,7 @@ class ProductController extends Controller
                 ]);
             }
         }
-        session()->flash('status',__('pages.product.add_success'));
+        session()->flash('status',__('pages.product.create.success'));
         return redirect()->route('product.show',compact('product'));
     }
 
@@ -64,6 +71,10 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $this->authorize('view',auth()->user()->member);
+        $validator = $this->validator($request->all());
+        if($validator->fails()){
+            return redirect()->route('product.edit')->withErrors($validator)->withInput();
+        }
         if($product->update($request->all())){
             if(request()->img){
                 foreach (request()->img as $file){
@@ -73,7 +84,7 @@ class ProductController extends Controller
                 }
             }
         }
-        session()->flash('status',__('pages.product.update_success'));
+        session()->flash('status',__('pages.product.edit.success'));
         return redirect()->route('product.show',compact('product'));
     }
 
@@ -107,5 +118,17 @@ class ProductController extends Controller
         }
         $product_img->delete();
         return redirect()->back();
+    }
+
+    private function validator(array $request)
+    {
+        return Validator::make($request,[
+            'name'          => 'required|string|min:3|max:50',
+            'tva'           => ['required', new TvaRule()],
+            'size'          => 'nullable|string|min:3|max:15',
+            'description'   => 'nullable|string|min:10',
+            'img.*'         => 'nullable|mimes:jpg,jpeg,png,bmp',
+            'qt_min'        => 'required|int|min:1'
+        ]);
     }
 }

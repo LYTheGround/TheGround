@@ -9,8 +9,6 @@
             <div class="col-md-12">
                 {{ Form::open(['method' => 'POST', 'url' => route('register'),'class' => 'form-horizontal']) }}
                 <div class="card-box">
-                    <div class="row m-b-30">
-                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <h4 class="card-title">{{ __('pages.auth.register.Personal details') }}</h4>
@@ -24,7 +22,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
                                                         <span
-                                                            class="text-warning">{{ $errors->first('first_name') }}</span>
+                                                            class="text-danger">{{ $errors->first('first_name') }}</span>
                                                     </div>
                                                 </div>
                                             @endif
@@ -35,7 +33,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
                                                         <span
-                                                            class="text-warning">{{ $errors->first('last_name') }}</span>
+                                                            class="text-danger">{{ $errors->first('last_name') }}</span>
                                                     </div>
                                                 </div>
                                             @endif
@@ -44,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                {{ Form::label('phone', __('validation.attributes.phone'),['class' => 'col-lg-3 control-label']) }}
+                                {{ Form::label('tel', __('validation.attributes.phone'),['class' => 'col-lg-3 control-label']) }}
                                 <div class="col-lg-9">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -53,7 +51,7 @@
                                         {{ Form::tel('tel',null,['class' => 'form-control', 'placeholder' => '06', 'minlenght' => '10', 'maxlenght' => '10']) }}
                                     </div>
                                     @if($errors->has('tel'))
-                                        <span class="text-warning">{{ $errors->first('tel') }}</span>
+                                        <span class="text-danger">{{ $errors->first('tel') }}</span>
                                     @endif
 
                                 </div>
@@ -65,7 +63,7 @@
                                         <div class="col-md-6">
                                             {{ Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Address', 'required', 'minlenght' => '10','maxlenght' => '80']) }}
                                             @if($errors->has('address'))
-                                                <span class="text-warning">{{ $errors->first('address') }}</span>
+                                                <span class="text-danger">{{ $errors->first('address') }}</span>
                                             @endif
 
                                         </div>
@@ -80,7 +78,7 @@
                                                 @endforeach
                                             </select>
                                             @if($errors->has('city'))
-                                                <span class="text-warning">{{ $errors->first('city') }}</span>
+                                                <span class="text-danger">{{ $errors->first('city') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -91,7 +89,7 @@
                                 <div class="col-lg-9">
                                     {{ Form::date('birth',(old('birth')) ? old('birth') : gmdate('Y-m-d',strtotime("-18 years")),['class' => 'form-control','placeholder' => 'birth', 'required']) }}
                                     @if($errors->has('birth'))
-                                        <span class="text-warning">{{ $errors->first('birth') }}</span>
+                                        <span class="text-danger">{{ $errors->first('birth') }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -106,13 +104,13 @@
                                         <div class="col-md-6">
                                             {{ Form::text('name',null,['class' => 'form-control', 'placeholder' => __('validation.attributes.username'),'required','minlenght' => '3','maxlenght' => '15']) }}
                                             @if($errors->has('name'))
-                                                <span class="text-warning">{{ $errors->first('name') }}</span>
+                                                <span class="text-danger">{{ $errors->first('name') }}</span>
                                             @endif
                                         </div>
                                         <div class="col-md-6">
                                             {{ Form::email('email',null,['class' => 'form-control', 'placeholder' => __('validation.attributes.email'),'required','minlenght' => '5','maxlenght' => '80']) }}
                                             @if($errors->has('email'))
-                                                <span class="text-warning">{{ $errors->first('email') }}</span>
+                                                <span class="text-danger">{{ $errors->first('email') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -125,14 +123,14 @@
                                         <div class="col-md-6">
                                             {{ Form::password('password',['class' => 'form-control', 'placeholder' => __('validation.attributes.password'),'required','minlenght' => '6','maxlenght' => '80']) }}
                                             @if($errors->has('password'))
-                                                <span class="text-warning">{{ $errors->first('password') }}</span>
+                                                <span class="text-danger">{{ $errors->first('password') }}</span>
                                             @endif
                                         </div>
                                         <div class="col-md-6">
                                             {{ Form::password('password_confirmation',['class' => 'form-control', 'placeholder' => __('validation.attributes.password_confirmation'),'required','minlenght' => '6','maxlenght' => '80']) }}
                                             @if($errors->has('password_confirmation'))
                                                 <span
-                                                    class="text-warning">{{ $errors->first('password_confirmation') }}</span>
+                                                    class="text-danger">{{ $errors->first('password_confirmation') }}</span>
                                             @endif
                                         </div>
                                     </div>
@@ -143,7 +141,7 @@
                                 <div class="col-lg-9">
                                     {{ Form::text('token', null, ['class' => 'form-control', 'placeholder' => __('validation.attributes.token'), 'required', 'minlenght' => '10']) }}
                                     @if($errors->has('token'))
-                                        <span class="text-warning">{{ $errors->first('token') }}</span>
+                                        <span class="text-danger">{{ $errors->first('token') }}</span>
                                     @endif
                                 </div>
                             </div>

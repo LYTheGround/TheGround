@@ -17,10 +17,13 @@ class CreateProvidersTable extends Migration
             $table->increments('id');
 
             $table->string('slug')->unique();
-            $table->string('description');
+            $table->string('description')->nullable();
 
             $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');
+
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users');
 
             $table->integer('info_box_id')->unsigned()->index();
             $table->foreign('info_box_id')->references('id')->on('info_boxes');

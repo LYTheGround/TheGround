@@ -15,7 +15,9 @@ class DealsSeeder extends Seeder
             $info = \App\Info_box::create([
                 'name'      => "provider $i",
                 'speaker'   => "provider",
-                'city_id'   => 1
+                'city_id'   => 1,
+                'address'   => 'address address address address address ',
+                'build'     => 1
             ]);
             $info->tels()->create([
                 'tel'   => "062256891$i",
@@ -28,14 +30,17 @@ class DealsSeeder extends Seeder
             $info->provider()->create([
                 'slug'          => "provider-$i",
                 'description'   => 'description provider description provider description provider ',
-                'company_id'    => 1
+                'company_id'    => 1,
+                'user_id'       => 1
             ]);
         }
         for ($i = 1; $i < 3; $i++){
             $info = \App\Info_box::create([
                 'name'      => "client $i",
                 'speaker'   => "client",
-                'city_id'   => 1
+                'city_id'   => 1,
+                'address'   => 'address address address address address ',
+                'build'     => 1
             ]);
             $info->tels()->create([
                 'tel'   => "062256892$i",
@@ -48,7 +53,8 @@ class DealsSeeder extends Seeder
             $info->client()->create([
                 'slug'      => "client-$i",
                 'description'   => 'description client description client description client ',
-                'company_id'    => 1
+                'company_id'    => 1,
+                'user_id'       => 1
             ]);
         }
     }

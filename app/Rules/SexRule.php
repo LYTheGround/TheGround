@@ -16,7 +16,7 @@ class SexRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ($value == 'man' || $value == 'woman');
+        return ($value == 'homme' || $value == 'femme');
     }
 
     /**

@@ -13,7 +13,7 @@ class Product extends Model
     /**
      * @var array
      */
-    protected $fillable = ['slug', 'name', 'ref', 'tva', 'size', 'description', 'qt', 'company_id'];
+    protected $fillable = ['slug', 'name', 'ref', 'tva', 'size', 'description', 'qt', 'qt_min', 'amount', 'min_prince', 'company_id'];
 
     /**
      * @return string
@@ -51,5 +51,20 @@ class Product extends Model
     public function solds()
     {
         return $this->hasMany(Sold::class);
+    }
+
+    public function member()
+    {
+        return $this->belongsTo(Member::class);
+    }
+
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class);
+    }
+
+    public function providers()
+    {
+        return $this->belongsToMany(Provider::class);
     }
 }

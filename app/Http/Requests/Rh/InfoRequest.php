@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests\RH;
 
+use App\Rules\BirthRule;
+use App\Rules\IdentityRule;
+use App\Rules\PasswordRule;
+use App\Rules\SexRule;
 use App\Rules\TelRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -31,11 +35,13 @@ class InfoRequest extends FormRequest
             'tel'           => ['bail','required','min:10','max:10',new TelRule(),'unique:tels,info_id,' . auth()->user()->member->info->id],
             'first_name'    => 'required|string|min:2|max:20',
             'last_name'     => 'required|string|min:2|max:20',
-            'sex'           => ['required',auth()->user()->sex == 'homme'||auth()->user()->sex == 'femme'],
-            'birth'         => 'bail|nullable|date|before:' . date('d-m-Y',strtotime("-18 years")),
+            'sex'           => ['nullable', new SexRule()],
+            'birth'         => ['bail','nullable','date',new BirthRule()],
             'address'       => 'nullable|string|min:10|max:100',
-            'city'          => 'bail|required|int|exists:cities,id',
-            'identity'  => ['required',auth()->user()->connect_with == 'email' || auth()->user()->connect_with == 'name' || auth()->user()->connect_with == 'tel'],
+            'city'          => 'bail|required|exists:cities,id',
+            'cin'           => 'nullable|string|max:20',
+            'identity'      => ['required', new IdentityRule()],
+            'password'      => ['bail','nullable','required_with:password_confirmation','string','min:6','max:18','confirmed',new PasswordRule()],
         ];
     }
 }

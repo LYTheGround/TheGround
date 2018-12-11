@@ -39,7 +39,6 @@ class RegisterController extends Controller
     /**
      * Create a new controller instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -57,14 +56,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name'    => 'required|string|min:2|max:20',
             'last_name'     => 'required|string|min:2|max:20',
-            'tel'           => ['bail','required','min:10','max:10',new TelRule(),'unique:tels'],
-            'address'       => 'nullable|string|min:10|max:100',
+            'tel'           => ['required','min:10','max:10',new TelRule(),'unique:tels'],
+            'address'       => 'required|string|min:10|max:100',
             'city'          => 'bail|required|int|exists:cities,id',
             'birth'         => 'bail|nullable|date|before:' . date('d-m-Y',strtotime("-18 years")),
             'token'         => 'required|min:20|exists:tokens,token',
             'name'          => 'bail|required|string|max:25|unique:members',
             'email'         => 'required|string|email|max:80|unique:emails',
-            'password'      => ['bail','required','string','min:6','max:18','confirmed',new PasswordRule()],
+            'password'      => ['required','string','min:6','max:18','confirmed',new PasswordRule()],
             'cin'           => 'nullable|string|min:6,unique:infos,cin'
         ]);
     }

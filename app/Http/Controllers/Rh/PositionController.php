@@ -6,6 +6,10 @@ use App\City;
 use App\Http\Requests\Rh\PositionStoreRequest;
 use App\Info;
 use App\Position;
+use App\Rules\BirthRule;
+use App\Rules\TelRule;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Info_box;
@@ -112,38 +116,37 @@ class PositionController extends Controller
     public function update(Request $request, Position $position)
     {
         $this->authorize('update',$position);
-        $data = $this->validate(request(), ['first_name' => '', 'last_name' => '', 'address' => '', 'sex' => '', 'city_id' => 'required', 'birth' => '', 'cin' => 'nullable|unique:infos,cin,' . $position->info->id, 'facial' => '',]);
-        $position->info->update($data);
-        $dataPosition['position'] = str_slug(request()->first_name . ' ' . request()->last_name . ' ' . $position->info->id, '-');
-        $position->position = $dataPosition['position'];
-        $position->save();
-        if (isset($position->info->emails[0]->id)) {
-            $datam = $this->validate(request(), ['email' => 'unique:emails,email,' . $position->info->emails[0]->id]);
-            $position->info->emails()->update($datam);
-        } else {
-            if (request()->email) {
-                $datam = $this->validate(request(), ['email' => '']);
-                $position->info->emails()->create($datam);
-            }
+        $validate = Validator::make($request->all(),[
+            'position'      => 'required|string|min:3|max:25',
+            'first_name'    => 'required|string|min:2|max:20',
+            'last_name'     => 'required|string|min:2|max:20',
+            'tel'           => ['required','min:10','max:10',new TelRule(),'unique:tels,id,' . $position->info->tels[0]->id],
+            'address'       => 'nullable|string|min:10|max:100',
+            'city'          => 'bail|required|int|exists:cities,id',
+            'birth'         => ['bail','nullable','date', new BirthRule()],
+            'email'         => 'required|string|email|max:80|unique:emails,id,' . $position->info->emails[0]->id,
+            'cin'           => 'nullable|string|min:6,unique:infos,cin'
+        ]);
+        if($validate->fails()){
+            return redirect()->route('position.edit',compact('position'))->withErrors($validate)
+                ->withInput();
         }
-        if (isset($position->info->tels[0]->id)) {
-            $datat = $this->validate(request(), ['tel' => '']);
-            $position->info->tels()->update($datat);
-        } else {
-            if (request()->tel) {
-                $datat = $this->validate(request(), ['tel' => '']);
-                $position->info->tels()->create($datat);
-            }
-        }
+        // update position
+        $position->update(['position' => $request->position]);
+        // update info
+        $position->info->update($request->all());
+        // update email
+        $position->info->emails[0]->update(['email' => $request->email]);
+        // update tel
+        $position->info->tels[0]->update(['tel' => $request->tel]);
+        // update face
         if ($request->file('face')) {
-            if (file_exists('storage/' . $position->info->face)) {
-                @unlink('storage/' . $position->info->face);
-            }
+            Storage::disk('public')->delete($position->info->face);
             $position->info->update([
                 'face'  => $request->file('face')->store('positions'),
             ]);
         }
-        session()->flash('status', __('pages.position.update_success'));
+        session()->flash('status', __('pages.rh.position.edit_success'));
         return redirect()->route('position.show',compact('position'));
     }
 

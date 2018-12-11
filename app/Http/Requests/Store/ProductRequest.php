@@ -28,7 +28,7 @@ class ProductRequest extends FormRequest
             'name'          => 'required|string|min:3|max:50',
             'tva'           => ['required', new TvaRule()],
             'size'          => 'nullable|string|min:3|max:15',
-            'description'   => 'nullable|string|min:10|max:100',
+            'description'   => 'nullable|string|min:10',
             'img.*'         => 'nullable|mimes:jpg,jpeg,png,bmp'
         ];
     }

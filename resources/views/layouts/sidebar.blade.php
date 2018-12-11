@@ -11,40 +11,34 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="list-unstyled" style="display: none;" id="lang-switcher">
-                        <li><a href="#"  data-lang="fr">{{ __('pages.language.fr') }}</a></li>
-                        <li><a href="#"  data-lang="fr">{{ __('pages.language.ar') }}</a></li>
+                        <li><a href="#" data-lang="fr">{{ __('pages.language.fr') }}</a></li>
+                        <li><a href="#" data-lang="fr">{{ __('pages.language.ar') }}</a></li>
                     </ul>
                 </li>
                 <li class="menu-title">Company</li>
-                <li class="{{ request()->is('dashboard') ? 'active' : '' }}" >
-                    <a href="#"><i class="fa fa-dashboard"></i> Tableau de bord</a>
+                <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Tableau de bord</a>
                 </li>
-                <li class="{{ request()->is('token/*') ? 'active' : '' }}">
-                    <a href="#"><i class="fa fa-dashboard"></i> Premium</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Agenda</a>
+                <li class="{{ (request()->is('token') || request()->is('token/*')) ? 'active' : '' }}">
+                    <a href="{{ route('token.index') }}"><i class="fa fa-dashboard"></i> {{ __('validation.attributes.token') }}</a>
                 </li>
                 <li class="menu-title">Humans Resource</li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Employees</a>
+                <li class="{{ (request()->is('member/*') || request()->is('member')) ? 'active' : '' }}">
+                    <a href="{{ route('member.list') }}"><i class="fa fa-user"></i> {{ ucfirst(__('pages.rh.user.members')) }}</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> users</a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> positions</a>
+                <li class="{{ (request()->is('position/*') || request()->is('position')) ? 'active' : '' }}">
+                    <a href="{{ route('position.index') }}"><i class="fa fa-user-secret"></i> {{ ucfirst(__('pages.rh.position.position')) }}</a>
                 </li>
                 <li class="menu-title">Store</li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Product</a>
+                <li class="{{ (request()->is('product/*') || request()->is('product')) ? 'active' : '' }}">
+                    <a href="{{ route('product.index') }}"><i class="fa fa-shopping-cart"></i> {{ ucfirst(__('pages.product.index.title'))}}</a>
                 </li>
                 <li class="menu-title">Deals</li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Providers</a>
+                <li class="{{ (request()->is('provider/*') || request()->is('provider')) ? 'active' : '' }}">
+                    <a href="{{ route('provider.index') }}"><i class="fa fa-users"></i> Providers</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Clients</a>
+                    <a href="#"><i class="fa fa-address-card"></i> Clients</a>
                 </li>
                 <li class="menu-title">Trade</li>
                 <li>

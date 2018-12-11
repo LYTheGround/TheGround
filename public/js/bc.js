@@ -52,4 +52,5 @@ $(function () {
         var $qt = "<td><input type='number' title='qt' name='qt["+$purchased+"]' min='1' max='"+$max+"' class='form-control' placeholder='QT' required></td>"
         return "<tr>"+$pu + $qt +"</tr>"
     }
+
 });

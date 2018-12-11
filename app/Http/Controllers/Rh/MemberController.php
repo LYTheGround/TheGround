@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Rh;
 
+use App\City;
 use App\Http\Requests\Premium\RangeRequest;
 use App\Http\Requests\Premium\StatusRequest;
 use App\Http\Requests\RH\InfoRequest;
 use App\Member;
 use App\Premium;
+use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use Illuminate\Http\Request;
@@ -30,7 +32,9 @@ class MemberController extends Controller
     public function params()
     {
         $member = auth()->user()->member;
-        return view('rh.member.params',compact('member'));
+        $identity = $member->identity(auth()->user());
+        $cities = City::all();
+        return view('rh.member.params',compact('member','cities','identity'));
     }
 
     public function updateParams(InfoRequest $request)
@@ -39,33 +43,50 @@ class MemberController extends Controller
         $member = auth()->user()->member;
         $info = $member->info;
         $r = $request->all();
+        $r['city_id'] = $request->city;
         // update face
         if(!is_null($request->file('face'))){
             if($info->face){
                 Storage::disk('public')->delete($info->face);
             }
-            $face = $request->file('face')->store('face');
+            $face = $request->file('face')->store('rh/users');
             $r['face'] = $face;
         }
         $info->update($r);
         $member->update($r);
+        // update email
+        $member->info->emails[0]->update(['email' => $request->email]);
+        $member->info->tels[0]->update(['tel' => $request->tel]);
+        // update tel
         // update identity
+
         auth()->user()->update([
             'login' => $r[$request->identity]
         ]);
+        // update password
+        if(!is_null($request->password)){
+            $user = auth()->user();
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }
+        session()->flash('status',trans('pages.rh.user.success_params'));
         return redirect()->route('member.show',compact('member'));
     }
 
     public function range(Member $member)
     {
-        if($member->premium->status->status == 'inactive' || $member->premium->status->status == 'active'){
-            if($member->premium->status->status == 'inactive'){
-                session()->flash('status','ce compte est désactiver il ne peux bénéficier que si il est activer');
-            }
+        if($member->premium->status->status == 'active'){
             return view('rh.member.range',compact('member'));
         }
-        session()->flash('status','cette action est interdite ce compte est archiver');
-        return back();
+        else{
+            if($member->premium->status->status == 'inactive'){
+                session()->flash('danger',trans('pages.rh.user.range.range_inactive_danger'));
+            }
+            else{
+                session()->flash('danger',trans('pages.rh.user.range.range_archived_danger'));
+            }
+            return back();
+        }
     }
 
     public function updateRange(RangeRequest $request,Member $member)
@@ -79,6 +100,7 @@ class MemberController extends Controller
                 $this->sold($request->range,$premium_company);
             }
             elseif($premium->status->status == 'active'){
+
                 $date = $this->addDate($range,$premium->limit);
                 $this->updateDate($date,$premium);
                 $this->sold($range,$premium_company);
@@ -87,10 +109,13 @@ class MemberController extends Controller
                 abort(403);
             }
         }
-        $date = $this->addDate($range,$premium->limit);
-        $this->updateDate($date,$premium);
-        $this->updateDate($date,$premium_company);
-        $this->sold($range,$premium_company);
+        else{
+            $date = $this->addDate($range,$premium->limit);
+            $this->updateDate($date,$premium);
+            $this->updateDate($date,$premium_company);
+            $this->sold($range,$premium_company);
+        }
+        session()->flash('status',trans('pages.rh.user.range.add_success'));
         return redirect()->route('member.show',compact('member'));
     }
 
@@ -114,13 +139,13 @@ class MemberController extends Controller
     public function status(Member $member)
     {
         if($member->premium->category->category == 'pdg'){
-            session()->flash('status', 'vous ête pdg');
+            session()->flash('danger', trans('pages.rh.user.status.danger_pdg'));
             return redirect()->route('member.show',compact('member'));
         }
         if($this->canUpdateStatus($member->premium)){
             return view('rh.member.status',compact('member'));
         }
-        session()->flash('status', 'le status est bloquez j\'usque ' . $member->premium->update_status);
+        session()->flash('danger', trans('pages.rh.user.status.danger_bloque',['value' => Carbon::parse($member->premium->update_status)->format('d-m-Y')]));
         return redirect()->route('member.show',compact('member'));
 
     }
@@ -129,11 +154,8 @@ class MemberController extends Controller
     {
         $status = $request->status;
         if($this->canUpdateStatus($member->premium)){
-            if($status != $member->premium->status_id){
-                $premium->updateStatusMember($status,$member->company,$premium);
-            }
+            $premium->updateStatusMember($status,$member->company,$member->premium);
         }
-
         return redirect()->route('member.show',compact('member'));
     }
 

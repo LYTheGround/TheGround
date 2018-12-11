@@ -1,78 +1,69 @@
 @extends('layouts.app')
 @section('page-title')
-    Members
+    {{ ucfirst(__("pages.auth.rh.user.members")) }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
-            <div class="col-sm-4 col-xs-3">
-                <h4 class="page-title">Members</h4>
+            <div class="col-xs-7">
+                <h1 class="page-title">{{ ucfirst(__("pages.auth.rh.user.members")) }}</h1>
             </div>
         </div>
-        <div class="row filter-row">
-            <div class="col-sm-3 col-xs-6">
-                <div class="form-group form-focus">
-                    <label class="control-label">Client ID</label>
-                    <input type="text" class="form-control floating">
-                </div>
-            </div>
-            <div class="col-sm-3 col-xs-6">
-                <div class="form-group form-focus">
-                    <label class="control-label">Client Name</label>
-                    <input type="text" class="form-control floating">
-                </div>
-            </div>
-            <div class="col-sm-3 col-xs-6">
-                <div class="form-group form-focus select-focus">
-                    <label class="control-label">Company</label>
-                    <select class="select floating">
-                        <option>Select Company</option>
-                        <option>Global Technologies</option>
-                        <option>Delta Infotech</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-3 col-xs-6">
-                <a href="#" class="btn btn-success btn-block"> Search </a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th class="text-right">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($members as $member)
+        <div class="card-box">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped custom-table datatable">
+                            <thead>
                             <tr>
-                                <td>
-                                    <a href="{{ route('member.show',compact('member')) }}" class="avatar">{{ strtoupper(substr($member->name,0,1))  }}</a>
-                                    <h2><a href="{{ route('member.show',compact('member')) }}">{{ $member->info->last_name . ' ' . $member->info->first_name }}</a></h2>
-                                </td>
-                                <td>{{ $member->info->emails[0]->email }}</td>
-                                <td>{{ $member->info->tels[0]->tel }}</td>
-                                <td class="text-right">
-                                    <div class="dropdown">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
-                                           aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                        <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" data-toggle="modal" data-target="#edit_client"><i
-                                                        class="fa fa-pencil m-r-5"></i> Range</a></li>
-                                            <li><a href="#" data-toggle="modal" data-target="#delete_client"><i
-                                                        class="fa fa-trash-o m-r-5"></i> Status</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
+                                <th>{{ __('validation.attributes.name') }}</th>
+                                <th>{{ __('validation.attributes.email') }}</th>
+                                <th>{{ __('validation.attributes.phone') }}</th>
+                                <th>{{ __('validation.attributes.status') }}</th>
+                                @can('range',auth()->user()->member)
+                                    <th class="text-right">{{ __('validation.attributes.action') }}</th>
+                                @endcan
                             </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            @foreach($members as $member)
+                                <tr>
+                                    <td>
+                                        @if($member->info->face)
+                                            <img src="{{ asset('storage/' . $member->info->face) }}" class="avatar"
+                                                 alt="{{ $member->name }}" title="{{ $member->name }}">
+                                        @else
+                                            <a href="#" class="avatar"
+                                               title="{{ $member->name }}">{{ strtoupper(substr($member->name,0,1))  }}</a>
+                                        @endif
+                                        <h2>
+                                            <a href="{{ route('member.show',compact('member')) }}">{{ strtoupper($member->info->last_name)  . ' ' . ucfirst($member->info->first_name)  }}</a>
+                                        </h2>
+                                    </td>
+                                    <td>{{ $member->info->emails[0]->email }}</td>
+                                    <td>{{ $member->info->tels[0]->tel }}</td>
+                                    <td><span
+                                            class="label {{ ($member->premium->status->status != 'active') ? ($member->premium->status->status != 'inactive') ? 'label-danger-border' : 'label-warning-border' : 'label-success-border'}}">{{ ucfirst(__('pages.premium.statuses.' . $member->premium->status->status)) }}</span>
+                                    </td>
+                                    @can('range',auth()->user()->member)
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                   aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li><a href="{{ route('member.status',compact('member')) }}"><i
+                                                                class="fa fa-plus m-r-5"></i> Range</a></li>
+                                                    <li><a href="{{ route('member.status',compact('member')) }}"><i
+                                                                class="fa fa-pencil m-r-5"></i> Status</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    @endcan
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

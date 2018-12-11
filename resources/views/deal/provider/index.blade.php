@@ -1,23 +1,16 @@
 @extends("layouts.app")
-@section('title')
-    {{__('pages.provider.title_index')}}
+@section('page-title')
+    {{ ucfirst(__('pages.deal.provider.index.title'))}}
 @stop
 @section('content')
-    @push('custom-styles')
-    <link rel="stylesheet" type="text/css" href="{{asset('css/dataTables.bootstrap.min.css')}}">
-    @endpush
-
-
     <div class="content container-fluid">
         <div class="row">
-            <div class="col-sm-4 col-xs-3">
-                <div class="view-icons pull-left">
-                    <i class="fa fa-bars"></i>
-                </div>
-                <h4 class="page-title">{{__('pages.provider.title_index')}}</h4>
+            <div class="col-xs-7">
+                <h4 class="page-title">{{ ucfirst(__('pages.deal.provider.index.title'))}}</h4>
             </div>
-            <div class="col-sm-8 col-xs-9 text-right m-b-20">
-                <a href="{{URL::route('provider.create')}}" class="btn btn-primary rounded pull-right"><i class="fa fa-plus"></i> {{__('pages.provider.details.add')}}</a>
+            <div class="col-xs-5 text-right">
+                <a href="{{ route('provider.create')}}" class="btn btn-primary"><i
+                        class="fa fa-plus"></i> {{__('validation.attributes.create')}}</a>
             </div>
         </div>
         <div class="row">
@@ -26,61 +19,55 @@
                     <div class="card-box">
                         <div class="card-block">
                             <table class="display datatable table table-stripped">
-                        <thead>
-                        <tr>
-
-                            <th>{{__('pages.provider.details.name')}}</th>
-                            <th>{{__('pages.provider.details.licence')}}</th>
-                            <th>{{__('pages.provider.details.tel')}}</th>
-                            <th>{{__('pages.provider.details.licence')}}</th>
-                            <th>{{__('pages.provider.details.actions')}}</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if($providers)
-                            @foreach($providers as $provider)
+                                <thead>
                                 <tr>
-                                    <td><a href="{{URL::route('provider.show',compact('provider'))}}">{{$provider->info_box->name}}</a></td>
-                                    <td>{{$provider->info_box->licence}}</td>
-                                    <td>{{isset($provider->info_box->tels[0]->tel) ? $provider->info_box->tels[0]->tel : ''}}</td>
-                                    <td>{{$provider->info_box->city->city}}</td>
-                                    <td class="text-right">
-                                        <div class="dropdown">
-                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a  href="{{URL::route('provider.edit', compact('provider')) }}"><i class="fa fa-pencil m-r-5"></i> {{__('pages.provider.details.edit')}}</a></li>
-                                                <li>
-                                                    <a href="#"
-                                                       onclick="if(confirm('Do you remove it ??')){
-                                                               document.getElementById('delete-provider{{$provider->id}}').submit();
-                                                               event.preventDefault();}
-                                                               else event.preventDefault(); ">
-                                                        <i class="fa fa-trash-o m-r-5"></i> {{__('pages.provider.details.delete')}}
-                                                    </a>
-                                                    <form id="delete-provider{{$provider->id}}" method="post" action="{{URL::route('provider.destroy', compact('provider')) }}">
-                                                        {!! method_field('delete') !!}
-                                                        {!! csrf_field() !!}
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </td>
+
+                                    <th>{{__('validation.attributes.name')}}</th>
+                                    <th>{{__('validation.attributes.city')}}</th>
+                                    <th>{{__('validation.attributes.phone')}}</th>
+                                    <th>{{__('validation.attributes.email')}}</th>
+                                    <th>{{__('validation.attributes.action')}}</th>
                                 </tr>
-                            @endforeach
-                        @else
-                            {{__('pages.provider.no_result')}}
-                        @endif
-                        </tbody>
-                    </table>
+                                </thead>
+                                <tbody>
+                                @foreach($providers as $provider)
+                                    <tr>
+                                        <td>
+                                            <span class="avatar">{{ substr($provider->info_box->name,0,1) }}</span>
+                                            <a href="{{ route('provider.show',compact('provider'))}}"
+                                               title="{{ $provider->info_box->name }}">{{$provider->info_box->name}}</a>
+                                        </td>
+                                        <td>{{ ($provider->info_box->city->city) ?: __('validation.attributes.inconnu') }}</td>
+                                        <td>{{ ($provider->info_box->tels[0]->tel) ?: __('validation.attributes.inconnu') }}</td>
+                                        <td>{{ ($provider->info_box->emails[0]->email) ?: __('validation.attributes.inconnu') }}</td>
+                                        <td class="text-right">
+                                            <div class="dropdown">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
+                                                   aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                                                <ul class="dropdown-menu pull-right">
+                                                    <li><a href="{{ route('provider.edit', compact('provider')) }}"><i
+                                                                class="fa fa-pencil m-r-5"></i> {{__('validation.attributes.edit')}}
+                                                        </a></li>
+                                                    <li>
+                                                        <a href="#" data-toggle="modal"
+                                                           data-target="#delete_provider{{$provider->id}}">
+                                                            <i class="fa fa-trash-o m-r-5"></i> {{__('validation.attributes.delete')}}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        @foreach($providers as $provider)
+            @include('deal.provider._delete',compact('provider'))
+        @endforeach
     </div>
-
-    @push('custom-scripts')
-    <script type="text/javascript" src="{{asset('js/jquery.dataTables.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/dataTables.bootstrap.min.js')}}"></script>
-    @endpush
 @stop
