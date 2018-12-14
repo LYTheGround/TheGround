@@ -76,8 +76,8 @@
 <script type="text/javascript" src="{{ asset('plugins/morris/morris.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('plugins/raphael/raphael-min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/translate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/bc.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/translate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/tmpl.js') }}"></script>
 </body>
 </html>

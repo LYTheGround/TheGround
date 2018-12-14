@@ -13,7 +13,7 @@ class Buy extends Model
     /**
      * @var array
      */
-    protected $fillable = ['slug', 'ht', 'tva', 'ttc', 'company_id', 'trade_action_id'];
+    protected $fillable = ['slug', 'ht', 'tva', 'ttc', 'user_id', 'company_id', 'trade_action_id'];
 
     /**
      * @return string
@@ -57,5 +57,10 @@ class Buy extends Model
     public function finish()
     {
         return $this->belongsTo(Trade_action::class)->where('status','=','finish');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -28,7 +28,7 @@ class Month extends Model
         return $this->hasMany(Purchased::class);
     }
 
-    public static function month()
+    public static function month(): Month
     {
         $accounting = auth()->user()->member->company->accounting;
         $month = self::issetMonth($accounting);

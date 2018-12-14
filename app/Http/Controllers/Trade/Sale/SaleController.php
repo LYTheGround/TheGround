@@ -14,7 +14,7 @@ class SaleController extends Controller
 
     public function index()
     {
-        $sales = auth()->user()->member->company->sales;
+        $sales = Sale::where('company_id',auth()->user()->member->company_id)->with(['trade_action'])->get();
         return view('trade.sale.index',compact('sales'));
     }
 
@@ -51,12 +51,14 @@ class SaleController extends Controller
 
     public function show(Sale $sale)
     {
+        $this->authorize('view',$sale);
         $tasks = json_decode($sale->trade_action->tasks);
         return view('trade.sale.show',compact('sale','tasks'));
     }
 
     public function destroy(Sale $sale)
     {
+        $this->authorize('delete',$sale);
         if(isset($sale->bcs[0])){
             foreach ($sale->bcs as $bc){
                 $purchased = $bc->purchased;

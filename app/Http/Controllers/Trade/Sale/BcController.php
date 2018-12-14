@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Trade\Sale;
 
+use App\Product;
 use App\Purchased;
 use App\Sale;
 use App\Sale_bc;
@@ -23,17 +24,20 @@ class BcController extends Controller
 
     public function create(Sale $sale)
     {
+        $this->authorize('view',$sale);
         return view('trade.sale.bc.bc-create',compact('sale'));
     }
 
     public function products(Request $request,Sale $sale)
     {
+        $this->authorize('view',$sale);
         // trouvez les produits de purchased qui son disponible
         $company = auth()->user()->member->company;
         $purchaseds = DB::table('purchaseds')
             ->join('products', 'products.id', '=', 'purchaseds.product_id')
+            ->join('buy_orders', 'buy_orders.id', '=', 'purchaseds.buy_order_id')
             ->where('purchaseds.store_qt','>',0)
-            ->select('purchaseds.id as purchased_id', 'purchaseds.*', 'products.*', 'products.id as product_id')
+            ->select('purchaseds.id as purchased_id', 'purchaseds.*', 'products.*', 'products.id as product_id','buy_orders.pu as order_pu')
             ->where('products.name','LIKE','%'.$request->product.'%')
             ->where('products.company_id','=',$company->id)
             ->get();
@@ -103,9 +107,13 @@ class BcController extends Controller
         }
     }
 
-    public function destroy(Sale $sale, int $id)
+    public function destroy(Sale $sale, int $order)
     {
-        $order = Sale_order::find($id);
+        $order = Sale_order::findOrFail($order);
+        $purchased = $order->bc->purchased;
+        $purchased->update([
+            'offer_qt' => $purchased->offer_qt + $order->bc->qt
+        ]);
         $order->delete();
         $this->orders($sale);
         $sale->update([
@@ -130,5 +138,15 @@ class BcController extends Controller
 
         ]);
         return redirect()->route('sale.show',compact('sale'));
+    }
+
+    public function productsRelease(Sale $sale, int $id)
+    {
+        $purchased = Purchased::findOrFail($id);
+        $bcs = $purchased->sale_bcs;
+        $bcs = collect($bcs)->reject(function ($bc) {
+            return $bc->sale->trade_action->dv;
+        });
+        return view('trade.sale.release',compact('bcs'));
     }
 }

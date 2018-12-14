@@ -10,12 +10,12 @@ class Purchased extends Model
 
     public function buy_order()
     {
-        return $this->belongsTo(Buy_order::class);
+        return $this->belongsTo(Buy_order::class,'buy_order_id');
     }
 
-    public function sale_bc()
+    public function sale_bcs()
     {
-        return $this->hasOne(Sale_bc::class);
+        return $this->hasMany(Sale_bc::class);
     }
 
     public function product()

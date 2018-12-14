@@ -1,22 +1,37 @@
 @extends('layouts.app')
 @section('page-title')
-    BC
+    {{ __('pages.trade.bc') }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
-            <h3>BC</h3>
+            <div class="col-xs-7">
+                <h3>{{ __('pages.trade.bc') }}</h3>
+            </div>
+            <div class="col-xs-5 text-right">
+                <a href="{{ route('buy.show',compact('buy')) }}" class="btn btn-success m-b-5"><i class="fa fa-backward"></i> {{ $buy->slug }}</a>
+                @if(isset($buy->bcs[0]))
+                    <a href="{{ route('buy.bc.confirm',compact('buy')) }}"
+                       class="btn btn-primary m-b-5">confirm</a>
+                @endif
+            </div>
         </div>
         <div class="row">
             <div class="col-xs-12">
                 {{ Form::open(['method'=>'POST','url' => route('bc.products',compact('buy')),'class'=> 'form-horizontal','id' => 'form-bc']) }}
-                <div class="form-group">
-                    {{ Form::label('product','Product : ',['class'=>'class-control']) }}
-                    {{ Form::text('product',null,['class' => 'form-control', 'id' => 'bc-product', 'placeholder' => 'Product']) }}
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        {{ Form::label('product',ucfirst(__('validation.attributes.products')) . ' : ',['class'=>'class-control']) }}
+                        {{ Form::text('product',null,['class' => 'form-control', 'id' => 'bc-product', 'placeholder' => ucfirst(__('validation.attributes.products')), 'required']) }}
+                    </div>
                 </div>
-                <div class="form-group text-right">
-                    {{ Form::submit('Search',['class' => 'btn btn-success']) }}
+
+                <div class="col-xs-12">
+                    <div class="form-group text-right">
+                        {{ Form::submit(ucfirst(__('validation.attributes.search')),['class' => 'btn btn-primary']) }}
+                    </div>
                 </div>
+                {{ Form::close() }}
             </div>
         </div>
         <div class="row">
@@ -48,14 +63,15 @@
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
                                            aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a href="#" ><i
-                                                        class="fa fa-trash-o m-r-5"></i> delete</a>
-                                                f<form >f
+                                            <li>
+                                                <a href="#" onclick="event.preventDefault();document.getElementById('{{ 'delete-bc-' .$bc->id }}').submit()"><i class="fa fa-trash"></i> {{ __('validation.attributes.delete') }}</a>
+                                                <form action="{{route('bc.destroy',compact('buy','bc'))}}" method="POST" id='{{ "delete-bc-$bc->id" }}' style="display: none;">
+                                                    @csrf
+                                                    @method('DELETE')
                                                 </form>
                                             </li>
 
                                         </ul>
-
 
                                     </div>
                                 </td>

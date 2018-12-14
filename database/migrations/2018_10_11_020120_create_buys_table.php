@@ -22,6 +22,9 @@ class CreateBuysTable extends Migration
             $table->string('tva')->default(0);
             $table->string('ttc')->default(0);
 
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users');
+
             $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');
 

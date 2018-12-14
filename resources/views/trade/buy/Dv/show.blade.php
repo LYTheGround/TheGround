@@ -1,26 +1,25 @@
 @extends('layouts.app')
 @section('page-title')
-    Devi
+    {{ ucfirst(__('validation.attributes.dv')) }}
 @stop
 @section('content')
-    <!-- cette page contiendra la list des orders indiquez dans le devi: -->
     <div class="content container-fluid">
-        <!--
-            - titre de la page : Devi
-            - boutons:
-                - bouton pour sélectionné ce devi si il n'est pas le cas ou n'est pas confirmé.
-                - bouton pour supprimé ce devi.
-                - bouton pour modifier ce devi.
-        -->
         <div class="row m-b-30">
-            <div class="col-xs-5">
-                <h3>Devi</h3>
+            <div class="col-xs-7">
+                <h3>{{ ucfirst(__('validation.attributes.dv')) }}</h3>
             </div>
-            <div class="col-xs-7 text-right">
-                <a href="#" class="btn btn-success">select</a>
-                <a href="#" class="btn btn-warning">edit</a>
-                <a href="#" class="btn btn-danger">delete</a>
+            @can('dv',$buy)
+            <div class="col-xs-5 text-right">
+                <a href="{{ route('buy.show',compact('buy')) }}" class="btn btn-success m-b-5"><i class="fa fa-backward"></i> {{ $buy->slug }}</a>
+                <a href="{{ route('buy.dv.selected',['buy' => $buy, 'dv' => $dv]) }}" class="btn btn-primary m-b-5"><i
+                        class="fa fa-hand-o-left m-r-5"></i> {{ __('validation.attributes.selected') }}</a>
+               <a href="#" onclick="event.preventDefault();
+                    document.getElementById('{{ 'delete-dv-' . $dv->id }}').submit();" class="btn btn-danger m-b-5"><i
+                        class="fa fa-trash-o m-r-5"></i> {{ __('validation.attributes.delete') }}</a>
+                {{ Form::open(['method'=>'DELETE','url'=>route('dv.destroy',compact('buy','dv')),'id' => "delete-dv-$dv->id",'style'=>"display:none;"]) }}
+                {{ Form::close() }}
             </div>
+            @endcan
         </div>
         <!--
             -   un cadre de fournisseur:
@@ -30,11 +29,12 @@
             <div class="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
                 <div class="profile-widget">
                     <div class="profile-img">
-                        <a href="#" class="avatar">F</a>
+                        <a href="#" class="avatar">{{ substr($provider->info_box->name,0,1) }}</a>
                     </div>
                     <h4 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">{{ $provider->info_box->name }}</a></h4>
-                    <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">{{ $provider->info_box->speaker . ': '. $provider->info_box->tels[0]->tel }}</a></h5>
-                    <a href="#" class="btn btn-default btn-sm m-t-10">View Profile</a>
+                    <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">{{ __('validation.attributes.speaker') . ' : '. $provider->info_box->speaker }}</a></h5>
+                    <h5 class="user-name m-t-10 m-b-0 text-ellipsis"><a href="#">{{ __('validation.attributes.phone') . ' : '. $provider->info_box->tels[0]->tel }}</a></h5>
+                    <a href="{{ route('provider.show',compact('provider')) }}" class="btn btn-primary btn-sm m-t-10">{{ ucfirst(__('validation.attributes.viewProfil')) }}</a>
                 </div>
             </div>
         </div>
@@ -58,33 +58,33 @@
                     <table class="table table-striped custom-table">
                         <thead>
                         <tr>
-                            <th>produit</th>
-                            <th>Quantité</th>
-                            <th>Prix unitaire</th>
-                            <th>HT</th>
-                            <th>TVA</th>
-                            <th class="text-right">TTC</th>
+                            <th>{{ __('validation.attributes.products') }}</th>
+                            <th class="text-center">{{ strtoupper(__('validation.attributes.qt')) }}</th>
+                            <th class="text-center">{{ strtoupper(__('validation.attributes.pu')) }}</th>
+                            <th class="text-center">{{ strtoupper(__('validation.attributes.ht')) }}</th>
+                            <th class="text-center">{{ strtoupper(__('validation.attributes.tva')) }}</th>
+                            <th class="text-right">{{ strtoupper(__('validation.attributes.ttc')) }}</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($orders as $order)
                         <tr>
                             <td>
-                                <a href="#" class="avatar">P</a>
-                                <a href="#"><h2>{{ $order->bc->product->name }}</h2></a>
+                                <a href="#" class="avatar">{{ substr($order->bc->product->name,0,1) }}</a>
+                                <a href="{{ route('product.show',['product' => $order->bc->product]) }}"><h2>{{ $order->bc->product->name }}</h2></a>
                             </td>
-                            <td>{{ $order->bc->qt }}</td>
-                            <td>{{ $order->pu }}</td>
-                            <td>{{ $order->ht }}</td>
-                            <td>{{ $order->tva }}</td>
+                            <td class="text-center">{{ $order->bc->qt }}</td>
+                            <td class="text-center">{{ $order->pu }}</td>
+                            <td class="text-center">{{ $order->ht }}</td>
+                            <td class="text-center">{{ $order->tva }}</td>
                             <td class="text-right">{{ $order->ttc }}</td>
                         </tr>
                         @endforeach
                         <tr class="success">
-                            <td colspan="3" class="text-center text-primary"><h3>TOTALE</h3></td>
-                            <td>{{ $dv->ht }}</td>
-                            <td>{{ $dv->tva }}</td>
-                            <td class="text-right text-danger"><h4>{{ $dv->ttc }}</h4></td>
+                            <td colspan="3" class="text-center text-primary"><h3>{{ strtoupper(__('validation.attributes.total')) }}</h3></td>
+                            <td class="text-center">{{ $dv->ht }}</td>
+                            <td class="text-center">{{ $dv->tva }}</td>
+                            <td class="text-right text-danger"><h3>{{ $dv->ttc }}</h3></td>
                         </tr>
                         </tbody>
                     </table>

@@ -13,11 +13,13 @@ use App\Policies\Rh\MemberPolicy;
 use App\Policies\Rh\PositionPolicy;
 use App\Policies\Store\ProductPolicy;
 use App\Policies\Trade\BuyPolicy;
+use App\Policies\Trade\SalePolicy;
 use App\Policies\UserPolicy;
 use App\Position;
 use App\Premium;
 use App\Product;
 use App\Provider;
+use App\Sale;
 use App\Token;
 use App\User;
 use Illuminate\Support\Facades\Gate;
@@ -38,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         Provider::class => ProviderPolicy::class,
         Client::class => ClientPolicy::class,
         Buy::class => BuyPolicy::class,
+        Sale::class => SalePolicy::class,
     ];
 
     /**

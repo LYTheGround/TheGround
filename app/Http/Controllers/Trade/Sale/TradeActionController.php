@@ -18,6 +18,7 @@ class TradeActionController extends Controller
 
     public function done(Sale $sale)
     {
+        $this->authorize('done',$sale);
         // marquez comme vendu
         $sale->trade_action()->update([
             'done'              => true,
@@ -25,7 +26,7 @@ class TradeActionController extends Controller
             'done_time'         => Carbon::now(),
             'tasks'             => json_encode(['next' => ['name' => 'store','url'=> route('sale.show',compact('sale')) . '/tasks/store'],'progress' => 45]),
         ]);
-        // offer and store_qt in purchased
+        // store_qt in purchased
         $this->purchased_store_qt($sale);
         $accounting = $sale->company->accounting;
         // ajouter les valuers sur le accounting
@@ -78,18 +79,26 @@ class TradeActionController extends Controller
     {
         foreach ($sale->dv->orders as $order) {
             $purchased = $order->bc->purchased;
+            $product = $purchased->product;
             $purchased->update([
                 'qt' => $purchased->qt - $order->bc->qt,
+            ]);
+            $product->update([
+                'qt'    => $product->qt - $order->bc->qt
             ]);
         }
     }
 
     public function store(Sale $sale)
     {
+        $this->authorize('store',$sale);
         $sale->trade_action()->update([
-            'store'              => true,
-            'store_member_id'    => auth()->user()->member->id,
-            'store_time'         => Carbon::now(),
+            'bl'                => true,
+            'bl_member_id'      => auth()->user()->member->id,
+            'bl_time'           => Carbon::now(),
+            'store'             => true,
+            'store_member_id'   => auth()->user()->member->id,
+            'store_time'        => Carbon::now(),
             'tasks'             => json_encode(['next' => ['name' => 'delivery','url'=> route('sale.show',compact('sale')) . '/tasks/delivery'],'progress' => 60]),
         ]);
         $this->purchased_qt($sale);
@@ -98,19 +107,24 @@ class TradeActionController extends Controller
 
     public function delivery(Sale $sale)
     {
+        $this->authorize('delivery',$sale);
         $sale->trade_action->update([
             'delivery'              => true,
             'delivery_member_id'    => auth()->user()->member->id,
             'delivery_time'         => Carbon::now(),
-            'tasks'             => json_encode(['next' => ['name' => 'finish','url'=> route('sale.show',compact('sale')) . '/tasks/finish'],'progress' => 75]),
+            'tasks'                 => json_encode(['next' => ['name' => 'finish','url'=> route('sale.show',compact('sale')) . '/tasks/finish'],'progress' => 75]),
         ]);
         return redirect()->route('sale.show',compact('sale'));
     }
 
     public function finish(Sale $sale)
     {
+        $this->authorize('finish',$sale);
         $trade = $sale->trade_action;
         $trade->update([
+            'fc'                => true,
+            'fc_member_id'      => auth()->user()->member->id,
+            'fc_time'           => Carbon::now(),
             'tasks'             => json_encode(['next' => null,'progress' => 100]),
             'status'            => 'finish'
         ]);

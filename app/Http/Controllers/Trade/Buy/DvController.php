@@ -51,6 +51,7 @@ class DvController extends Controller
 
     public function create(Buy $buy)
     {
+        $this->authorize('dv',$buy);
         // bcs de cet achat
         $bcs = $buy->bcs;
         // tous les provider de la compagnie
@@ -61,6 +62,7 @@ class DvController extends Controller
 
     public function store(DvRequest $request, Buy $buy)
     {
+        $this->authorize('dv',$buy);
         // request
             // pu pour tous les bons de commande
             // le provider exist et contient a cette compagnie
@@ -70,6 +72,9 @@ class DvController extends Controller
         // ajouter un nouveau dv
         $dv = $buy->dvs()->create([
             'provider_id' => $request->provider,
+        ]);
+        $dv->update([
+            'slug' => 'DV-0' . $dv->id
         ]);
         $this->selected($buy,$dv);
         // ajouter tous les orders avec la fonction [$this->orders($request->all())]
@@ -81,7 +86,7 @@ class DvController extends Controller
             'ttc'   =>$this->ttc
         ]);
         // indiquez en session flash que l'insertion du devi a bien est inséré avec succès
-        session()->flash('status',"l'insertion est avec succès");
+        session()->flash('status',__('pages.trade.buy.dv.create.success'));
         // returner une redirection vers le show buy en lui transmettant la variable buy
         return redirect()->route('buy.show',compact('buy'));
     }
@@ -90,7 +95,7 @@ class DvController extends Controller
     {
         foreach ($buy->bcs as $bc){
             if(!isset($request->pu[$bc->id])){
-                session()->flash('status','Désolé tous les prix doit être indiquez');
+                session()->flash('danger',__('pages.trade.buy.dv.create.danger'));
                 return true;
             }
         }
@@ -120,17 +125,20 @@ class DvController extends Controller
     {
         // vérifié si ce dv appartient a ce buy
         // vérifier si ce buy appartient a cette compagnie
-        if($dv->delete()){
-            session()->flash('status','le devi a été supprimé avec succès');
+        if($buy->trade_action->dv){
+            session()->flash('status',__('pages.trade.buy.dv.delete.danger'));
         }
         else{
-            session()->flash('status','un problème est survenu l\'or de la suppression veuillez ressayer');
+            $dv->delete();
+            session()->flash('status',__('pages.trade.buy.dv.delete.success'));
+
         }
         return redirect()->route('buy.show',compact('buy'));
     }
 
     public function selected(Buy $buy, Buy_dv $dv)
     {
+        $this->authorize('dv',$buy);
         $dvs = $buy->dvs;
         foreach ($dvs as $ds){
             $ds->update(['selected' => false]);
@@ -141,12 +149,14 @@ class DvController extends Controller
 
     public function confirm(Buy $buy)
     {
+        $this->authorize('dv',$buy);
         $buy->trade_action->update([
             'dv'            => true,
             'dv_member_id'  => auth()->user()->member->id,
             'dv_time'       => Carbon::now(),
-            'tasks'         => json_encode(['prev' => null,'next' => ['name' => 'acheter','url'=> route('buy.show',compact('buy')) . '/tasks/done'],'progress' => 30]),
+            'tasks'         => json_encode(['prev' => null,'next' => ['name' => __('validation.attributes.buyed'),'url'=> route('buy.show',compact('buy')) . '/tasks/done'],'progress' => 30]),
         ]);
+        session()->flash('status',__('pages.trade.buy.dv.confirm.success'));
         return redirect()->route('buy.show',compact('buy'));
     }
 }

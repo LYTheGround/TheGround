@@ -62,6 +62,7 @@ class BuysTableSeeder extends Seeder
     {
         return $trade_action->buy()->create([
             'slug'          => 'B-1',
+            'user_id'       => 1,
             'company_id'    => 1,
             'ht'            => 5000,
             'tva'           => 1000,

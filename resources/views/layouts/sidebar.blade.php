@@ -42,10 +42,10 @@
                 </li>
                 <li class="menu-title">Trade</li>
                 <li class="{{ (request()->is('trade/buy/*') || request()->is('trade/buy')) ? 'active' : '' }}">
-                    <a href="{{ route('buy.index') }}"><i class="fa fa-credit-card"></i> Buys</a>
+                    <a href="{{ route('buy.index') }}"><i class="fa fa-credit-card"></i> {{ ucfirst(__('pages.trade.buy.index.title')) }}</a>
                 </li>
-                <li>
-                    <a href="#"><i class="fa fa-dollar"></i> Sales</a>
+                <li class="{{ (request()->is('trade/sale/*') || request()->is('trade/sale')) ? 'active' : '' }}">
+                    <a href="{{ route('sale.index') }}"><i class="fa fa-dollar"></i> Sales</a>
                 </li>
                 <li class="menu-title">Money</li>
                 <li>

@@ -22,4 +22,9 @@ class Sale_order extends Model
     {
         return $this->hasOne(Sold::class);
     }
+
+    public function purchased()
+    {
+        return $this->hasOne(Purchased::class);
+    }
 }

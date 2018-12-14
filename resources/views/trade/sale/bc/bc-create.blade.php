@@ -1,22 +1,33 @@
 @extends('layouts.app')
 @section('page-title')
-    Bon de commande
+    {{ __('validation.attributes.bc') }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
-            <h1>Bon de commande</h1>
+            <div class="col-xs-7">
+                <h2>{{ __('validation.attributes.bc') }}</h2>
+            </div>
+            <div class="col-xs-5 text-right">
+                <a href="{{ route('sale.show',compact('sale')) }}" title="{{ $sale->slug }}"
+                   class="btn btn-success m-b-5"><i class="fa fa-backward"></i> {{ $sale->slug }}</a>
+                @if(isset($sale->bcs[0]))
+                    <a href="{{ route('sale.bc.confirm',compact('sale')) }}"
+                       class="btn btn-primary m-b-5">{{ __('validation.attributes.confirm') }}</a>
+                @endif
+            </div>
         </div>
-        <div class="row">
+        <div class="row card-box">
             <div class="col-xs-12">
                 {{ Form::open(['method'=>'POST','url' => route('sale_bc.products',compact('sale')),'class'=> 'form-horizontal','id' => 'form-bc']) }}
                 <div class="form-group">
-                    {{ Form::label('product','Product : ',['class'=>'class-control']) }}
-                    {{ Form::text('product',null,['class' => 'form-control', 'id' => 'bc-product', 'placeholder' => 'Product']) }}
+                    {{ Form::label('product',ucfirst(__('validation.attributes.products')) . ' : ',['class'=>'class-control']) }}
+                    {{ Form::text('product',null,['class' => 'form-control', 'id' => 'bc-product', 'placeholder' => ucfirst(__('validation.attributes.products')) . ' : ']) }}
                 </div>
                 <div class="form-group text-right">
-                    {{ Form::submit('Search',['class' => 'btn btn-success']) }}
+                    {{ Form::submit(__('validation.attributes.search'),['class' => 'btn btn-primary']) }}
                 </div>
+                {{ Form::close() }}
             </div>
         </div>
         <div class="row">
@@ -31,17 +42,17 @@
             <table class="table table-striped custom-table">
                 <thead>
                 <tr>
-                    <th>Product</th>
-                    <th>pu</th>
-                    <th>Qt</th>
-                    <th>HT</th>
-                    <th>TVA</th>
-                    <th>TTC</th>
-                    <th>TVA_payed</th>
-                    <th>profit</th>
-                    <th>taxes</th>
-                    <th>profit_after_taxes</th>
-                    <th>action</th>
+                    <th>{{ ucfirst(__('validation.attributes.products')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.pu')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.qt')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.ht')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.tva')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.ttc')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.tva_payed')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.profit')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.taxes')) }}</th>
+                    <th>{{ strtoupper(__('validation.attributes.profit_taxes')) }}</th>
+                    <th>{{ __('validation.attributes.action') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,10 +71,12 @@
                             <td>{{ $order->profit_after_taxes }}</td>
                             <td>
                                 <a href="#"
-                                   onclick='event.preventDefault();document.getElementById("delete-bc-{{$order->id}}").submit()'>
+                                   onclick="event.preventDefault();document.getElementById('{{"delete-bc-$order->id"}}').submit()"
+                                   class="btn btn-danger">
                                     <i class="fa fa-trash-o m-r-5"></i> destroy
                                 </a>
-                                <form id="delete-bc-{{ $order->id }}" method="post" action="{{route('sale_bc.destroy', compact('sale','order')) }}">
+                                <form id="delete-bc-{{ $order->id }}" method="post"
+                                      action="{{route('sale_bc.destroy', compact('sale','order')) }}">
                                     {!! method_field('delete') !!}
                                     {!! csrf_field() !!}
                                 </form>

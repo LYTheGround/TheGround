@@ -4,8 +4,6 @@
 @stop
 @section('content')
     <div class="content container-fluid">
-
-        <div class="row">
             <div class="row">
                 <div class="col-xs-7">
                     <h4>{{ ucfirst(__('pages.trade.buy.index.title')) }}</h4>
@@ -20,6 +18,7 @@
                     </form>
                 </div>
             </div>
+            <div class="row">
             @include('trade.buy._list',compact('buys'))
         </div>
     </div>

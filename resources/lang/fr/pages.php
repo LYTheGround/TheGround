@@ -148,7 +148,43 @@ return [
                 'danger'  => 'Vous avez pas les autorisation nécessaire pour supprimé cette achat',
                 'success'  => 'L\'Achat a été supprimé avec succès',
                 'modal_delete'  => '<p>La suppression de cet achat sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
+            ]
+        ],
+        'sale' => [
+            'index' => ['title' => 'Ventes'],
+            'create' => [
+                'title'     => 'création d\'une nouvel vente',
+                'success'   => 'une nouvel vente a bien été créer avec succès'
             ],
+            'delete' => [
+                'danger'  => 'Vous n\'avez malheureusement pas les autorisations nécessaire pour supprimé cette vente',
+                'success'  => 'La vente a bien été supprimé avec succès',
+                'modal_delete'  => '<p>La suppression de cette vente sera définitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
+            ],
+            'release' => [
+                'title' => 'liste des vente non Confirmé'
+            ]
+        ],
+        'bc' => 'Bon de Commande',
+        'dv' => [
+            'create' => [
+                'title' => 'Création d\'un nouvel Devi',
+                'success' => 'Le devi bien a été ajouté avec succès',
+                'danger' => 'Tous les prix unitaire doit être indiquez'
+            ],
+            'delete' => [
+                'success' => 'Le devi a été supprimé avec succès',
+                'danger'    => 'Ce devi ne peux être supprimé il est déjà Confirmé.'
+            ],
+            'confirm' => [
+                'success' => 'Le devi a été confirmé avec succès'
+            ]
+        ],
+        'bl'    => [
+            'select' => 'Ajouté le Bon de commande'
+        ],
+        'fc'    => [
+            'select' => 'Ajouté la facture'
         ],
     ]
 ];

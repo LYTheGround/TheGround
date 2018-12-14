@@ -64,7 +64,7 @@ Route::middleware('auth')->group(function () {
         // Trade
         Route::get('/', 'Trade\TradeController')->name('trade');
         // Buy
-        Route::resource('buy', 'Trade\Buy\BuyController')->only(['index', 'store', 'show']);
+        Route::resource('buy', 'Trade\Buy\BuyController')->only(['index', 'store', 'show', 'destroy']);
         Route::prefix('buy')->group(function () {
             // Buy_bc
             Route::post('{buy}/bc/products', 'Trade\Buy\BcController@products')->name('bc.products');
@@ -84,22 +84,28 @@ Route::middleware('auth')->group(function () {
                 abort(404);
                 return false;
             });
+            Route::post('{buy}/bl','Trade\Buy\TradeActionController@bl')->name('buy.bl');
+            Route::delete('{buy}/bl','Trade\Buy\TradeActionController@blDestroy')->name('buy.bl.destroy');
+            Route::post('{buy}/fc','Trade\Buy\TradeActionController@fc')->name('buy.fc');
+            Route::delete('{buy}/fc','Trade\Buy\TradeActionController@fcDestroy')->name('buy.fc.destroy');
         });
         //sale
         Route::resource('sale', 'Trade\Sale\SaleController');
-
-        Route::post('sale/{sale}/sale_bc/product', 'Trade\Sale\BcController@products')->name('sale_bc.products');
-        Route::resource('sale/{sale}/sale_bc', 'Trade\Sale\BcController');
-        Route::get('sale/{sale}/bc/sale_bc/confirm', 'Trade\Sale\BcController@confirm')->name('sale.bc.confirm');
-        // sale_tasks
-        Route::get('sale/{sale}/tasks/{trade}', function ($sale, $trade) {
-            if (($trade == 'done') || ($trade == 'delivery') || ($trade == 'store') || ($trade == 'finish')) {
-                $class = new \App\Http\Controllers\Trade\Sale\TradeActionController();
-                $sale = \App\Sale::where('slug', $sale)->first();
-                return $class->$trade($sale);
-            }
-            abort(404);
-            return false;
+        Route::prefix('sale/{sale}')->namespace('Trade\Sale')->group(function (){
+            Route::post('sale_bc/product', 'BcController@products')->name('sale_bc.products');
+            Route::resource('sale_bc', 'BcController');
+            Route::get('bc/sale_bc/confirm', 'BcController@confirm')->name('sale.bc.confirm');
+            Route::get('bc/sale_bc/release/{id}', 'BcController@productsRelease')->name('sale.bc.release');
+            // sale_tasks
+            Route::get('tasks/{trade}', function ($sale, $trade) {
+                if (($trade == 'done') || ($trade == 'delivery') || ($trade == 'store') || ($trade == 'finish')) {
+                    $class = new \App\Http\Controllers\Trade\Sale\TradeActionController();
+                    $sale = \App\Sale::where('slug', $sale)->first();
+                    return $class->$trade($sale);
+                }
+                abort(404);
+                return false;
+            });
         });
     });
     // money

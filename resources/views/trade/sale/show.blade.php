@@ -1,33 +1,43 @@
 @extends('layouts.app')
 @section('page-title')
-    Sale
+    {{ $sale->slug }}
 @stop
 
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h3>Sale Show</h3>
+                <h3>{{ $sale->slug }}</h3>
             </div>
-            @if($sale->trade_action->status == 'int' || $sale->trade_action->status == 'dv')
-                <div class="col-xs-5 text-right">
-                    <a href="#" onclick='event.preventDefault();document.getElementById("delete-sale-{{$sale->id}}").submit()'
+            <div class="col-xs-5 text-right">
+                @can('delete',$sale)
+                    <a href="#"
+                       onclick='event.preventDefault();document.getElementById("delete-sale-{{$sale->id}}").submit()'
                        class="btn btn-danger">
                         <i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                    <form id="delete-sale-{{ $sale->id }}" method="post" action="{{route('sale.destroy', compact('sale')) }}">
+                    <form id="delete-sale-{{ $sale->id }}" method="post"
+                          action="{{route('sale.destroy', compact('sale')) }}">
                         {!! method_field('delete') !!}
                         {!! csrf_field() !!}
                     </form>
-                </div>
-            @endif
+                @endcan
+                @can('bl',$sale)
+                    <a href="#" class="btn btn-primary">bl</a>
+                @endcan
+                @can('fc',$sale)
+                    <a href="#" class="btn btn-warning">fc</a>
+                @endcan
+            </div>
+
         </div>
         <div class="row">
             <div class="col-md-6 panel activity-panel">
                 <div class="panel-heading">
                     <div class="col-xs-12">
                         <div class="col-xs-7">
-                            <h4 class="text-center">Activities</h4>
-                            <p class="m-b-5">Progress <span class="text-success pull-right">{{ $tasks->progress }}
+                            <h4 class="text-center">{{ ucfirst(__('validation.attributes.activity')) }}</h4>
+                            <p class="m-b-5">{{ __('validation.attributes.progress') }} <span
+                                    class="text-success pull-right">{{ $tasks->progress }}
                                     %</span></p>
                             <div class="progress progress-xs m-b-0">
                                 <div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip"
@@ -42,16 +52,19 @@
                             @if($sale->trade_action->bc)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
-                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                        <a href="#" title="{{ $sale->trade_action->bc_member->info->last_name }}"
+                                           data-toggle="tooltip" class="avatar">
+                                            <img alt="{{ $sale->trade_action->bc_member->info->last_name }}"
+                                                 src="{{ ($sale->trade_action->bc_member->info->face) ? asset('storage/' . $sale->trade_action->bc_member->info->face) : asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->bc_member->name }}</a> a
-                                            fait le bon de commande
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#" class="name">{{ $sale->trade_action->bc_member->name }}</a>
+                                            {{ __('validation.attributes.buy_bc_task') }}
+                                            <span
+                                                class="time">{{ __('validation.attributes.tasks_time',['date' => \Carbon\Carbon::parse($sale->trade_action->bc_time)->format('d-m'),'hour' => \Carbon\Carbon::parse($sale->trade_action->bc_time)->format('H'),'min' => \Carbon\Carbon::parse($sale->trade_action->bc_time)->format('m')]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -59,16 +72,22 @@
                             @if($sale->trade_action->dv)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
-                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                        <a href="#" title="{{ $sale->trade_action->dv_member->info->last_name }}"
+                                           data-toggle="tooltip" class="avatar">
+                                            <img alt="{{ $sale->trade_action->dv_member->info->last_name }}"
+                                                 src="{{ asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->dv_member->name }}</a> a
-                                            selectionner le devi
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#"
+                                               class="name">{{ $sale->trade_action->dv_member->name }}</a> {{ __('validation.attributes.buy_dv_task') }}
+                                            <span class="time">{{ __('validation.attributes.tasks_time',[
+                                            'date' => \Carbon\Carbon::parse($sale->trade_action->dv_time)->format('d-m'),
+                                            'hour' => \Carbon\Carbon::parse($sale->trade_action->dv_time)->format('H'),
+                                            'min' => \Carbon\Carbon::parse($sale->trade_action->dv_time)->format('m')
+                                            ]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -76,16 +95,22 @@
                             @if($sale->trade_action->done)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
-                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                        <a href="#" title="{{ $sale->trade_action->done_member->info->last_name }}"
+                                           data-toggle="tooltip" class="avatar">
+                                            <img alt="{{ $sale->trade_action->done_member->info->last_name }}"
+                                                 src="{{ asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->done_member->name }}</a> a
-                                            marquer l'achat
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#"
+                                               class="name">{{ $sale->trade_action->done_member->name }}</a> {{ __('validation.attributes.buy_done_task') }}
+                                            <span class="time">{{ __('validation.attributes.tasks_time',[
+                                            'date' => \Carbon\Carbon::parse($sale->trade_action->done_time)->format('d-m'),
+                                            'hour' => \Carbon\Carbon::parse($sale->trade_action->done_time)->format('H'),
+                                            'min' => \Carbon\Carbon::parse($sale->trade_action->done_time)->format('m')
+                                            ]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -93,16 +118,23 @@
                             @if($sale->trade_action->delivery)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
-                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                        <a href="#" title="{{ $sale->trade_action->delivery_member->info->last_name }}"
+                                           data-toggle="tooltip" class="avatar">
+                                            <img alt="{{ $sale->trade_action->delivery_member->info->last_name }}"
+                                                 src="{{ asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->done_member->name }}</a> a
-                                            liverer
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#"
+                                               class="name">{{ $sale->trade_action->delivery_member->name }}</a>
+                                            {{ __('validation.attributes.buy_delivery_task') }}
+                                            <span class="time">{{ __('validation.attributes.tasks_time',[
+                                            'date' => \Carbon\Carbon::parse($sale->trade_action->delivery_time)->format('d-m'),
+                                            'hour' => \Carbon\Carbon::parse($sale->trade_action->delivery_time)->format('H'),
+                                            'min' => \Carbon\Carbon::parse($sale->trade_action->delivery_time)->format('m')
+                                            ]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -110,16 +142,22 @@
                             @if($sale->trade_action->store)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
-                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                        <a href="#" title="{{ $sale->trade_action->store_member->info->last_name }}"
+                                           data-toggle="tooltip" class="avatar">
+                                            <img alt="{{ $sale->trade_action->store_member->info->last_name }}"
+                                                 src="{{ asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->done_member->name }}</a> a
-                                            indiquer que les produits est dans le magazin
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#" class="name">{{ $sale->trade_action->store_member->name }}</a>
+                                            {{ __('validation.attributes.buy_store_task') }}
+                                            <span class="time">{{ __('validation.attributes.tasks_time',[
+                                            'date' => \Carbon\Carbon::parse($sale->trade_action->store_time)->format('d-m'),
+                                            'hour' => \Carbon\Carbon::parse($sale->trade_action->store_time)->format('H'),
+                                            'min' => \Carbon\Carbon::parse($sale->trade_action->store_time)->format('m')
+                                            ]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -127,16 +165,22 @@
                             @if($sale->trade_action->bl)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
-                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                        <a href="#" title="{{ $sale->trade_action->bl_member->info->last_name }}"
+                                           data-toggle="tooltip" class="avatar">
+                                            <img alt="{{ $sale->trade_action->bl_member->info->last_name }}"
+                                                 src="{{ asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->bl_member->name }}</a> a
-                                            uploader le bon de livraison
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#" class="name">{{ $sale->trade_action->bl_member->name }}</a>
+                                            {{ __('validation.attributes.buy_bl_task') }}
+                                            <span class="time">{{ __('validation.attributes.tasks_time',[
+                                            'date' => \Carbon\Carbon::parse($sale->trade_action->bl_time)->format('d-m'),
+                                            'hour' => \Carbon\Carbon::parse($sale->trade_action->bl_time)->format('H'),
+                                            'min' => \Carbon\Carbon::parse($sale->trade_action->bl_time)->format('m')
+                                            ]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -144,18 +188,22 @@
                             @if($sale->trade_action->fc)
                                 <li>
                                     <div class="activity-user">
-                                        <a href="#" title="{{ $sale->trade_action->bl_member->name }}"
+                                        <a href="#" title="{{ $sale->trade_action->fc_member->info->last_name }}"
                                            data-toggle="tooltip" class="avatar">
-                                            <img alt="{{ $sale->trade_action->bl_member->name }}"
+                                            <img alt="{{ $sale->trade_action->fc_member->info->last_name }}"
                                                  src="{{ asset('img/user.jpg') }}"
                                                  class="img-responsive img-circle">
                                         </a>
                                     </div>
                                     <div class="activity-content">
                                         <div class="timeline-content">
-                                            <a href="#" class="name">{{ $sale->trade_action->bl_member->name }}</a> a
-                                            uploader la facture
-                                            <span class="time">4 mins ago</span>
+                                            <a href="#" class="name">{{ $sale->trade_action->fc_member->name }}</a>
+                                            {{ __('validation.attributes.buy_fc_task') }}
+                                            <span class="time">{{ __('validation.attributes.tasks_time',[
+                                            'date' => \Carbon\Carbon::parse($sale->trade_action->fc_time)->format('d-m'),
+                                            'hour' => \Carbon\Carbon::parse($sale->trade_action->fc_time)->format('H'),
+                                            'min' => \Carbon\Carbon::parse($sale->trade_action->fc_time)->format('m')
+                                            ]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -174,15 +222,15 @@
             <div class="card-box">
                 <div class="card-title">
                     <div class="col-xs-7">
-                        <h4>Bon de commande</h4>
+                        <h4>{{ __('validation.attributes.bc') }}</h4>
                     </div>
                     <div class="col-xs-5 text-right">
-
                         @if(!$sale->trade_action->dv)
-                            <a href="{{ route('sale_bc.create',compact('sale')) }}" class="btn btn-success">update</a>
-                            @if($sale->dv)
+                            <a href="{{ route('sale_bc.create',compact('sale')) }}"
+                               class="btn btn-success">{{ __('validation.attributes.edit') }}</a>
+                            @if(isset($sale->bcs[0]))
                                 <a href="{{ route('sale.bc.confirm',compact('sale')) }}"
-                                   class="btn btn-primary">Confirm</a>
+                                   class="btn btn-primary">{{ __('validation.attributes.confirm') }}</a>
                             @endif
                         @endif
                     </div>
@@ -191,11 +239,11 @@
                     <table class="table table-striped custom-table">
                         <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Qt</th>
-                            <th>ht</th>
-                            <th>tva</th>
-                            <th class="text-center">ttc</th>
+                            <th>{{ ucfirst(__('validation.attributes.products')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.qt')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.ht')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.tva')) }}</th>
+                            <th class="text-center">{{ strtoupper(__('validation.attributes.ttc')) }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -210,7 +258,8 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="2" class="bg-primary">TOTAL</td>
+                                <td colspan="2"
+                                    class="bg-primary">{{ strtoupper(__('validation.attributes.total')) }}</td>
                                 <td class="bg-warning">{{ $sale->ht }}</td>
                                 <td class="bg-warning">{{ $sale->tva }}</td>
                                 <td class="bg-danger text-center">{{ $sale->ttc }}</td>

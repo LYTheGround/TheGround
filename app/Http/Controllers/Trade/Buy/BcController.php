@@ -12,17 +12,20 @@ class BcController extends Controller
 {
     public function create(Buy $buy)
     {
+        $this->authorize('bc',$buy);
         return view('trade.buy.bc.create',compact('buy'));
     }
 
     public function products(Request $request,Buy $buy)
     {
+        $this->authorize('bc',$buy);
         $products = auth()->user()->member->company->products()->where('name','LIKE','%' . $request->product . '%')->get();
         return view('trade.buy.bc.list',compact('products','buy'));
     }
 
     public function store(Request $request,Buy $buy)
     {
+        $this->authorize('bc',$buy);
         $buy->bcs()->create([
             'qt' => $request->qt,
             'product_id' => $request->product
@@ -32,6 +35,7 @@ class BcController extends Controller
 
     public function destroy(Buy $buy, Buy_bc $bc)
     {
+        $this->authorize('bc',$buy);
         $bc->delete();
         return back();
     }

@@ -54,7 +54,7 @@ class CreateProductsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('buy_product', function (Blueprint $table) {
+        Schema::create('product_provider', function (Blueprint $table) {
             $table->increments('id');
 
             $table->string('min_prince');
