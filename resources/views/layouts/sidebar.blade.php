@@ -20,7 +20,7 @@
                     <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Tableau de bord</a>
                 </li>
                 <li class="{{ (request()->is('token') || request()->is('token/*')) ? 'active' : '' }}">
-                    <a href="{{ route('token.index') }}"><i class="fa fa-dashboard"></i> {{ __('validation.attributes.token') }}</a>
+                    <a href="{{ route('token.index') }}"><i class="fa fa-lock"></i> {{ __('validation.attributes.token') }}</a>
                 </li>
                 <li class="menu-title">Humans Resource</li>
                 <li class="{{ (request()->is('member/*') || request()->is('member')) ? 'active' : '' }}">
@@ -45,14 +45,14 @@
                     <a href="{{ route('buy.index') }}"><i class="fa fa-credit-card"></i> {{ ucfirst(__('pages.trade.buy.index.title')) }}</a>
                 </li>
                 <li class="{{ (request()->is('trade/sale/*') || request()->is('trade/sale')) ? 'active' : '' }}">
-                    <a href="{{ route('sale.index') }}"><i class="fa fa-dollar"></i> Sales</a>
+                    <a href="{{ route('sale.index') }}"><i class="fa fa-dollar"></i> {{ ucfirst(__('pages.trade.sale.index.title')) }}</a>
                 </li>
                 <li class="menu-title">Money</li>
-                <li>
-                    <a href="#"><i class="fa fa-dashboard"></i> Accounting</a>
+                <li class="{{ (request()->is('accounting/*') || request()->is('accounting')) ? 'active' : '' }}">
+                    <a href="{{ route('accounting.index') }}"><i class="fa fa-money"></i> Accounting</a>
                 </li>
                 <li class="{{ (request()->is('unload') || request()->is('unload/*')) ? 'active' : '' }}">
-                    <a href="{{ route('unload.index') }}"><i class="fa fa-dashboard"></i> Unloads</a>
+                    <a href="{{ route('unload.index') }}"><i class="fa fa-adjust"></i> Unloads</a>
                 </li>
             </ul>
         </div>

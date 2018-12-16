@@ -9,6 +9,7 @@ use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Http\Requests\Company\SoldRequest;
 use App\Http\Requests\Company\StatusRequest;
 use App\Info_box;
+use App\Member;
 use App\Premium;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
@@ -25,7 +26,8 @@ class CompanyController extends Controller
 
     public function show(Company $company)
     {
-        return view('admin.company.show',compact('company'));
+        $token = $company->tokens()->where('category_id',2)->first()->token;
+        return view('admin.company.show',compact('company','token'));
     }
 
     public function create()

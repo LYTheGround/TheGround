@@ -12,6 +12,9 @@
                         {{ Form::label('sold','Sold :',['class' => 'control-label']) }}
                         {{ Form::number('sold',null,['class'=> 'form-control','placeholder' => 'Sold :', 'required']) }}
                     </div>
+                    @if($errors->has('sold'))
+                        <span class="text-danger">{{ $errors->first('sold') }}</span>
+                    @endif
                 </div>
                 <div class="col-xs-12 text-right">
                     <input type="submit" value="Add" class="btn btn-primary">

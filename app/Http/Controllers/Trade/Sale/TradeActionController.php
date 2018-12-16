@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Trade\Sale;
 
 use App\Accounting;
+use App\Client;
 use App\Http\Controllers\Admin\ArchiveTradeController;
 use App\Month;
+use App\Product;
 use App\Sale;
 use App\Trade_action;
 use Carbon\Carbon;
@@ -54,7 +56,8 @@ class TradeActionController extends Controller
 
     private function sold(Sale $sale,Accounting $accounting,Month $month)
     {
-        foreach ($sale->dv->orders as $order) {
+        $dv = $sale->dv;
+        foreach ($dv->orders as $order) {
             $sold = $order->sold()->create([
                 'qt'    => $order->bc->qt,
                 'product_id' => $order->bc->purchased->product_id,
@@ -62,6 +65,22 @@ class TradeActionController extends Controller
                 'month_id'  => $month->id
             ]);
             $sold->update(['slug' => 'SOLD-' . $sold->id]);
+            $this->min_prince($dv->client,$order->bc->purchased->product_id,$order->pu);
+        }
+    }
+
+    public function min_prince(Client $client,$product_id,$pu)
+    {
+        $min = $client->products()->where('product_id',$product_id)->first();
+        if($min){
+            if ($min->pivot->min_prince > $pu){
+                $min->pivot->update([
+                    'min_prince' => $pu
+                ]);
+            }
+        }
+        else{
+            $client->products()->attach($product_id, ['min_prince' => $pu]);
         }
     }
 
@@ -129,5 +148,17 @@ class TradeActionController extends Controller
             'status'            => 'finish'
         ]);
         return redirect()->route('sale.show',compact('sale'));
+    }
+
+    public function bl(Sale $sale)
+    {
+        $this->authorize('bl',$sale);
+        return view('trade.sale.bc.bl',compact('sale'));
+    }
+
+    public function fc(Sale $sale)
+    {
+        $this->authorize('fc',$sale);
+        return view('trade.sale.fc',compact('sale'));
     }
 }

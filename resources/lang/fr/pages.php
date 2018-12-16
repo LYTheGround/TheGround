@@ -186,5 +186,12 @@ return [
         'fc'    => [
             'select' => 'Ajouté la facture'
         ],
+    ],
+    'money' => [
+        'unload' => [
+            'delete_success' => 'la décharge a bien été supprimé',
+            'edit_success' => 'la décharge a bien été modifier',
+            'create_success' => 'la décharge a bien été crée',
+        ],
     ]
 ];

@@ -9,7 +9,7 @@
                 <h1>Admins</h1>
             </div>
             <div class="col-xs-5 text-right">
-                <a href="{{ route('admin.create') }}" class="btn btn-success">Create</a>
+                <a href="{{ route('admin.create') }}" class="btn btn-primary">Create</a>
             </div>
         </div>
         <div class="row">

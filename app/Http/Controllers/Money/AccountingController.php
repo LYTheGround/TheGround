@@ -16,7 +16,8 @@ class AccountingController extends Controller
     public function index()
     {
         $accounting = auth()->user()->member->company->accounting;
-        $months = $accounting->months;
+        //$months = $accounting->months->orderBy('date', 'desc')->get();
+        $months = Month::where('accounting_id',$accounting->id)->orderBy('date', 'desc')->get();
         return view('money.accounting.index',compact('accounting','months'));
     }
 
@@ -28,7 +29,6 @@ class AccountingController extends Controller
         $solds = $month->solds;
         // unloads
         $unloads = $month->unloads;
-        //dd($solds[0]->order->dv->client->info_box->name);
         return view('money.accounting.show',compact('solds','purchaseds','unloads'));
     }
 }

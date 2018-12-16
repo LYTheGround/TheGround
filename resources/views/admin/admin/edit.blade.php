@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="card-box">
-            {{ Form::model($admin->user,['method' => 'PUT', 'url' => route('admin.update',compact('admin')),'enctype' => 'multipart/form-data' ]) }}
+            {{ Form::model($admin->user,['method' => 'PUT', 'url' => route('admin.params.update',compact('admin')),'enctype' => 'multipart/form-data' ]) }}
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">

@@ -22,7 +22,7 @@
                     </form>
                 @endcan
                 @can('bl',$sale)
-                    <a href="#" class="btn btn-primary">bl</a>
+                    <a href="{{ route('sale.show',compact('sale')) . '/tasks/bl' }}" class="btn btn-primary">bl</a>
                 @endcan
                 @can('fc',$sale)
                     <a href="#" class="btn btn-warning">fc</a>

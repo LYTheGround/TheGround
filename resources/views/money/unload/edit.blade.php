@@ -5,7 +5,7 @@
 @section('content')
     <div class="content .container-fluid">
         <div class="row">
-            <h1>Unload Create</h1>
+            <h1>{{ $unload->name }}</h1>
         </div>
         <div class="card-box">
             {{ Form::open(['method' => 'PUT', 'url' => route('unload.update',compact('unload')),'class' => 'form-horizontal','enctype' => 'multipart/form-data']) }}
@@ -13,41 +13,50 @@
                 <div class="col-xs-12">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="name">Nom Charger</label>
+                            <label for="name">{{ ucfirst(__('validation.attributes.name')) }} : </label>
                             <input type="text" name="name" title="name" value="{{ $unload->name }}" id="name"
                                    class="form-control"
                                    placeholder="Nom de la charge" required>
+                            @if($errors->has('name'))
+                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="prince">Montant a Charger</label>
-                            <input type="text" name="prince" title="prince" value="{{ $unload->prince }}" id="prince"
+                            <label for="prince">{{ __('validation.attributes.prince') }} :</label>
+                            <input type="number" name="prince" title="prince" value="{{ $unload->prince }}" id="prince"
                                    class="form-control"
                                    placeholder="Prince" required>
+                            @if($errors->has('prince'))
+                                <span class="text-danger">{{ $errors->first('prince') }}</span>
+                            @endif
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="charge">Charges sur:</label>
+                            <label for="charge">{{ __('validation.attributes.chargeOn') }} :</label>
                             <select name="charge" id="charge" class="form-control" title="charge">
-                                <option value="taxes" {{ ($unload->taxes) ? 'selected' : '' }}>Taxes</option>
-                                <option value="tva" {{ ($unload->tva) ? 'selected' : '' }}>Tva</option>
+                                <option value="taxes" {{ ($unload->taxes) ? 'selected' : '' }}>{{ __('validation.attributes.taxes') }}</option>
+                                <option value="tva" {{ ($unload->tva) ? 'selected' : '' }}>{{ __('validation.attributes.tva') }}</option>
                             </select>
                         </div>
+                        @if($errors->has('charge'))
+                            <span class="text-danger">{{ $errors->first('charge') }}</span>
+                        @endif
                     </div>
                 </div>
                 <div class="col-xs-12">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="description">Description : </label>
+                            <label for="description">{{ __('validation.attributes.description') }} : </label>
                             <textarea name="description" class="form-control" id="description" cols="30"
                                       rows="10">{{ $unload->description }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-5 col-md-offset-1">
                         <div class="form-group">
-                            <label>pièce justificatif</label>
+                            <label>{{ __('validation.attributes.justify') }}</label>
                             <div id="filesinput">
                                 <!-- Our File Inputs -->
                                 <div class="wrap-custom-file">
@@ -59,7 +68,6 @@
                                 </div>
                                 <!-- End Page Wrap -->
                             </div>
-                            <small class="help-block">Allowed images: jpg, gif, jpeg, png. Maximum 1 image only.</small>
                             @if ($errors->has('justify'))
                                 <div class="help-block">{{ $errors->first('justify') }}</div>
                             @endif

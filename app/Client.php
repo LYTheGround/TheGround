@@ -40,7 +40,7 @@ class Client extends Model
      */
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot('min_prince', 'updated_at');
     }
 
     public function user()

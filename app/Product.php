@@ -60,7 +60,7 @@ class Product extends Model
 
     public function clients()
     {
-        return $this->belongsToMany(Client::class);
+        return $this->belongsToMany(Client::class)->withPivot('min_prince', 'updated_at');
     }
 
     public function providers()

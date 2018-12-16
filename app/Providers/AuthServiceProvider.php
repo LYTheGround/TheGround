@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Accounting;
 use App\Buy;
 use App\Client;
 use App\Member;
+use App\Policies\Accounting\AccountingPolicy;
+use App\Policies\Accounting\UnloadPolicy;
 use App\Policies\Deal\ClientPolicy;
 use App\Policies\Deal\ProviderPolicy;
 use App\Policies\Premium\PremiumPolicy;
@@ -21,6 +24,7 @@ use App\Product;
 use App\Provider;
 use App\Sale;
 use App\Token;
+use App\Unload;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -41,6 +45,8 @@ class AuthServiceProvider extends ServiceProvider
         Client::class => ClientPolicy::class,
         Buy::class => BuyPolicy::class,
         Sale::class => SalePolicy::class,
+        Accounting::class => AccountingPolicy::class,
+        Unload::class => UnloadPolicy::class,
     ];
 
     /**

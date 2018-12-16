@@ -58,7 +58,6 @@ Route::middleware('auth')->group(function () {
         // client
         Route::resource('client', 'clientController');
     });
-
     // Trade
     Route::prefix('trade')->group(function () {
         // Trade
@@ -98,7 +97,7 @@ Route::middleware('auth')->group(function () {
             Route::get('bc/sale_bc/release/{id}', 'BcController@productsRelease')->name('sale.bc.release');
             // sale_tasks
             Route::get('tasks/{trade}', function ($sale, $trade) {
-                if (($trade == 'done') || ($trade == 'delivery') || ($trade == 'store') || ($trade == 'finish')) {
+                if (($trade == 'done') || ($trade == 'delivery') || ($trade == 'store') || ($trade == 'finish') || ($trade == 'bl') || ($trade == 'fc')) {
                     $class = new \App\Http\Controllers\Trade\Sale\TradeActionController();
                     $sale = \App\Sale::where('slug', $sale)->first();
                     return $class->$trade($sale);
@@ -116,12 +115,6 @@ Route::middleware('auth')->group(function () {
     // todo : update chargeOn
     Route::resource('unload', 'Money\UnloadController');
 
-    //todo : lisner tradeAction archived
-    //todo : lisner tradeAction archived
-    //todo : list released sale
-    //todo : agenda
-    //todo : list purchased
-    //todo : list sold
     //todo : administration
     //todo : documentation
     Route::prefix('admin')->group(function () {
@@ -131,6 +124,8 @@ Route::middleware('auth')->group(function () {
         Route::get('company/{company}/status', 'Admin\CompanyController@status')->name('company.status');
         Route::put('company/{company}/status', 'Admin\CompanyController@updateStatus')->name('company.updateStatus');
 
-        Route::resource('admin', 'Admin\AdminController');
+        Route::resource('admin', 'Admin\AdminController')->except(['edit','update']);
+        Route::get('params','Admin\AdminController@edit')->name('admin.params');
+        Route::put('edit','Admin\AdminController@update')->name('admin.params.update');
     });
 });

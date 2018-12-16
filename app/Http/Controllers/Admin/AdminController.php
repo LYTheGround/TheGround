@@ -72,11 +72,11 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
-    public function edit(Admin $admin)
+    public function edit()
     {
+        $admin = auth()->user()->admin;
         $cities = City::all();
         return view('admin.admin.edit',compact('admin','cities'));
     }

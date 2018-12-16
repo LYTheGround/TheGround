@@ -165,10 +165,20 @@ $(document).ready(function($) {
     // Datatable
 
     if ($('.datatable').length > 0) {
-        $('.datatable').DataTable({
-            "bFilter": false,
-        });
+        if ($('#table_desc').length > 0) {
+
+            $('#table_desc').DataTable( {
+                "order": [[ 1, "desc" ]],
+            } );
+        }
+        else{
+            $('.datatable').DataTable({
+                "bFilter": false,
+            });
+        }
     }
+
+
 
     // Bootstrap Tooltip
 

@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Member extends Model
 {
+
     /**
      * Les attributes assigner en masse
      *
@@ -84,10 +86,10 @@ class Member extends Model
     public function identity($user)
     {
         $info = $this->info;
-        if($user->login == $info->emails[0]->email){
+        if ($user->login == $info->emails[0]->email) {
             return 'email';
         }
-        if($user->login == $info->tels[0]->tel){
+        if ($user->login == $info->tels[0]->tel) {
             return 'tel';
         }
         return 'name';

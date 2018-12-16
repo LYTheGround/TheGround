@@ -24,7 +24,7 @@ class SoldRequest extends FormRequest
     public function rules()
     {
         return [
-            'sold'  => 'required|min:1|max:10000'
+            'sold'  => 'required|int|min:1|max:10000'
         ];
     }
 }

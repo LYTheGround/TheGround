@@ -9,6 +9,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
 
     <title>@yield('page-title')</title>
 
@@ -79,5 +80,6 @@
 <script type="text/javascript" src="{{ asset('js/bc.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/translate.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/tmpl.js') }}"></script>
+
 </body>
 </html>

@@ -9,7 +9,6 @@
                 <h1>companies</h1>
             </div>
             <div class="col-xs-5 text-right">
-                <a href="{{ route('admin.edit',compact('admin')) }}" class="btn btn-success">Edit</a>
                 <a href="#"  data-toggle="modal" data-target="#delete_admin" class="btn btn-danger" >destroy</a>
             </div>
         </div>

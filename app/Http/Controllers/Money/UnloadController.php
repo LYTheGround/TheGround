@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UnloadController extends Controller
 {
+
     public function index()
     {
         $month = Month::month();
@@ -24,6 +25,15 @@ class UnloadController extends Controller
 
     public function store(Request $request)
     {
+        $validate = $this->validate($request,[
+            'name' => 'required|string|min:3|max:50',
+            'prince' => 'required|int',
+            'description' => 'nullable|string|min:3',
+            'justify' => 'required|mimes:jpg,png,jpeg,gif'
+        ]);
+        if($validate->fails()){
+            return back()->withErrors($validate)->withInput();
+        }
         if ($request->charge == 'tva') {
             $tva = true;
             $taxes = false;
@@ -52,11 +62,13 @@ class UnloadController extends Controller
             $month->update(['taxes_after_unload' => $month->taxes_after_unload - $request->prince,]);
             $month->accounting->update(['taxes_after_unload' => $month->taxes_after_unload - $request->prince,]);
         }
+        session()->flash('success',__('pages.money.unload.create_success'));
         return redirect()->route('unload.show', compact('unload'));
     }
 
     public function show(Unload $unload)
     {
+        $this->authorize('view',$unload);
         return view('money.unload.show', compact('unload'));
     }
 
@@ -67,7 +79,17 @@ class UnloadController extends Controller
 
     public function update(Request $request, Unload $unload)
     {
-        $data = $request->all();
+        $this->authorize('view',$unload);
+        $validate = $this->validate($request,[
+            'name' => 'required|string|min:3|max:50',
+            'prince' => 'required|int',
+            'description' => 'nullable|string|min:3',
+            'justify' => 'required|mimes:jpg,png,jpeg,gif'
+        ]);
+        if($validate->fails()){
+            return back()->withErrors($validate)->withInput();
+        }
+        $data = $request->all(['name','prince','description','justify']);
         if($request->file('justify')){
             Storage::disk('public')->delete($unload->justify);
             $justify = $request->justify->store('unload/justify');
@@ -75,15 +97,17 @@ class UnloadController extends Controller
         }
         $unload->unload();
         $unload->charge($data);
+        session()->flash('success',__('pages.money.unload.edit_success'));
         return redirect()->route('unload.show',compact('unload'));
     }
 
     public function destroy(Unload $unload)
     {
+        $this->authorize('view',$unload);
         $unload->unload();
         Storage::disk('public')->delete($unload->justify);
         $unload->delete();
-        session()->flash('success','unload destroyed successfully');
+        session()->flash('success',__('pages.money.unload.delete_success'));
         return redirect()->route('unload.index');
     }
 }

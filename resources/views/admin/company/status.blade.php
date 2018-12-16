@@ -16,6 +16,9 @@
                             <option value="3" {{ ($company->premium->status->status == 'archived') ? 'selected' : '' }}>archived</option>
                         </select>
                     </div>
+                    @if($errors->has('status'))
+                        <span class="text-danger">{{ $errors->first('status') }}</span>
+                    @endif
                 </div>
                 <div class="col-xs-12 text-right">
                     <input type="submit" value="Add" class="btn btn-primary">
