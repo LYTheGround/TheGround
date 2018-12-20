@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('page-title')
-    {{ ucfirst(__("pages.auth.rh.user.members")) }}
+    {{ ucfirst(__("pages.rh.user.members")) }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h1 class="page-title">{{ ucfirst(__("pages.auth.rh.user.members")) }}</h1>
+                <h1 class="page-title">{{ ucfirst(__("pages.rh.user.members")) }}</h1>
             </div>
         </div>
         <div class="card-box">

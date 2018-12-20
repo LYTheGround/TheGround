@@ -93,7 +93,7 @@ class ProductController extends Controller
         $this->authorize('view',auth()->user()->member);
         $user = $user->where('id',auth()->user()->id)->first();
         if($user->cant('delete',$product)){
-            session()->flash('status', 'vous ne pouvez pas supprimé ce produit il est encore dans votre cour de travaille');
+            session()->flash('danger', 'vous ne pouvez pas supprimé ce produit il est encore dans votre cour de travaille');
             return back();
         }
         $product->delete();
@@ -107,6 +107,7 @@ class ProductController extends Controller
         }
         session()->flash('status',__('pages.product.delete_success'));
         return redirect()->route('product.index');
+
     }
 
     public function destroyImg($img)

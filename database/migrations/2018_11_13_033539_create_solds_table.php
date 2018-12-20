@@ -15,8 +15,10 @@ class CreateSoldsTable extends Migration
     {
         Schema::create('solds', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('slug')->nullable();
             $table->string('qt');
+
             $table->integer('product_id')->unsigned()->index();;
             $table->integer('month_id')->unsigned()->index();
             $table->integer('accounting_id')->unsigned()->index();;

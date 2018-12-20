@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group text-right">
                                 <div class="col-xs-12">
-                                    {{ Form::submit(__('validation.attributes.create'),['class'=>'btn btn-success']) }}
+                                    {{ Form::submit(__('validation.attributes.create'),['class'=>'btn btn-primary']) }}
                                 </div>
                             </div>
                         </div>

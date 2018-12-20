@@ -11,6 +11,15 @@ class Buy_bc extends Model
      */
     protected $fillable = ['qt', 'buy_id', 'product_id'];
 
+    public function getQtAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setQtAttribute($value)
+    {
+        $this->attributes['qt'] = (string) $value;
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

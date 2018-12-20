@@ -14,7 +14,7 @@ class UnloadController extends Controller
     public function index()
     {
         $month = Month::month();
-        $unloads = $month->unloads;
+        $unloads = $month->unloads()->orderBy('updated_at','asc')->get();
         return view('money.unload.index', compact('unloads', 'month'));
     }
 
@@ -31,9 +31,6 @@ class UnloadController extends Controller
             'description' => 'nullable|string|min:3',
             'justify' => 'required|mimes:jpg,png,jpeg,gif'
         ]);
-        if($validate->fails()){
-            return back()->withErrors($validate)->withInput();
-        }
         if ($request->charge == 'tva') {
             $tva = true;
             $taxes = false;
@@ -84,12 +81,9 @@ class UnloadController extends Controller
             'name' => 'required|string|min:3|max:50',
             'prince' => 'required|int',
             'description' => 'nullable|string|min:3',
-            'justify' => 'required|mimes:jpg,png,jpeg,gif'
+            'justify' => 'nullable|mimes:jpg,png,jpeg,gif'
         ]);
-        if($validate->fails()){
-            return back()->withErrors($validate)->withInput();
-        }
-        $data = $request->all(['name','prince','description','justify']);
+        $data = $request->all(['name','prince','description','charge']);
         if($request->file('justify')){
             Storage::disk('public')->delete($unload->justify);
             $justify = $request->justify->store('unload/justify');

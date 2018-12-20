@@ -28,9 +28,14 @@ class MemberPolicy
      * @param  \App\User $user
      * @return mixed
      */
-    public function range(User $user)
+    public function range(User $user,Member $member)
     {
-        return $user->member->premium->category->category == 'pdg' || $user->member->premium->category->category == 'manager';
+        if($user->member->premium->category->category == 'pdg' || $user->member->premium->category->category == 'manager'){
+            if($member->premium->status->status == 'active'){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

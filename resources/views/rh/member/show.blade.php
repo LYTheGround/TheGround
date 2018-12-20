@@ -17,6 +17,12 @@
                                 class="fa fa-plus"></i> Status</a>
                     @endif
                 @endcan
+                @cannot('range',$member)
+                    <div>
+                        <span>status bloquez jusqu'au : <span
+                                class="label label-danger-border">{{ Carbon\Carbon::parse($member->premium->update_status)->format('d-m-Y')  }}</span></span>
+                    </div>
+                @endcannot
             </div>
         </div>
         <div class="card-box">
@@ -45,19 +51,21 @@
                                 </div>
                                 <div class="col-md-7">
                                     <ul class="personal-info">
-                                        <li  class="row text-left">
+                                        <li class="row text-left">
                                             <span class="title">{{ __('validation.attributes.phone') }} :</span>
                                             <span class="text"><a href="#">{{ $member->info->tels[0]->tel }}</a></span>
                                         </li>
                                         <li class="row text-left">
                                             <span class="title">{{ __('validation.attributes.email') }} :</span>
                                             <span class="text">
-                                                <a href="#" title="{{ $member->info->emails[0]->email }}">{{ $member->info->emails[0]->email }}</a>
+                                                <a href="#"
+                                                   title="{{ $member->info->emails[0]->email }}">{{ $member->info->emails[0]->email }}</a>
                                             </span>
                                         </li>
                                         <li class="row text-left">
                                             <span class="title">{{ __('validation.attributes.birth') }} :</span>
-                                            <span class="text">{{ ($member->info->birth) ? Carbon\Carbon::parse($member->info->birth)->format('d-m-Y') : 'inconnu' }}</span>
+                                            <span
+                                                class="text">{{ ($member->info->birth) ? Carbon\Carbon::parse($member->info->birth)->format('d-m-Y') : 'inconnu' }}</span>
                                         </li>
                                         <li class="row text-left">
                                             <span class="title">{{ __('validation.attributes.address') }} :</span>

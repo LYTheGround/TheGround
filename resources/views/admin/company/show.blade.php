@@ -10,9 +10,11 @@
 
             </div>
             <div class="col-xs-5 text-right">
-                <a href="{{ route('company.edit',compact('company')) }}" class="btn btn-success">Update</a>
-                <a href="{{ route('company.sold',compact('company')) }}" class="btn btn-primary">Sold</a>
-                <a href="{{ route('company.status',compact('company')) }}" class="btn btn-danger">Status</a>
+                <a href="{{ route('company.edit',compact('company')) }}" class="btn btn-success"><i class="fa fa-edit"></i> {{ __('validation.attributes.edit') }}</a>
+                @can('view',\App\Admin::class)
+                <a href="{{ route('company.sold',compact('company')) }}" class="btn btn-primary"><i class="fa fa-money"></i> {{ __('validation.attributes.sold') }}</a>
+                <a href="{{ route('company.status',compact('company')) }}" class="btn btn-danger"><i class="fa fa-flag"></i> {{ __('validation.attributes.status') }}</a>
+                @endcan
             </div>
         </div>
         <div class="row m-b-0">
@@ -36,7 +38,7 @@
                                             <div class="staff-id"><b>{{__('validation.attributes.speaker')}}</b> : {{$company->info_box->speaker}}</div>
                                             <div class="staff-id"><b>{{__('validation.attributes.sold')}}</b> : {{$company->premium->sold}}</div>
                                             <div class="staff-id"><b>{{__('validation.attributes.status')}}</b> : {{$company->premium->status->status}}</div>
-                                            <div class="staff-id"><b>{{__('validation.attributes.token')}}</b> : {{ ($token) ?: __('validation.attributes.inconnu') }}</div>
+                                            <div class="staff-id"><b>{{__('validation.attributes.token')}}</b> : {{ ($token) ? $token->token : __('validation.attributes.inconnu') }}</div>
                                         </div>
                                     </div>
                                     <div class="col-md-7">

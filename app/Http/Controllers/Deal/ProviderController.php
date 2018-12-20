@@ -78,7 +78,7 @@ class ProviderController extends Controller
             $provider->info_box->tels()->delete();
             $provider->info_box->delete();
             $provider->delete();
-            session()->flash('status', __('pages.provider.delete_success'));
+            session()->flash('status', __('pages.deal.provider.delete.delete_success'));
             return redirect()->route('provider.index');
         }
         session()->flash('danger', __('pages.deal.provider.delete.danger'));

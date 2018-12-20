@@ -7,7 +7,7 @@ $(function () {
         var $token = $('input[name="_token"]').val();
         var $product = $('#bc-product').val();
         if($product.length !== 0){
-            $('#target-list-product').show();
+            $('#target-list-product').parent().show();
             $.ajax({
                 method: $method,
                 url: $form,
@@ -23,7 +23,7 @@ $(function () {
                 }
             })
         }else{
-            $('#target-list-product').hide();
+            $('#target-list-product').parent().hide();
         }
 
     });

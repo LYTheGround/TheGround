@@ -16,6 +16,22 @@ class Info_box extends Model
      */
     protected $fillable = ['brand', 'name', 'slug', 'licence', 'turnover', 'taxes', 'fax', 'speaker', 'address', 'build', 'floor', 'apt_nbr', 'zip', 'city_id'];
 
+    public function getTurnoverAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setTurnoverAttribute($value)
+    {
+        $this->attributes['turnover'] = (string) round($value,2);
+    }
+    public function getTaxesAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setTaxesAttribute($value)
+    {
+        $this->attributes['taxes'] = (string) round($value,2);
+    }
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

@@ -23,7 +23,7 @@
                                 @if($sale->company->info_box->brand)
                                     <img src="{{ asset('storage/' . $sale->company->info_box->brand) }}" class="inv-logo" alt="{{ $sale->company->info_box->name }}" title="{{ $sale->company->info_box->name }}">
                                 @endif
-                                <h3>Bon de Livraison</h3>
+                                <h3>{{ ucfirst(__('validation.attributes.bl')) }}</h3>
                                 <ul class="list-unstyled">
                                     <li><strong>{{ ucfirst($sale->company->info_box->name) }}</strong></li>
                                     <li>{{ ($sale->company->info_box->zip) ? $sale->company->info_box->zip . ', ' : '' }} {{ $sale->company->info_box->address }},</li>

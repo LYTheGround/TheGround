@@ -108,9 +108,23 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         if($admin->type != 'A'){
-            if(auth()->user()->admin->type == 'A'){
-                $admin->delete();
+            $company = Company::where('user_id',$admin->user->id)->first();
+            if(!$company){
+                if(auth()->user()->admin->type == 'A'){
+                    session()->flash('success', 'l\administrateur a bien été supprimé');
+                    $admin->user()->delete();
+                    $admin->delete();
+                }
+                else{
+                    session()->flash('danger', 'vous avez pas l\autorisation nécessaire');
+                }
             }
+            else{
+                session()->flash('danger', 'ce member a créer déjà une ou des compagnies');
+            }
+        }
+        else{
+            session()->flash('danger', 'Je ne peux pas supprimé mon propriétaire :(');
         }
         return redirect()->route('admin.index');
     }

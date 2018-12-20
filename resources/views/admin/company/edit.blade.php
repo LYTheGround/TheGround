@@ -144,7 +144,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         {{ Form::label('apt_nbr','n° :',['class' => 'control-label']) }}
-                        {{ Form::text('apt_nbr',null,['class' => 'form-control','placeholder'=>'N°']) }}
+                        {{ Form::number('apt_nbr',null,['class' => 'form-control','placeholder'=>'N°']) }}
                         @if($errors->has('apt_nbr'))
                             <span class="text-danger">
                                 {{ $errors->first('apt_nbr') }}
@@ -170,7 +170,8 @@
                         {{ Form::label('city_id','Ville :',['class' => 'control-label']) }}
                         <select name="city" id="city" title="city" class="form-control">
                             @foreach($cities as $city)
-                                <option value="{{ $city->id }}" {{ (old('city_id') == $city->id) ? 'selected' : '' }}>{{ $city->city }}</option>
+                                <option
+                                    value="{{ $city->id }}" {{ (old('city_id') == $city->id) ? 'selected' : '' }}>{{ $city->city }}</option>
                             @endforeach
                         </select>
                         @if($errors->has('city'))
@@ -185,14 +186,20 @@
                 <div class="col-xs-12">
                     <div class="form-group">
                         <label>pièce justificatif</label>
-                        <div id="filesinput" >
+                        <div id="filesinput">
                             <!-- Our File Inputs -->
                             <div class="wrap-custom-file">
-                                <input type="file" name="brand" id="image1" accept=".gif, .jpg, .png" />
-                                <label  for="image1" class="covimgs" {{'style=background-image:'."url(".asset("img/placeholder.jpg").")"}} >
-                                    <span>Select justify image</span>
-                                    <i class="fa fa-plus-circle"></i>
-                                </label>
+                                <input type="file" name="brand" id="image1" accept=".gif, .jpg, .png"/>
+                                @if($company->info_box->brand)
+                                    <label for="image1"
+                                           class="covimgs" style="background-image: url('{{ asset('storage/' . $company->info_box->brand) }}');" >
+                                        @else
+                                            <label for="image1"
+                                                   class="covimgs" style="background-image: url('{{ asset('img/placeholder.jpg') }}');" >
+                                            @endif
+                                        <span>Select justify image</span>
+                                        <i class="fa fa-plus-circle"></i>
+                                    </label>
                             </div>
                             <!-- End Page Wrap -->
                         </div>

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('page-title')
-    {{ __('pages.trade.buy.dv.create.title') }}
+    {{ __('pages.trade.dv.create.title') }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h4>{{ __('pages.trade.buy.dv.create.title') }}</h4>
+                <h4>{{ __('pages.trade.dv.create.title') }}</h4>
             </div>
         </div>
         <div class="row">
@@ -43,7 +43,7 @@
                                 @foreach($bcs as $bc)
                                     <tr>
                                         <td><a href="{{ route('product.show',['product' => $bc->product]) }}">{{ $bc->product->name }}</a></td>
-                                        <td><a href="#">{{ $bc->qt }}</a></td>
+                                        <td><span data-toggle="tooltip" data-html="true" title="{{ ucfirst(__('validation.attributes.qt')) }}">{{ $bc->qt . 'u' }}</span></td>
                                         <td><a href="#">
                                                 {{ Form::number('pu['. $bc->id. ']',null,['class' => 'form-control', 'placeholder' => ucfirst(__('validation.attributes.pu')), 'step' => '0.01', 'required']) }}
                                             </a>

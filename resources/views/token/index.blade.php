@@ -10,7 +10,7 @@
         </div>
         <div class="col-xs-5 text-right m-b-30">
             @can('token', auth()->user()->member)
-                <a href="{{ route('token.create') }}" class="btn btn-success rounded"><i class="fa fa-plus"></i> {{ __('validation.attributes.create') }}</a>
+                <a href="{{ route('token.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ __('validation.attributes.create') }}</a>
             @endcan
         </div>
     </div>

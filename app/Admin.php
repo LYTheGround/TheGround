@@ -13,10 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     /**
-     * <p>
-     *  Type :      pour identifier l'admin <br>
-     *  user_id :   join user
-     * </p>
+     *
      * @var array
      */
     protected $fillable = ['type', 'user_id','city_id'];
@@ -28,6 +25,10 @@ class Admin extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function city()
     {
         return $this->belongsTo(City::class);

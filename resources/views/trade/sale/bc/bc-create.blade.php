@@ -17,26 +17,25 @@
                 @endif
             </div>
         </div>
-        <div class="row card-box">
-            <div class="col-xs-12">
-                {{ Form::open(['method'=>'POST','url' => route('sale_bc.products',compact('sale')),'class'=> 'form-horizontal','id' => 'form-bc']) }}
-                <div class="form-group">
-                    {{ Form::label('product',ucfirst(__('validation.attributes.products')) . ' : ',['class'=>'class-control']) }}
-                    {{ Form::text('product',null,['class' => 'form-control', 'id' => 'bc-product', 'placeholder' => ucfirst(__('validation.attributes.products')) . ' : ']) }}
+        <div class="card-box">
+            <div class="row">
+                <div class="col-xs-12">
+                    {{ Form::open(['method'=>'POST','url' => route('sale_bc.products',compact('sale')),'class'=> 'form-horizontal','id' => 'form-bc']) }}
+                    <div class="form-group">
+                        {{ Form::label('product',ucfirst(__('validation.attributes.products')) . ' : ',['class'=>'class-control']) }}
+                        {{ Form::text('product',null,['class' => 'form-control', 'id' => 'bc-product', 'placeholder' => ucfirst(__('validation.attributes.products')) . ' : ']) }}
+                    </div>
+                    <div class="form-group text-right">
+                        {{ Form::submit(__('validation.attributes.search'),['class' => 'btn btn-primary']) }}
+                    </div>
+                    {{ Form::close() }}
                 </div>
-                <div class="form-group text-right">
-                    {{ Form::submit(__('validation.attributes.search'),['class' => 'btn btn-primary']) }}
-                </div>
-                {{ Form::close() }}
             </div>
         </div>
         <div class="row">
-            <div class="card-box" id="target-list-product" style="display: none">
-                <!-- list choix product -->
+            <div class="panel activity-panel" style="display: none">
+                <div class="panel-body" id="target-list-product"></div>
             </div>
-        </div>
-        <div class="row">
-
         </div>
         <div class="row">
             <table class="table table-striped custom-table">

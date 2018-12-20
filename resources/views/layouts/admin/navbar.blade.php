@@ -1,7 +1,7 @@
 <div class="header">
     <div class="header-left">
         <a href="/" class="logo">
-            <img src="{{ asset('img/logo.png') }}" width="40" height="40" alt="">
+            <img src="{{ asset('img/logo_.png') }}" width="70" height="70" alt="">
         </a>
     </div>
     <div class="page-title-box pull-left">
@@ -44,72 +44,28 @@
                     </div>
                     <div class="drop-scroll">
                         <ul class="media-list">
-                            <li class="media notification-message">
+                            @foreach(auth()->user()->notifications as $notification)
+                            <li class="media notification-message  bg-info">
                                 <a href="#">
-                                    <div class="media-left">
+                                    <div class="media-left bg-dark">
                                             <span class="avatar">
-												<img alt="John Doe" src="{{ asset('face.jpg') }}"
+                                                @if(isset($notification->data['img']))
+												<img alt="{{ $notification->data['name'] }}" src="{{ asset('storage/' . $notification->data['img']) }}"
                                                      class="img-responsive img-circle">
+                                                @else
+                                                    <span>{{ substr($notification->data['name'],0,1) }}</span>
+                                                @endif
+
 											</span>
                                     </div>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">John Doe</span> added new task
-                                            <span class="noti-title">Patient appointment booking</span></p>
-                                        <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
+                                        <p class="noti-details text-warning"><span class="noti-title">{{ $notification->data['name'] }}</span> <span class="text-warning">{{ $notification->data['task'] }}</span>
+                                            <span class="noti-title">{{ $notification->data['msg'] }}</span></p>
+                                        <p class="noti-time"><span class="notification-time">{{ \Carbon\Carbon::parse($notification->created_at)->format('d-m-y H:i:s') }}</span></p>
                                     </div>
                                 </a>
                             </li>
-                            <li class="media notification-message">
-                                <a href="#">
-                                    <div class="media-left">
-                                        <span class="avatar">V</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed
-                                            the task name <span class="noti-title">Appointment booking with payment gateway</span>
-                                        </p>
-                                        <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media notification-message">
-                                <a href="#">
-                                    <div class="media-left">
-                                        <span class="avatar">L</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span
-                                                class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span>
-                                            to project <span class="noti-title">Doctor available module</span></p>
-                                        <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media notification-message">
-                                <a href="#">
-                                    <div class="media-left">
-                                        <span class="avatar">G</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Rolland Webber</span> completed
-                                            task <span class="noti-title">Patient and Doctor video conferencing</span>
-                                        </p>
-                                        <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="media notification-message">
-                                <a href="#">
-                                    <div class="media-left">
-                                        <span class="avatar">V</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added
-                                            new task <span class="noti-title">Private chat module</span></p>
-                                        <p class="noti-time"><span class="notification-time">2 days ago</span></p>
-                                    </div>
-                                </a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="topnav-dropdown-footer">

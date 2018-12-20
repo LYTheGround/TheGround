@@ -11,7 +11,15 @@ class City extends Model
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $guarded = ['city'];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'created_at'    => 'datetime:d-m-Y',
+        'updated_at'    => 'datetime:d-m-Y',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

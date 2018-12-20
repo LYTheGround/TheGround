@@ -13,12 +13,13 @@ class Status extends Model
     /**
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = ['status'];
 
     /**
      * @var bool
      */
     public $timestamps = false;
+
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

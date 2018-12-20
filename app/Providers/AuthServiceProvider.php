@@ -3,11 +3,13 @@
 namespace App\Providers;
 
 use App\Accounting;
+use App\Admin;
 use App\Buy;
 use App\Client;
 use App\Member;
 use App\Policies\Accounting\AccountingPolicy;
 use App\Policies\Accounting\UnloadPolicy;
+use App\Policies\Admin\AdminPolicy;
 use App\Policies\Deal\ClientPolicy;
 use App\Policies\Deal\ProviderPolicy;
 use App\Policies\Premium\PremiumPolicy;
@@ -47,6 +49,7 @@ class AuthServiceProvider extends ServiceProvider
         Sale::class => SalePolicy::class,
         Accounting::class => AccountingPolicy::class,
         Unload::class => UnloadPolicy::class,
+        Admin::class => AdminPolicy::class,
     ];
 
     /**

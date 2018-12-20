@@ -13,7 +13,7 @@ class Trade_action extends Model
     /**
      * @var array
      */
-    protected $fillable = ['bc', 'bc_member_id', 'bc_time', 'dv', 'dv_member_id', 'dv_time', 'done', 'done_member_id', 'done_time', 'delivery', 'delivery_member_id', 'delivery_time', 'store', 'store_member_id', 'store_time', 'bl', 'bl_member_id', 'bl_time', 'fc', 'fc_member_id', 'fc_time', 'tasks', 'status'];
+    protected $fillable = ['bc', 'bc_member_id', 'bc_time', 'dv', 'dv_member_id', 'dv_time', 'done', 'done_member_id', 'done_time', 'delivery', 'delivery_member_id', 'delivery_time', 'store', 'store_member_id', 'store_time', 'bl', 'bl_member_id', 'bl_time', 'fc', 'fc_member_id', 'fc_time', 'tasks', 'status', 'company_id'];
 
 
     /**

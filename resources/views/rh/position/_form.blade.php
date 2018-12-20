@@ -1,5 +1,5 @@
-@if(isset($position))
-    {{ Form::model($position->info,['method' => 'PUT', 'url' => route('position.update',compact('position')), 'enctype'=>"multipart/form-data"]) }}
+@if(isset($info))
+    {{ Form::model($info,['method' => 'PUT', 'url' => route('position.update',compact('position')), 'enctype'=>"multipart/form-data"]) }}
 @else
     {{ Form::open(['method' => 'POST', 'url' => route('position.store'), 'enctype'=>"multipart/form-data"]) }}
 @endif
@@ -9,7 +9,7 @@
             {{ Form::label('first_name',__('validation.attributes.first_name'),['class' => 'control-label']) }}
             {{ Form::text('first_name',null,['class' => 'form-control','placeholder' => __('validation.attributes.first_name'),'required']) }}
             @if ($errors->has('first_name'))
-                <div class="help-block">{{ $errors->first('first_name') }}</div>
+                <span class="text-danger">{{ $errors->first('first_name') }}</span>
             @endif
         </div>
     </div>
@@ -18,7 +18,7 @@
             {{ Form::label('last_name',__('validation.attributes.last_name'),['class' => 'control-label']) }}
             {{ Form::text('last_name',null,['class' => 'form-control','placeholder' => __('validation.attributes.last_name'),'required']) }}
             @if ($errors->has('last_name'))
-                <div class="help-block">{{ $errors->first('last_name') }}</div>
+                <span class="text-danger">{{ $errors->first('last_name') }}</span>
             @endif
         </div>
     </div>
@@ -31,16 +31,16 @@
             {{ Form::label('tel',__('validation.attributes.phone'),['class' => 'control-label']) }}
             {{ Form::tel('tel',(isset($info)) ? $info->tels[0]->tel : null,['class' => 'form-control','placeholder' => __('validation.attributes.phone'),'required']) }}
             @if ($errors->has('tel'))
-                <div class="help-block">{{ $errors->first('tel') }}</div>
+                <span class="text-danger">{{ $errors->first('tel') }}</span>
             @endif
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             {{ Form::label('email',__('validation.attributes.email'),['class' => 'control-label']) }}
-            {{ Form::text('email',(isset($info)) ? $info->emails[0]->email : null,['class' => 'form-control','placeholder' => __('validation.attributes.email'),'required']) }}
+            {{ Form::email('email',(isset($info)) ? $info->emails[0]->email : null,['class' => 'form-control','placeholder' => __('validation.attributes.email'),'required']) }}
             @if ($errors->has('email'))
-                <div class="help-block">{{ $errors->first('email') }}</div>
+                <span class="text-danger">{{ $errors->first('email') }}</span>
             @endif
         </div>
     </div>
@@ -52,7 +52,7 @@
             {{ Form::label('address',__('validation.attributes.address'),['class' => 'control-label']) }}
             {{ Form::text('address',null,['class' => 'form-control','placeholder' => __('validation.attributes.address')]) }}
             @if ($errors->has('address'))
-                <div class="help-block">{{ $errors->first('address') }}</div>
+                <span class="text-danger">{{ $errors->first('address') }}</span>
             @endif
         </div>
     </div>
@@ -61,7 +61,7 @@
             {{ Form::label('position',__('validation.attributes.position'),['class' => 'control-label']) }}
             {{ Form::text('position',(isset($info)) ? $info->position->position : null,['class' => 'form-control','placeholder' => __('validation.attributes.position'),'required']) }}
             @if ($errors->has('position'))
-                <div class="help-block">{{ $errors->first('position') }}</div>
+                <span class="text-danger">{{ $errors->first('position') }}</span>
             @endif
         </div>
     </div>
@@ -71,13 +71,18 @@
     <div class="col-md-6">
         <div class="form-group">
             {{ Form::label('sex',__('validation.attributes.sex'),['class' => 'control-label']) }}
-            <select name="sex" title="sex" id="sex" class="form-control">
-                <option disabled selected value>{{ __('validation.attributes.sex') }}</option>
-                <option value="homme" {{ ((isset($info)) && ($info->sex == 'homme')) ? 'selected' :'' }}>{{__('validation.attributes.homme')}}</option>
-                <option value="femme" {{ ((isset($info)) && ($info->sex == 'femme')) ? 'selected' :'' }}>{{__('validation.attributes.femme')}}</option>
+            <select name="sex" title="sex" id="sex" class="form-control" required>
+                @if(!old('sex') && !$info->sex)
+                    <option disabled selected value>{{ __('validation.attributes.sex') }}</option>
+                @endif
+                <option
+                    value="homme" {{ (old('sex') && old('sex') == 'homme') ? 'selected' : ((isset($info)) && ($info->sex == 'homme')) ? 'selected' :'' }}>{{__('validation.attributes.homme')}}</option>
+                <option
+                    value="femme" {{ (old('sex') && old('sex') == 'femme') ? 'selected' : ((isset($info)) && ($info->sex == 'femme')) ? 'selected' :'' }}>{{__('validation.attributes.femme')}}</option>
+
             </select>
             @if ($errors->has('sex'))
-                <div class="help-block">{{ $errors->first('sex') }}</div>
+                <span class="text-danger">{{ $errors->first('sex') }}</span>
             @endif
         </div>
     </div>
@@ -85,13 +90,21 @@
         <div class="form-group">
             {{ Form::label('city',__('validation.attributes.city'),['class' => 'control-label']) }}
             <select id="city" title="city" name="city" class="form-control" required>
-                <option disabled selected value>{{ __('validation.attributes.city') }}</option>
+                @if(!old('city'))
+                    <option disabled selected value>{{ __('validation.attributes.city') }}</option>
+                @endif
                 @foreach($cities as $city)
-                    <option value="{{$city->id}}" {{ ((isset($info)) && ($info->city_id == $city->id)) ? 'selected' :'' }}>{{$city->city}}</option>
+                    @if(old('city') == $city->id)
+                        <option value="{{$city->id}}" selected>{{$city->city}}</option>
+                    @elseif((!old('city') && (isset($info)) && ($info->city_id == $city->id)))
+                        <option value="{{$city->id}}" selected>{{$city->city}}</option>
+                    @else
+                        <option value="{{$city->id}}">{{$city->city}}</option>
+                    @endif
                 @endforeach
             </select>
-            @if ($errors->has('city'))
-                <div class="help-block">{{ $errors->first('city') }}</div>
+            @if ($errors->has('city_id'))
+                <span class="text-danger">{{ $errors->first('city_id') }}</span>
             @endif
         </div>
     </div>
@@ -101,9 +114,9 @@
     <div class="col-md-6">
         <div class="form-group">
             {{ Form::label('birth',__('validation.attributes.birth'),['class' => 'control-label']) }}
-            {{ Form::date('birth',(isset($info)) ? $info->birth : null,['class' => 'form-control','placeholder' => __('validation.attributes.birth')]) }}
+            {{ Form::date('birth',(isset($info)) ? $info->birth : null,['class' => 'form-control','placeholder' => __('validation.attributes.birth'), 'required']) }}
             @if ($errors->has('birth'))
-                <div class="help-block">{{ $errors->first('birth') }}</div>
+                <span class="text-danger">{{ $errors->first('birth') }}</span>
             @endif
         </div>
     </div>
@@ -112,7 +125,7 @@
             {{ Form::label('cin',__('validation.attributes.cin'),['class' => 'control-label']) }}
             {{ Form::text('cin',null,['class' => 'form-control','placeholder' => __('validation.attributes.cin')]) }}
             @if ($errors->has('cin'))
-                <div class="help-block">{{ $errors->first('cin') }}</div>
+                <span class="text-danger">{{ $errors->first('cin') }}</span>
             @endif
         </div>
     </div>
@@ -124,7 +137,8 @@
         <!-- Our File Inputs -->
         <div class="wrap-custom-file">
             <input type="file" name="face" id="image1" accept=".gif, .jpg, .png"/>
-            <label for="image1" class="covimgs" style="background-image: url('{{ (isset($info) && ($info->face)) ? asset('storage/' . $info->face) : asset('img/user.jpg') }}');">
+            <label for="image1" class="covimgs"
+                   style="background-image: url('{{ (isset($info) && ($info->face)) ? asset('storage/' . $info->face) : asset('img/user.jpg') }}');">
                 <span>{{ __('validation.attributes.face') }}</span>
                 <i class="fa {{ (isset($info) && ($info->face)) ? 'fa-edit' : 'fa-plus-circle' }}"></i>
             </label>

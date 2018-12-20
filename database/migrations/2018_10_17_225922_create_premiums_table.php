@@ -26,6 +26,7 @@ class CreatePremiumsTable extends Migration
 
             $table->integer('status_id')->unsigned()->index();
             $table->foreign('status_id')->references('id')->on('statuses');
+
             $table->timestamps();
         });
     }

@@ -14,7 +14,7 @@
                 @endif
                 <div class="account-logo">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('img/logo2.png') }}" alt="Preadmin">
+                        <img src="{{ asset('img/logo_.png') }}" alt="Preadmin">
                     </a>
                 </div>
                 {{ Form::open(['method'=>'POST','url'=>route('login')]) }}

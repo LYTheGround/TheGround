@@ -9,7 +9,7 @@
                         <a href="{{ route('product.show',['product' => $purchased->slug]) }}" class="btn btn-info addcart-btn">Access</a>
                         @if($purchased->store_qt > 0)
                             @if($purchased->offer_qt == 0)
-                            <a href="{{ route('sale.bc.release',['sale' => $sale, 'product' => $purchased->product_id]) }}" class="btn btn-warning proedit-btn add-product">released</a>
+                            <a href="{{ route('sale.bc.release',['sale' => $sale, 'purchased' => $purchased->purchased_id]) }}" class="btn btn-warning proedit-btn">released</a>
                                 @else
                                 <a href="#" class="btn btn-primary proedit-btn add-product" data-target="{{'#add-product-' . $purchased->id}}">{{ ucfirst(__('validation.attributes.add')) }}</a>
                             @endif
@@ -19,26 +19,24 @@
                 <div class="pro-desc">
                     <h5><a href="#">{{ $purchased->name }}</a></h5>
                     <span class="text-dark">{{ ($purchased->description) ? substr($purchased->description,0,10) . '...' : ''  }}</span>
-                    <div class="price"><sup>{{ __('validation.attributes.buyed') }}</sup>: {{ $purchased->order_pu }}</div>
+                    <div class="price"><sup>{{ __('validation.attributes.buyed') }}</sup>: {{ $purchased->order_pu }}<b> ~M</b></div>
                     <div class="price"><sup>{{ __('validation.attributes.storeLeft') }}</sup>: {{ $purchased->store_qt }}</div>
                     <div class="price"><sup>{{ __('validation.attributes.offerLeft') }}</sup>: {{  $purchased->offer_qt}}</div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
                         {{ Form::open(['method'=>'POST','url'=> route('sale_bc.store',compact('sale')),'id'=>'add-product-' . $purchased->id,'class'=>'form-horizontal','style'=>'display: none;']) }}
-                        <div class="form-group">
-                            <div class="col-xs-12 m-b-30">
-                                {{ Form::number('purchased_id',$purchased->purchased_id,['style'=>'display: none;','required']) }}
-                                <div class="col-xs-6">
+                        <div class="form-group text-center">
+                            <div class="col-xs-12 m-b-5">
                                 {{ Form::number('qt',null,['class'=>'form-control','placeholder' => __('validation.attributes.qt'),'title' =>  __('validation.attributes.qt'),'min'=>1, 'max'=> $purchased->offer_qt,'required']) }}
-                                </div>
-                                <div class="col-xs-6">
+                            </div>
+                            <div class="col-xs-12 m-b-5">
                                 {{ Form::number('pu',null,['class'=>'form-control','placeholder' => __('validation.attributes.pu'),'title' =>  __('validation.attributes.pu'), 'step'=>"0.01",'min'=>1,'required']) }}
-
-                                </div>
                             </div>
                             <div class="col-xs-12 text-right">
-                                {{ Form::submit('confirm',['class'=>'btn btn-primary']) }}
+                                {{ Form::number('purchased_id',$purchased->purchased_id,['style'=>'display: none;','required']) }}
+
+                                {{ Form::submit(__('validation.attributes.confirm'),['class'=>'btn btn-primary']) }}
                             </div>
                         </div>
                         {{ Form::close() }}

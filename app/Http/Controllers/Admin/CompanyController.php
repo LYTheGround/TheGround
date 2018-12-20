@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Admin;
 use App\City;
 use App\Company;
-use App\Http\Requests\Company\CompanyCreateRequest;
+use App\Http\Requests\Company\CompanyRequest;
 use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Http\Requests\Company\SoldRequest;
 use App\Http\Requests\Company\StatusRequest;
 use App\Info_box;
 use App\Member;
+use App\Notifications\Company\CompanyUpdate;
 use App\Premium;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Dotenv\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+
 
 class CompanyController extends Controller
 {
@@ -26,7 +32,7 @@ class CompanyController extends Controller
 
     public function show(Company $company)
     {
-        $token = $company->tokens()->where('category_id',2)->first()->token;
+        $token = $company->tokens()->where('category_id',2)->first();
         return view('admin.company.show',compact('company','token'));
     }
 
@@ -36,7 +42,7 @@ class CompanyController extends Controller
         return view('admin.company.create',compact('cities'));
     }
 
-    public function store(CompanyCreateRequest $request)
+    public function store(CompanyRequest $request)
     {
         $brand = null;
         // brand
@@ -101,7 +107,7 @@ class CompanyController extends Controller
         return view('admin.company.edit',compact('company','cities'));
     }
 
-    public function update(CompanyUpdateRequest $request, Company $company)
+    public function update(CompanyRequest $request, Company $company)
     {
         $info_box = $company->info_box;
         $brand = $info_box->brand;
@@ -128,17 +134,28 @@ class CompanyController extends Controller
             'zip'       => $request->zip,
             'city_id'   => $request->city,
         ]);
+        $data = [
+            'img' => null,
+            'name' => auth()->user()->name,
+            'url' => route('company.show',compact('company')),
+            'task' => 'vient de modifier ' . $company->info_box->name,
+            'msg' => 'veuillez vérifié',
+        ];
+        $admin = Admin::where('type','A')->first()->user;
+        Notification::send($admin,new CompanyUpdate($data));
         return redirect()->route('company.show',compact('company'));
     }
 
 
     public function sold(Company $company)
     {
+        $this->authorize('view',Admin::class);
         return view('admin.company.sold',compact('company'));
     }
 
     public function updateSold(SoldRequest $request, Company $company)
     {
+        $this->authorize('view',Admin::class);
         $premium = $company->premium;
         $premium->update(['sold' => $request->sold + $premium->sold]);
         return redirect()->route('company.show',compact('company'));
@@ -146,11 +163,13 @@ class CompanyController extends Controller
 
     public function status(Company $company)
     {
+        $this->authorize('view',Admin::class);
         return view('admin.company.status',compact('company'));
     }
 
     public function updateStatus(StatusRequest $request, Company $company)
     {
+        $this->authorize('view',Admin::class);
         // active
         $premium = new Premium();
         $premium->updateStatus($request->status,$company);

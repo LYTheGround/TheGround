@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('page-title')
-    Accounting
+   {{ __('validation.attributes.accounting') }}
 @stop
 @section('content')
     <div class="content .container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h1>Accounting</h1>
+                <h1>{{ ucfirst(__('validation.attributes.accounting')) }}</h1>
             </div>
             <div class="col-xs-5 text-right">
                 <a href="{{ route('unload.create') }}" class="btn btn-primary">{{ __('validation.attributes.create') }}</a>
@@ -18,7 +18,7 @@
                         <div class="card-box">
                             <div class="card-block">
                                 <div class="table-responsive">
-                                    <table id="table_desc" class="display datatable table table-stripped">
+                                    <table class="display datatable table table_desc table-stripped">
                                         <thead>
                                         <tr>
                                             <th>{{ strtoupper(__('validation.attributes.month')) }}</th>

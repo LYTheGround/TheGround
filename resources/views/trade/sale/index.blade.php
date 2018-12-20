@@ -9,7 +9,7 @@
                 <h4>{{ ucfirst(__('pages.trade.sale.index.title')) }}</h4>
             </div>
             <div class="col-xs-5 text-right m-b-5">
-                <a href="{{ route('sale.create') }}" class="btn btn-success">
+                <a href="{{ route('sale.create') }}" class="btn btn-primary">
                     <i class="fa fa-plus"></i> Create
                 </a>
             </div>

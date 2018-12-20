@@ -30,7 +30,8 @@ class SaleController extends Controller
         $tasks = json_encode(['next' => null,'progress' => 0]);
         $trade = Trade_action::create([
             'status' => 'int',
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'company_id' => auth()->user()->member->company_id
         ]);
         // sale
         $sale = $trade->sale()->create([
@@ -59,25 +60,29 @@ class SaleController extends Controller
     public function destroy(Sale $sale)
     {
         $this->authorize('delete',$sale);
-        if(isset($sale->bcs[0])){
-            foreach ($sale->bcs as $bc){
-                $purchased = $bc->purchased;
-                // add bcs to purchased
-                $purchased->update([
-                    'offer_qt' => $bc->qt + $purchased->offer_qt
-                ]);
-                // delete orders
-                $bc->order()->delete();
-                // delete bcs
-                $bc->delete();
+        if(auth()->user()->member->company_id == $sale->company_id){
+            if(isset($sale->bcs[0])){
+                foreach ($sale->bcs as $bc){
+                    $purchased = $bc->purchased;
+                    // add bcs to purchased
+                    $purchased->update([
+                        'offer_qt' => $bc->qt + $purchased->offer_qt
+                    ]);
+                    // delete orders
+                    $bc->order()->delete();
+                    // delete bcs
+                    $bc->delete();
+                }
             }
+            // delete dv
+            $sale->dv()->delete();
+            // delete trade_action
+            $sale->trade_action()->delete();
+            // delete sale
+            $sale->delete();
+            session()->flash('status',__('pages.trade.sale.delete.success'));
+            return redirect()->route('sale.index');
         }
-        // delete dv
-        $sale->dv()->delete();
-        // delete trade_action
-        $sale->trade_action()->delete();
-        // delete sale
-        $sale->delete();
-        return redirect()->route('sale.index');
+        abort(404);
     }
 }

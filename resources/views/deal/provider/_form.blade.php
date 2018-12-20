@@ -124,9 +124,17 @@
         <div class="form-group">
             {{ Form::label('city',__('validation.attributes.city'),['class' => 'control-label']) }}
             <select id="city" title="city" name="city" class="form-control" required>
-                <option disabled selected value>{{ __('validation.attributes.city') }}</option>
+                @if(!old('city'))
+                    <option disabled selected value>{{ __('validation.attributes.city') }}</option>
+                @endif
                 @foreach($cities as $city)
-                    <option value="{{$city->id}}" {{ ((isset($info)) && ($info->city_id == $city->id)) ? 'selected' :'' }}>{{$city->city}}</option>
+                    @if(old('city') == $city->id)
+                        <option value="{{$city->id}}" selected>{{$city->city}}</option>
+                    @elseif((!old('city') && (isset($info)) && ($info->city_id == $city->id)))
+                        <option value="{{$city->id}}" selected>{{$city->city}}</option>
+                    @else
+                        <option value="{{$city->id}}">{{$city->city}}</option>
+                    @endif
                 @endforeach
             </select>
             @if ($errors->has('city'))

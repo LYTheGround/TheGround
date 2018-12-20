@@ -17,7 +17,7 @@ class CreateProvidersTable extends Migration
             $table->increments('id');
 
             $table->string('slug')->unique();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
 
             $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');

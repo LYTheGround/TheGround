@@ -68,7 +68,9 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="product_desc">
                             <div class="product-content">
-                                {{ ($product->desription) ?: 'description inconnu' }}
+                                <p class="text-justify">
+                                    {{ ($product->description) ?: 'description inconnu' }}
+                                </p>
                             </div>
                         </div>
                     </div>

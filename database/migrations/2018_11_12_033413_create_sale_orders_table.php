@@ -15,6 +15,7 @@ class CreateSaleOrdersTable extends Migration
     {
         Schema::create('sale_orders', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('pu');
             $table->string('ht');
             $table->string('tva');
@@ -23,8 +24,10 @@ class CreateSaleOrdersTable extends Migration
             $table->string('profit');
             $table->string('taxes');
             $table->string('profit_after_taxes');
+
             $table->integer('sale_dv_id')->unsigned()->index();
             $table->integer('sale_bc_id')->unsigned()->index();
+
             $table->timestamps();
         });
     }

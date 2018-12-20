@@ -12,11 +12,11 @@
                 <a href="{{ route('buy.show',compact('buy')) }}" class="btn btn-success m-b-5"><i class="fa fa-backward"></i> {{ $buy->slug }}</a>
                 @if(isset($buy->bcs[0]))
                     <a href="{{ route('buy.bc.confirm',compact('buy')) }}"
-                       class="btn btn-primary m-b-5">confirm</a>
+                       class="btn btn-primary m-b-5">{{ __('validation.attributes.confirm') }}</a>
                 @endif
             </div>
         </div>
-        <div class="row">
+        <div class="row card-box">
             <div class="col-xs-12">
                 {{ Form::open(['method'=>'POST','url' => route('bc.products',compact('buy')),'class'=> 'form-horizontal','id' => 'form-bc']) }}
                 <div class="col-xs-12">
@@ -35,14 +35,14 @@
             </div>
         </div>
         <div class="row">
-            <div class="card-box" id="target-list-product" style="display: none">
-
+            <div class="panel activity-panel" style="display: none">
+                <div class="panel-body" id="target-list-product"></div>
             </div>
         </div>
-        <div class="row">
+        <div class="row card-box">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table ">
                         <thead>
                         <tr>
                             <th>product</th>

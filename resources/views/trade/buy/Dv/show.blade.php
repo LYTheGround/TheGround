@@ -59,7 +59,7 @@
                         <thead>
                         <tr>
                             <th>{{ __('validation.attributes.products') }}</th>
-                            <th class="text-center">{{ strtoupper(__('validation.attributes.qt')) }}</th>
+                            <th class="text-center">{{ strtoupper(__('validation.attributes.qt')) . '/U' }}</th>
                             <th class="text-center">{{ strtoupper(__('validation.attributes.pu')) }}</th>
                             <th class="text-center">{{ strtoupper(__('validation.attributes.ht')) }}</th>
                             <th class="text-center">{{ strtoupper(__('validation.attributes.tva')) }}</th>
@@ -74,17 +74,17 @@
                                 <a href="{{ route('product.show',['product' => $order->bc->product]) }}"><h2>{{ $order->bc->product->name }}</h2></a>
                             </td>
                             <td class="text-center">{{ $order->bc->qt }}</td>
-                            <td class="text-center">{{ $order->pu }}</td>
-                            <td class="text-center">{{ $order->ht }}</td>
-                            <td class="text-center">{{ $order->tva }}</td>
-                            <td class="text-right">{{ $order->ttc }}</td>
+                            <td class="text-center">{{ $order->pu }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                            <td class="text-center">{{ $order->ht }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                            <td class="text-center">{{ $order->tva }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                            <td class="text-right">{{ $order->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
                         </tr>
                         @endforeach
                         <tr class="success">
                             <td colspan="3" class="text-center text-primary"><h3>{{ strtoupper(__('validation.attributes.total')) }}</h3></td>
                             <td class="text-center">{{ $dv->ht }}</td>
                             <td class="text-center">{{ $dv->tva }}</td>
-                            <td class="text-right text-danger"><h3>{{ $dv->ttc }}</h3></td>
+                            <td class="text-right text-danger"><h3>{{ $dv->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></h3></td>
                         </tr>
                         </tbody>
                     </table>

@@ -103,8 +103,7 @@
                                         <thead>
                                         <tr>
                                             <th>{{ strtoupper(__('validation.attributes.prince')) }}</th>
-                                            <th>{{ strtoupper(__('validation.attributes.tva')) }}</th>
-                                            <th>{{ strtoupper(__('validation.attributes.taxes')) }}</th>
+                                            <th>{{ strtoupper(__('validation.attributes.chargeOn')) }}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -113,8 +112,7 @@
                                                 <td>
                                                     <a href="{{ route('unload.show',compact('unload')) }}">{{ $unload->prince }}</a>
                                                 </td>
-                                                <td><a href="#">{{ ($unload->tva) ? 'charge' : 'NONE' }}</a></td>
-                                                <td><a href="#">{{($unload->taxes) ? 'charge' : 'NONE' }}</a></td>
+                                                <td><a href="#">{{ ($unload->tva) ? 'TVA' : 'TAXES' }}</a></td>
                                             </tr>
                                         @endforeach
                                         </tbody>

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table class="table table-striped custom-table datatable">
+                <table class="table table-striped table_desc custom-table datatable">
                     <thead>
                     <tr>
                         <th>{{ ucfirst(__('pages.deal.provider.index.title')) }}</th>

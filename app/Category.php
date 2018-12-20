@@ -13,7 +13,8 @@ class Category extends Model
     /**
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = ['category'];
+
 
     /**
      * @var bool

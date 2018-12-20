@@ -132,8 +132,8 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        {{ Form::label('floor','Floor :',['class' => 'control-label']) }}
-                        {{ Form::text('floor',null,['class' => 'form-control','placeholder'=>'Floor']) }}
+                        {{ Form::label('floor',__('validation.attributes.floor'),['class' => 'control-label']) }}
+                        {{ Form::text('floor',null,['class' => 'form-control','placeholder'=> __('validation.attributes.floor')]) }}
                         @if($errors->has('floor'))
                             <span class="text-danger">
                                 {{ $errors->first('floor') }}
@@ -143,8 +143,8 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        {{ Form::label('apt_nbr','n° :',['class' => 'control-label']) }}
-                        {{ Form::text('apt_nbr',null,['class' => 'form-control','placeholder'=>'N°']) }}
+                        {{ Form::label('apt_nbr',__('validation.attributes.apt_nbr'),['class' => 'control-label']) }}
+                        {{ Form::number('apt_nbr',null,['class' => 'form-control','placeholder'=>__('validation.attributes.apt_nbr')]) }}
                         @if($errors->has('apt_nbr'))
                             <span class="text-danger">
                                 {{ $errors->first('apt_nbr') }}
@@ -205,7 +205,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12 text-right">
-                    <input type="submit" value="create" class="btn btn-primary">
+                    <input type="submit" value="{{ __('validation.attributes.create') }}" class="btn btn-primary">
                 </div>
             </div>
             {{ Form::close() }}

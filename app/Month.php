@@ -7,7 +7,57 @@ use Illuminate\Database\Eloquent\Model;
 
 class Month extends Model
 {
-    protected $fillable = ['profit','tva', 'taxes', 'tva_after_unload', 'taxes_after_unload', 'accounting_id', 'date'];
+    protected $fillable = ['profit', 'tva', 'taxes', 'tva_after_unload', 'taxes_after_unload', 'accounting_id', 'date'];
+
+    public function getProfitAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function setProfitAttribute($value)
+    {
+        $this->attributes['profit'] = (string) round($value,2);
+    }
+
+    public function getTvaAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function setTvaAttribute($value)
+    {
+        $this->attributes['tva'] = (string) round($value,2);
+    }
+
+    public function getTaxesAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function setTaxesAttribute($value)
+    {
+        $this->attributes['taxes'] = (string) round($value,2);
+    }
+
+    public function getTva_after_unloadAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function setTva_after_unloadAttribute($value)
+    {
+        $this->attributes['tva_after_unload'] = (string) round($value,2);
+    }
+
+    public function getTaxes_after_unloadAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    public function setTaxes_after_unloadAttribute($value)
+    {
+        $this->attributes['taxes_after_unload'] = (string) round($value,2);
+    }
 
     public function unloads()
     {
@@ -23,6 +73,7 @@ class Month extends Model
     {
         return $this->hasMany(Sold::class);
     }
+
     public function purchaseds()
     {
         return $this->hasMany(Purchased::class);
@@ -32,29 +83,20 @@ class Month extends Model
     {
         $accounting = auth()->user()->member->company->accounting;
         $month = self::issetMonth($accounting);
-        if($month){
+        if ($month) {
             return $month;
-        }
-        else{
-            return self::create([
-                'profit'             => 0,
-                'tva'                => 0,
-                'taxes'              => 0,
-                'tva_after_unload'   => 0,
-                'taxes_after_unload' => 0,
-                'accounting_id'      => $accounting->id,
-                'date'               => Carbon::now()
-            ]);
+        } else {
+            return self::create(['profit' => 0, 'tva' => 0, 'taxes' => 0, 'tva_after_unload' => 0, 'taxes_after_unload' => 0, 'accounting_id' => $accounting->id, 'date' => Carbon::now()]);
         }
     }
 
     private static function issetMonth($accounting)
     {
-        if(isset($accounting->months[0])){
-            foreach ($accounting->months as $month){
+        if (isset($accounting->months[0])) {
+            foreach ($accounting->months as $month) {
                 $date = new \DateTime($month->date);
                 $m = $date->format('Y-m');
-                if($m == gmdate('Y-m')){
+                if ($m == gmdate('Y-m')) {
                     return $month;
                 }
             }
@@ -67,43 +109,43 @@ class Month extends Model
         $date = new \DateTime($month->date);
         $m = $date->format('m');
         $y = $date->format('Y');
-        switch ($m){
+        switch ($m) {
             case 1:
-            return 'Janvier' . $y;
-            break;
+                return 'Janvier' . $y;
+                break;
             case 2:
-            return 'Février' . $y;
-            break;
+                return 'Février' . $y;
+                break;
             case 3:
-            return 'Mars' . $y;
-            break;
+                return 'Mars' . $y;
+                break;
             case 4:
-            return 'Avril' . $y;
-            break;
+                return 'Avril' . $y;
+                break;
             case 5:
-            return 'Mai' . $y;
-            break;
+                return 'Mai' . $y;
+                break;
             case 6:
-            return 'Juin ' . $y;
-            break;
+                return 'Juin ' . $y;
+                break;
             case 7:
-            return 'Juillet ' . $y;
-            break;
+                return 'Juillet ' . $y;
+                break;
             case 8:
-            return 'Août ' . $y;
-            break;
+                return 'Août ' . $y;
+                break;
             case 9:
-            return 'September ' . $y;
-            break;
+                return 'September ' . $y;
+                break;
             case 10:
-            return 'October ' . $y;
-            break;
+                return 'October ' . $y;
+                break;
             case 11:
-            return 'November ' . $y;
-            break;
+                return 'November ' . $y;
+                break;
             case 12:
-            return 'December ' . $y;
-            break;
+                return 'December ' . $y;
+                break;
         }
 
     }

@@ -49,10 +49,10 @@
                 </li>
                 <li class="menu-title">Money</li>
                 <li class="{{ (request()->is('accounting/*') || request()->is('accounting')) ? 'active' : '' }}">
-                    <a href="{{ route('accounting.index') }}"><i class="fa fa-money"></i> Accounting</a>
+                    <a href="{{ route('accounting.index') }}"><i class="fa fa-money"></i> {{ ucfirst(__('validation.attributes.accounting')) }}</a>
                 </li>
                 <li class="{{ (request()->is('unload') || request()->is('unload/*')) ? 'active' : '' }}">
-                    <a href="{{ route('unload.index') }}"><i class="fa fa-adjust"></i> Unloads</a>
+                    <a href="{{ route('unload.index') }}"><i class="fa fa-adjust"></i> {{ ucfirst(__('validation.attributes.unload')) }}</a>
                 </li>
             </ul>
         </div>

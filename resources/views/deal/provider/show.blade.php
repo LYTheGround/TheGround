@@ -93,7 +93,9 @@
                         <div class="row">
                             <div class="col-xs-12">
                             <div class="col-xs-12 card-box">
-                                <p>{{ ucfirst(__('validation.attributes.description')) . ' : ' }}{{ ($provider->info_box->description) ? $provider->info_box->description : __('validation.attributes.inconnu') }}</p>
+                                <p class="text-muted">
+                                    {{ ($provider->description) ?: __('validation.attributes.inconnu') }}
+                                </p>
                             </div>
                             </div>
                         </div>

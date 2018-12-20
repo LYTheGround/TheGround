@@ -46,6 +46,10 @@ class CreateTradeActionsTable extends Migration
             $table->json('tasks');
             $table->string('status')->default('int');
 
+            $table->integer('company_id')->index()->unsigned();
+            $table->foreign('company_id')->references('id')->on('companies')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

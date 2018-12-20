@@ -22,7 +22,8 @@ class BuyController extends Controller
         $tasks = json_encode(['next' => null,'progress' => 0]);
         $trade = Trade_action::create([
             'status' => 'int',
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'company_id' => auth()->user()->member->company_id
         ]);
         // new buy
         $buy = $trade->buy()->create([
@@ -44,24 +45,27 @@ class BuyController extends Controller
     public function destroy(Request $request, Buy $buy)
     {
         $this->authorize('delete',$buy);
-        if(isset($buy->dvs[0])){
-            foreach ($buy->dvs as $dv){
-                if(isset($dv->orders[0])){
-                    foreach ($dv->orders as $order){
-                        $order->delete();
+        if(auth()->user()->member->company_id == $buy->company_id){
+            if(isset($buy->dvs[0])){
+                foreach ($buy->dvs as $dv){
+                    if(isset($dv->orders[0])){
+                        foreach ($dv->orders as $order){
+                            $order->delete();
+                        }
                     }
+                    $dv->delete();
                 }
-                $dv->delete();
             }
-        }
-        if(isset($buy->bcs[0])){
-            foreach ($buy->bcs as $bc){
-                $bc->delete();
+            if(isset($buy->bcs[0])){
+                foreach ($buy->bcs as $bc){
+                    $bc->delete();
+                }
             }
+            $buy->trade_action()->delete();
+            $buy->delete();
+            session()->flash('status',__('pages.trade.buy.delete.success'));
+            return redirect()->route('buy.index');
         }
-        $buy->trade_action()->delete();
-        $buy->delete();
-        session()->flash('status',__('pages.trade.buy.delete.success'));
-        return redirect()->route('buy.index');
+        abort(404);
     }
 }

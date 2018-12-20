@@ -9,7 +9,7 @@
                 <h1>companies</h1>
             </div>
             <div class="col-xs-5 text-right">
-                <a href="{{ route('company.create') }}" class="btn btn-success">Create</a>
+                <a href="{{ route('company.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ __('validation.attributes.create') }}</a>
             </div>
         </div>
         <div class="row">
@@ -17,7 +17,7 @@
                 <div class="card-box">
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="display datatable table table-stripped">
+                            <table class="display datatable table table-stripped table_desc">
                                 <thead>
                                 <tr>
 

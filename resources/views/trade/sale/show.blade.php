@@ -11,10 +11,8 @@
             </div>
             <div class="col-xs-5 text-right">
                 @can('delete',$sale)
-                    <a href="#"
-                       onclick='event.preventDefault();document.getElementById("delete-sale-{{$sale->id}}").submit()'
-                       class="btn btn-danger">
-                        <i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                    <a href="#" data-toggle="modal" data-target="#delete_sale" class="btn btn-danger"><i
+                            class="fa fa-trash-o m-r-5"></i> {{ ucfirst(__('validation.attributes.delete')) }}</a>
                     <form id="delete-sale-{{ $sale->id }}" method="post"
                           action="{{route('sale.destroy', compact('sale')) }}">
                         {!! method_field('delete') !!}
@@ -22,10 +20,10 @@
                     </form>
                 @endcan
                 @can('bl',$sale)
-                    <a href="{{ route('sale.show',compact('sale')) . '/tasks/bl' }}" class="btn btn-primary">bl</a>
+                    <a href="{{ route('sale.show',compact('sale')) . '/tasks/bl' }}" class="btn btn-primary">{{ ucfirst(__('validation.attributes.bc')) }}</a>
                 @endcan
                 @can('fc',$sale)
-                    <a href="#" class="btn btn-warning">fc</a>
+                    <a href="{{ route('sale.show',compact('sale')) . '/tasks/fc' }}" class="btn btn-danger">{{ ucfirst(__('validation.attributes.fc')) }}</a>
                 @endcan
             </div>
 
@@ -267,6 +265,28 @@
                         @endif
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete_sale" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content modal-md">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ $sale->slug}}</h4>
+                </div>
+                <div class="modal-body card-box">
+                    <p>{{ __('pages.diver.sure') }}</p>
+                    {!! __('pages.trade.sale.delete.modal_delete') !!}
+                    <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <span onclick="event.preventDefault();document.getElementById('delete-sale').submit()"
+                              class="btn btn-danger">{{ __('validation.attributes.delete') }}</span>
+                        <form action="{{route('sale.destroy',compact('sale'))}}" method="POST" id="delete-sale">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

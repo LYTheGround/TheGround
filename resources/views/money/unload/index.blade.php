@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('page-title')
-
+    {{ ucfirst(__('validation.attributes.unload')) }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h1>unload</h1>
+                <h1>{{ ucfirst(__('validation.attributes.unload')) }}</h1>
             </div>
             <div class="col-xs-5 text-right">
-                <a href="{{ route('unload.create') }}" class="btn btn-success">Create</a>
+                <a href="{{ route('unload.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ __('validation.attributes.create') }}</a>
             </div>
         </div>
         <div class="card-box">
@@ -20,16 +20,14 @@
                             <table class="display datatable table table-stripped">
                                 <thead>
                                 <tr>
-                                    <th>Month</th>
-                                    <th>user</th>
-                                    <th>name</th>
-                                    <th>prince</th>
-                                    <th>ChargeOn</th>
+                                    <th>{{ __('validation.attributes.month') }}</th>
+                                    <th>{{ __('pages.rh.user.members') }}</th>
+                                    <th>{{ __('validation.attributes.username') }}</th>
+                                    <th>{{ __('validation.attributes.prince') }}</th>
+                                    <th>{{ __('validation.attributes.chargeOn') }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                @if(isset($unloads[0]))
                                     @foreach($unloads as $unload)
                                         <tr>
                                             <td><a href="{{ route('unload.show',compact('unload')) }}">{{ \App\Month::date($unload->month) }}</a></td>
@@ -39,9 +37,6 @@
                                             <td>{{ ($unload->taxes) ? 'TAXES' : 'TVA' }}</td>
                                         </tr>
                                     @endforeach
-                                @else
-                                    {{__('pages.client.no_result')}}
-                                @endif
                                 </tbody>
                             </table>
                         </div>

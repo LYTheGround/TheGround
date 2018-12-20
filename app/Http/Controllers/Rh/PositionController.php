@@ -7,6 +7,7 @@ use App\Http\Requests\Rh\PositionStoreRequest;
 use App\Info;
 use App\Position;
 use App\Rules\BirthRule;
+use App\Rules\SexRule;
 use App\Rules\TelRule;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -58,15 +59,23 @@ class PositionController extends Controller
 
     /**
      * créer une nouvel position dans ma compagne
-     * @param PositionStoreRequest $request
+     * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(PositionStoreRequest $request)
+    public function store(Request $request)
     {
+        $v = $this->validated($request);
+        if($v->fails()){
+            return redirect()
+                ->route('position.create')
+                ->withErrors($v)
+                ->withInput();
+        }
         // uploader l'image faciale de position si il existe
         $data = $request->all();
         if($request->face){
             $data = array_merge($data, ['face' => $request->file('face')->store('positions')]);
+            $data = array_merge($data, ['city_id' => $request->city]);
         }
         // créer la position
         $info = Info::create($data);
@@ -116,25 +125,20 @@ class PositionController extends Controller
     public function update(Request $request, Position $position)
     {
         $this->authorize('update',$position);
-        $validate = Validator::make($request->all(),[
-            'position'      => 'required|string|min:3|max:25',
-            'first_name'    => 'required|string|min:2|max:20',
-            'last_name'     => 'required|string|min:2|max:20',
-            'tel'           => ['required','min:10','max:10',new TelRule(),'unique:tels,id,' . $position->info->tels[0]->id],
-            'address'       => 'nullable|string|min:10|max:100',
-            'city'          => 'bail|required|int|exists:cities,id',
-            'birth'         => ['bail','nullable','date', new BirthRule()],
-            'email'         => 'required|string|email|max:80|unique:emails,id,' . $position->info->emails[0]->id,
-            'cin'           => 'nullable|string|min:6,unique:infos,cin'
-        ]);
+        $validate = $this->validated($request);
         if($validate->fails()){
-            return redirect()->route('position.edit',compact('position'))->withErrors($validate)
+            return redirect()
+                ->route('position.edit',compact('position'))
+                ->withErrors($validate)
                 ->withInput();
         }
         // update position
         $position->update(['position' => $request->position]);
         // update info
-        $position->info->update($request->all());
+        $data = $request->all();
+        $data = array_merge($data, ['city_id' => $request->city]);
+
+        $position->info->update($data);
         // update email
         $position->info->emails[0]->update(['email' => $request->email]);
         // update tel
@@ -168,5 +172,21 @@ class PositionController extends Controller
         $position->delete();
         session()->flash('status', __('pages.position.delete_success'));
         return redirect()->route('position.index');
+    }
+
+    private function validated($request)
+    {
+        return Validator::make($request->all(), [
+            'first_name' => 'required|string|min:3|max:20',
+            'last_name' => 'required|string|min:3|max:20',
+            'address' => 'nullable|string|min:10|max:100',
+            'sex' => ['required', 'string', new SexRule()],
+            'city' => 'required|int|exists:cities,id',
+            'birth' => ['required','date', new BirthRule()],
+            'cin' => 'nullable|unique:infos,cin',
+            'face' => 'nullable|mimes:png,jpg,jpeg,bmp',
+            'email' => 'required|email',
+            'tel' => ['required','min:10','max:10', new TelRule()],
+        ]);
     }
 }

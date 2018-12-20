@@ -205,7 +205,7 @@
                                     <div class="wrap-custom-file">
                                         <input type="file" name="face" id="face" accept=".gif, .jpg, .png"/>
                                         <label for="face" class="covimgs"
-                                               style="background-image: url({{ asset(($member->info->face)? 'storage/' . $member->info->face:'img/user.jpg') }})">
+                                               style="background-image: url({{ asset(($member->info->face) ? 'storage/' . $member->info->face:'img/user.jpg') }})">
                                             <span>{{__('validation.attributes.face')}}</span>
                                             <i class="fa fa-edit text-dark"></i>
                                         </label>
@@ -223,7 +223,7 @@
                     </div>
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">
-                            {{ __('pages.auth.register.registered') }}
+                            <i class="fa fa-edit"></i> {{ __('validation.attributes.edit') }}
                         </button>
                     </div>
                 </div>

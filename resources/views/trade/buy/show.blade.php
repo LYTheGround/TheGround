@@ -368,7 +368,7 @@
                         </thead>
                         <tbody>
                         @foreach($buy->dvs as $dv)
-                            <tr>
+                            <tr {!! ($dv->selected) ? 'style="background-color: #3d4852 !important"' : '' !!}>
                                 <td>
                                     <span class="avatar">{{ substr($dv->provider->info_box->name,0,1) }}</span>
                                     <a href="#">{{ $dv->provider->info_box->name }}</a>
@@ -376,8 +376,8 @@
                                 <td>
                                     <a href="{{ route('dv.show',compact('buy','dv')) }}">{{ $dv->slug }}</a>
                                 </td>
-                                <td>{{ $dv->ttc }}</td>
-                                <td>{{ ($dv->selected) ? 'selected' : 'null' }}</td>
+                                <td class="{{ ($dv->selected) ? 'text-primary' :'' }}">{{ $dv->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                <td class="{{ ($dv->selected) ? 'text-primary' :'' }}">{{ ($dv->selected) ? ucfirst(__('validation.attributes.selected')) : 'null' }}</td>
 
                                 @if(!$buy->trade_action->dv)
                                     <td class="text-right">

@@ -8,6 +8,23 @@ class Unload extends Model
 {
     protected $fillable = ['name','justify', 'prince', 'taxes', 'tva', 'accounting_id','month_id','member_id','description'];
 
+    /**
+     * @param $value
+     * @return int
+     */
+    public function getPrinceAttribute($value)
+    {
+        return (int) $value;
+    }
+
+    /**
+     * @param $value
+     */
+    public function setPrinceAttribute($value)
+    {
+        $this->attributes['prince'] = (string) round($value,2);
+    }
+
     public function accounting()
     {
         return $this->belongsTo(Accounting::class);

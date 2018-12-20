@@ -46,7 +46,7 @@
                                     <div class="dropdown">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
-                                            <li><a  href="#" data-toggle="modal" data-target="{{ '#edit_product' . $product->id }}" ><i class="fa fa-pencil m-r-5"></i> {{__('validation.attributes.edit')}}</a></li>
+                                            <li><a  href="{{ route('product.edit',compact('product')) }}" ><i class="fa fa-pencil m-r-5"></i> {{__('validation.attributes.edit')}}</a></li>
                                             <li>
                                                 <a href="#"  data-toggle="modal" data-target="{{ '#delete_product' . $product->id }}" >
                                                     <i class="fa fa-trash-o m-r-5"></i> {{__('validation.attributes.delete')}}

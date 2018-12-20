@@ -17,6 +17,12 @@ class TradeActionController extends Controller
 {
     private $tva = 0;
 
+    public function echeance(Buy $buy)
+    {
+        $url = route('buy.show',compact('buy')) . '/tasks/echance';
+        return view('trade.echeance.create',compact('url'));
+    }
+
     public function done(Buy $buy)
     {
         $this->authorize('done',$buy);

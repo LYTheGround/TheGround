@@ -9,14 +9,14 @@
                 <h1>Admins</h1>
             </div>
             <div class="col-xs-5 text-right">
-                <a href="{{ route('admin.create') }}" class="btn btn-primary">Create</a>
+                <a href="{{ route('admin.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> {{ __('validation.attributes.create') }}</a>
             </div>
         </div>
         <div class="row">
             <div class="card-box">
                 <div class="card-block">
                     <div class="table-responsive">
-                        <table class="display datatable table table-stripped">
+                        <table class="display table_desc datatable table table-stripped">
                             <thead>
                             <tr>
                                 <th>login</th>

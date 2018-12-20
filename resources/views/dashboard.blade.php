@@ -4,11 +4,6 @@
 @stop
 @section('content')
     <div class="content container-fluid">
-        <div class="card-box">
-            <div class="row">
-                <canvas id="trade_bar" style="max-width: 400px"></canvas>
-            </div>
-        </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="panel member-panel">

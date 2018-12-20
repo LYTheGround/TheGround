@@ -16,7 +16,7 @@ class CreateTokensTable extends Migration
         Schema::create('tokens', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->unsignedDecimal('range');
+            $table->integer('range')->unsigned();
             $table->string('token')->unique()->index();
 
             $table->integer('category_id')->unsigned()->index();

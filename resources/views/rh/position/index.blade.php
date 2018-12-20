@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-8 col-xs-9 text-right m-b-20">
                 <a href="#" data-toggle="modal" data-target="#add_position"
-                   class="btn btn-primary rounded pull-right"><i
+                   class="btn btn-primary"><i
                         class="fa fa-plus"></i> {{__('validation.attributes.create')}}</a>
             </div>
         </div>

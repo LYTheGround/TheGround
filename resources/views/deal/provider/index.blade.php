@@ -18,7 +18,7 @@
                 <div class="table-responsive">
                     <div class="card-box">
                         <div class="card-block">
-                            <table class="display datatable table table-stripped">
+                            <table class="display datatable table_desc table table-stripped">
                                 <thead>
                                 <tr>
 

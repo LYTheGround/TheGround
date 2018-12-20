@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,26 @@ class Premium extends Model
      */
     protected $fillable = ['sold', 'range', 'limit', 'category_id', 'update_status', 'status_id'];
 
+    protected $casts = [
+        'created_at'        => 'datetime:d-m-Y',
+        'updated_at'        => 'datetime:d-m-Y',
+    ];
+    public function getSoldAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setSoldAttribute($value)
+    {
+        $this->attributes['sold'] = (string) $value;
+    }
+    public function getRangeAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setRangeAttribute($value)
+    {
+        $this->attributes['range'] = (string) $value;
+    }
     /**
      * @var string
      */

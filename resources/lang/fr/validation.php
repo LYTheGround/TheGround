@@ -135,6 +135,7 @@ return [
         'sex'                   => 'sexe',
         'gender'                => 'genre',
         'day'                   => 'jour',
+        'days'                  => 'jours',
         'month'                 => 'mois',
         'year'                  => 'annee',
         'hour'                  => 'heure',
@@ -226,7 +227,13 @@ return [
         'upload'                => 'upload',
         'emptyList'             => 'La liste recherche est vide',
         'storeLeft'             => 'En Stock',
-        'offerLeft'             => 'En Offre'
+        'offerLeft'             => 'En Offre',
+        'soldLeft'              => 'solde restant',
+        'pdg'                   => 'pdg',
+        'echeance'              => 'écheance',
+        'limit'                 => 'date limite',
+        'margin'                => 'nombre des jours',
+        'accounting'            => 'Comptabilité',
     ],
 
 ];

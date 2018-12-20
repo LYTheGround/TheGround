@@ -54,7 +54,8 @@ class BuysTableSeeder extends Seeder
             'fc_member_id'      => 3,
             'fc_time'           => \Carbon\Carbon::now(),
             'tasks'             => json_encode(['next' => null,'progress' => 100]),
-            'status'            => 'finish'
+            'status'            => 'finish',
+            'company_id'        => 1
         ]);
     }
 

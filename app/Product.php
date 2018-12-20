@@ -16,6 +16,54 @@ class Product extends Model
     protected $fillable = ['slug', 'name', 'ref', 'tva', 'size', 'description', 'qt', 'qt_min', 'amount', 'min_prince', 'company_id'];
 
     /**
+     * @var array
+     */
+     protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d',
+    ];
+
+    public function getTvaAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setTvaAttribute($value)
+    {
+        $this->attributes['tva'] = (string) $value;
+    }
+    public function getQtAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setQtAttribute($value)
+    {
+        $this->attributes['qt'] = (string) $value;
+    }
+    public function getQt_minAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setQt_minAttribute($value)
+    {
+        $this->attributes['qt_min'] = (string) $value;
+    }
+    public function getMin_princeAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setMin_princeAttribute($value)
+    {
+        $this->attributes['min_prince'] = (string) round($value,2);
+    }
+    public function getAmountAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setAmountAttribute($value)
+    {
+        $this->attributes['amount'] = (string) round($value,2);
+    }
+    /**
      * @return string
      */
     public function getRouteKeyName()

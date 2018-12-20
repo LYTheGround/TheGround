@@ -8,6 +8,10 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * Class User
+ * @package App
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -33,6 +37,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * @var array
+     */
+    protected $casts = [
+        'created_at'    => 'datetime:d-m-Y',
+        'updated_at'    => 'datetime:d-m-Y',
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function admin()
@@ -48,24 +60,36 @@ class User extends Authenticatable
         return $this->hasOne(Member::class);
     }
 
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new ResetPasswordNotification($token));
-    }
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function providers()
     {
         return $this->hasMany(Provider::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function clients()
     {
         return $this->hasMany(Client::class);
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function buys()
     {
         return $this->hasMany(Buy::class);
+    }
+
+    /**
+     * @param string $token
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
 }

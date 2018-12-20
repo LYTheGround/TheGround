@@ -24,14 +24,14 @@ return [
                'subject'    => 'Modifier mon mot de passe',
                 'line1'     => 'Suite a votre demande de reinitialisation du mot de passe de votre compte LYTheGround',
                 'line2'     => 'Ce message vous a été envoyer suite a la tentative de votre mot de passe!',
-                'action'    => 'Modifier mon mot de passe',
-                "salutation" => 'cordialement',
-                "greeting"  => "bonjour"
+                'action'    => 'Modifié mon mot de passe',
+                "salutation" => 'Cordialement',
+                "greeting"  => "Bonjour"
             ],
             'reset' => [
                 'title' => 'change password',
                 "btn" => "change password",
-                "text"  => "votre encient mot de passe sera supprimé immédiatement"
+                "text"  => "votre précédent mot de passe sera supprimé immédiatement"
             ]
         ],
     ],

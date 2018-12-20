@@ -6,7 +6,7 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-12">
-                <h4 class="page-title">Unload</h4>
+                <h4 class="page-title">{{ $unload->name }}</h4>
             </div>
         </div>
         <div class="row">
@@ -23,8 +23,10 @@
                                 <div class="col-sm-3">
                                     <div class="mail-view-action">
                                         <div class="btn-group">
+                                            <a href="#" data-toggle="modal"
+                                               data-target="#delete-unload">
                                             <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="Delete"> <i class="fa fa-trash-o"></i></button>
-
+                                            </a>
                                             <a href="{{ route('unload.create') }}">
                                                 <button type="button" class="btn btn-default btn-sm" data-toggle="tooltip" title="create"> <i class="fa fa-plus"></i></button>
                                             </a>
