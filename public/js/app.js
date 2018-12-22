@@ -758,4 +758,20 @@ $(document).ready(function($) {
             colors: colors
         });
     }
+
+    $('body').on('click','#notifications_panel',function () {
+        var $url = $('#notifications_panel').attr('data-t');
+        var $token = $('input[name="_token"]').val();
+        $.ajax({
+            method: 'POST',
+            url: $url,
+            data: {"_token":$token},
+            error: function (data) {
+                console.log(data)
+            },
+            success: function (data) {
+                $('#badge_notif').remove();
+            }
+        })
+    })
 });

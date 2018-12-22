@@ -115,5 +115,14 @@ class Company extends Model
         $date = (int)$premium->range;
         $premium->update(['range' => 0, 'limit' => gmdate("Y-m-d", strtotime("+$date days")), 'status_id' => Status::where('status', 'active')->first()->id]);
     }
+    public function echeances()
+    {
+        return $this->hasMany(Echeance::class);
+    }
+
+    public function productAmounts()
+    {
+        return $this->hasMany(Amount_product::class);
+    }
 
 }

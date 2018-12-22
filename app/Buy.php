@@ -109,9 +109,7 @@ class Buy extends Model
         return $this->hasMany(Buy_dv::class);
     }
 
-    /**
-     * @return $this
-     */
+
     public function finish()
     {
         return $this->belongsTo(Trade_action::class)->where('status', '=', 'finish');
@@ -123,5 +121,11 @@ class Buy extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function echeance()
+    {
+        return $this->hasOne(Echeance::class);
     }
 }

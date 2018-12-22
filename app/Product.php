@@ -113,6 +113,11 @@ class Product extends Model
 
     public function providers()
     {
-        return $this->belongsToMany(Provider::class);
+        return $this->belongsToMany(Provider::class)->withPivot('min_prince', 'updated_at');
+    }
+
+    public function productAmounts()
+    {
+        return $this->hasMany(Amount_product::class);
     }
 }

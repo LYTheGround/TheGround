@@ -170,4 +170,9 @@ class Sale extends Model
     {
         return $this->hasOne(Sale_dv::class);
     }
+
+    public function echeance()
+    {
+        return $this->hasOne(Echeance::class);
+    }
 }

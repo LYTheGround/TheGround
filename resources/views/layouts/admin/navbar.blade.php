@@ -36,40 +36,51 @@
         </form>
         @auth
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span
-                        class="badge bg-primary pull-right">3</span></a>
+                <a href="#" id="notifications_panel" data-t="{{ route('notification.read') }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i>
+                    @if(isset($count_notifications))
+                        <span class="badge bg-primary pull-right" id="badge_notif">{{ $count_notifications }}</span>
+                    @endif
+                </a>
                 <div class="dropdown-menu notifications">
                     <div class="topnav-dropdown-header">
                         <span>Notifications</span>
                     </div>
                     <div class="drop-scroll">
                         <ul class="media-list">
-                            @foreach(auth()->user()->notifications as $notification)
-                            <li class="media notification-message  bg-info">
-                                <a href="#">
-                                    <div class="media-left bg-dark">
+                            @foreach(auth()->user()->unreadNotifications  as $notification)
+                                <li class="media notification-message">
+                                    <a href="#">
+                                        <div class="media-left">
                                             <span class="avatar">
                                                 @if(isset($notification->data['img']))
-												<img alt="{{ $notification->data['name'] }}" src="{{ asset('storage/' . $notification->data['img']) }}"
-                                                     class="img-responsive img-circle">
+                                                    <img alt="{{ $notification->data['name'] }}"
+                                                         src="{{ asset('storage/' . $notification->data['img']) }}"
+                                                         class="img-responsive img-circle">
                                                 @else
                                                     <span>{{ substr($notification->data['name'],0,1) }}</span>
                                                 @endif
 
 											</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details text-warning"><span class="noti-title">{{ $notification->data['name'] }}</span> <span class="text-warning">{{ $notification->data['task'] }}</span>
-                                            <span class="noti-title">{{ $notification->data['msg'] }}</span></p>
-                                        <p class="noti-time"><span class="notification-time">{{ \Carbon\Carbon::parse($notification->created_at)->format('d-m-y H:i:s') }}</span></p>
-                                    </div>
-                                </a>
-                            </li>
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="noti-details text-warning">
+                                                <span class="noti-title">{{ $notification->data['name'] }}</span>
+                                                <span class="">{{ $notification->data['task'] }}</span>
+                                                <span class="noti-title">{{ $notification->data['msg'] }}</span>
+                                            </p>
+                                            <p class="noti-time">
+                                                <span class="notification-time">
+                                                    Le :{{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/y à H:i:s') }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
                             @endforeach
                         </ul>
                     </div>
                     <div class="topnav-dropdown-footer">
-                        <a href="#">View all Notifications</a>
+                        <a href="{{ route('notification.index') }}">View all Notifications</a>
                     </div>
                 </div>
             </li>
@@ -131,8 +142,16 @@
                         <span>{{ auth()->user()->login }}</span>
                     </a>
                 </li>
-                <li class="text-center btn-mobil"><a href="#">{{ __('Notifications') }}</a></li>
-                <li class="text-center">
+                <li class="text-left"><a href="{{ route('admin.params') }}">params</a></li>
+                <li class="text-left">
+                    <a href="{{ route('notification.index') }}">
+                            <span class="">{{ __('Notifications') }}</span>
+
+                            @if(isset($count_notifications))
+                                <span class="badge bg-primary pull-right">{{ $count_notifications }}</span>
+                            @endif</a>
+                </li>
+                <li class="text-left">
                     <a href="{{ route('logout') }}"
                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

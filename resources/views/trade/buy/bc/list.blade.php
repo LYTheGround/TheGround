@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    {{ Form::open(['method'=>'POST','url'=>route('bc.store',compact('buy')),'id'=>'add-product-' . $product->id,'class'=>'form-horizontal','style'=>'display: none;']) }}
+                    {{ Form::open(['method'=>'POST','url'=>route('bc.store',compact('buy')),'id'=>'add-product-' . $product->id,'class'=>'form-horizontal form-bc','style'=>'display: none;']) }}
                     <div class="form-group">
                         <div class="col-xs-12">
                             {{ Form::number('product',$product->id,['style'=>'display: none;','required']) }}

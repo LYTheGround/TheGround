@@ -32,4 +32,9 @@ class Purchased extends Model
     {
         return $this->belongsTo(Month::class);
     }
+
+    public function productAmount()
+    {
+        return $this->hasOne(Amount_product::class);
+    }
 }

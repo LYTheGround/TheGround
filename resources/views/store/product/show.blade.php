@@ -58,7 +58,7 @@
                         <p><b>{{__('validation.attributes.qt')}} : </b> {{ $product->qt . ' u' }}</p>
                         <p><b>{{__('validation.attributes.qt_min')}} : </b> {{ $product->qt_min . ' u' }}</p>
                         <p><b>{{__('validation.attributes.tva')}} : </b> {{$product->tva === 0 ? 'exonérer' : $product->tva.'%'  }}</p>
-                        <p><b>{{__('validation.attributes.amount')}} : </b> {{ ($product->amount) ?: '0' }}</p>
+                        <p><b>{{ucfirst(__('validation.attributes.amount'))}} : </b> {{ ($product->amount) ?: '0' }} ~M TTC</p>
                     </div>
                 </div>
                 <div class="col-xs-12">

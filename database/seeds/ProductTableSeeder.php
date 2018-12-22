@@ -13,14 +13,11 @@ class ProductTableSeeder extends Seeder
     {
         $company = \App\Company::first();
         for($i = 1; $i < 6; $i++){
-            $product = $company->products()->create([
+            $company->products()->create([
                 'slug'          => "product-0-$i",
                 'name'          => "product-0$i",
                 'ref'           => "PROD-00$i",
                 'tva'           => 20
-            ]);
-            $product->imgs()->create([
-                'img'   => "product-0$i.jpg"
             ]);
         }
 

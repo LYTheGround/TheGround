@@ -35,22 +35,10 @@ $(function () {
     });
     $('body').on('click','.add-product',function (e) {
         e.preventDefault();
+        $('.form-bc').hide();
         var $target = $(this).attr('data-target');
         $($target).show();
     })
 
-    // bc add
-    $('body').on('click','.add-bc-sale',function () {
-        var $purchased = $(this).attr('data-target');
-        var $max = $(this).attr('data-title');
-        var $name = $(this).attr('data-content');
-        $('#bc-form tbody').append().text(form_bc($purchased,$max))
-        alert('ok');
-    })
-    function form_bc($purchased,$max){
-        var $pu = "<td><input type='number' title='pu' name='pu["+$purchased+"]' class='form-control' placeholder='PU' required></td>";
-        var $qt = "<td><input type='number' title='qt' name='qt["+$purchased+"]' min='1' max='"+$max+"' class='form-control' placeholder='QT' required></td>"
-        return "<tr>"+$pu + $qt +"</tr>"
-    }
 
 });

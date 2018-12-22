@@ -11,8 +11,14 @@ Route::post('language/', array('before' => 'csrf', 'as' => 'language-chooser', '
 
 // auth APP
 Route::middleware('auth')->group(function () {
+    // notifications
+    Route::get('notifications','notificationController@index')->name('notification.index');
+    Route::post('notifications','notificationController@read')->name('notification.read');
+    Route::delete('notifications','notificationController@destroy')->name('notification.destroy');
+
+
     Route::middleware('admin')->group(function (){
-// home
+        // home
         Route::get('/', 'HomeController@index')->name('home');
         // Dashboard
         Route::get('dashboard', 'Dashboard\DashboardController')->name('dashboard');
@@ -84,6 +90,7 @@ Route::middleware('auth')->group(function () {
                     abort(404);
                     return false;
                 });
+                Route::post('{buy}/echeance','Trade\Buy\TradeActionController@echeance')->name('echeance.purchased');
                 Route::post('{buy}/bl','Trade\Buy\TradeActionController@bl')->name('buy.bl');
                 Route::delete('{buy}/bl','Trade\Buy\TradeActionController@blDestroy')->name('buy.bl.destroy');
                 Route::post('{buy}/fc','Trade\Buy\TradeActionController@fc')->name('buy.fc');
@@ -106,18 +113,21 @@ Route::middleware('auth')->group(function () {
                     abort(404);
                     return false;
                 });
+                Route::post('echeance','TradeActionController@echeance')->name('echeance.sold');
+
             });
+            // Echeance
+            Route::patch('echeance/{echeance}/payed','Money\EcheanceController@payed')->name('echeance.payed');
+            Route::resource('echeance','Money\EcheanceController')->except(['create', 'store', 'show']);
         });
         // money
         //accounting
         Route::get('accounting', 'Money\AccountingController@index')->name('accounting.index');
         Route::get('accounting/{month}', 'Money\AccountingController@show')->name('accounting.show');
         // unload
-        // todo : update chargeOn
         Route::resource('unload', 'Money\UnloadController');
-    });
+      });
 
-    //todo : administration
     //todo : documentation
     Route::prefix('admin')->middleware('member')->group(function () {
         Route::resource('company', 'Admin\CompanyController');

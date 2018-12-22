@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Trade\Sale;
 use App\Accounting;
 use App\Client;
 use App\Http\Controllers\Admin\ArchiveTradeController;
+use App\Http\Requests\Trade\EcheanceRequest;
 use App\Month;
 use App\Product;
 use App\Sale;
@@ -18,9 +19,14 @@ use DateTime;
 class TradeActionController extends Controller
 {
 
-    public function done(Sale $sale)
+    public function echeance(EcheanceRequest $request, Sale $sale)
     {
-        $this->authorize('done',$sale);
+        //$this->authorize('done',$sale);
+        $sale->echeance()->create([
+            'date'  => $request->date,
+            'prince'    => $sale->ttc,
+            'company_id' => $sale->company_id
+        ]);
         // marquez comme vendu
         $sale->trade_action()->update([
             'done'              => true,
@@ -40,7 +46,7 @@ class TradeActionController extends Controller
             'tva_after_unload'      => $accounting->tva_after_unload + $sale->tva_payed
         ]);
         // ajouter le sold
-            // month
+        // month
         $month = Month::month();
         $this->sold($sale,$accounting,$month);
         $month->update([
@@ -54,6 +60,14 @@ class TradeActionController extends Controller
         return redirect()->route('sale.show',compact('sale'));
     }
 
+    public function done(Sale $sale)
+    {
+        $this->authorize('done',$sale);
+        $ttc = $sale->ttc;
+        $url = route('sale.show',compact('sale')) . '/echeance';
+        return view('trade.echeance.create',compact('url','ttc'));
+    }
+
     private function sold(Sale $sale,Accounting $accounting,Month $month)
     {
         $dv = $sale->dv;
@@ -64,30 +78,46 @@ class TradeActionController extends Controller
                 'accounting_id' => $accounting->id,
                 'month_id'  => $month->id
             ]);
-            $sold->update(['slug' => 'SOLD-' . $sold->id]);
+            $sold->update(['slug' => '#SOLD-' . $sold->id]);
             $this->min_prince($dv->client,$order->bc->purchased->product_id,$order->pu);
         }
     }
 
-    public function min_prince(Client $client,$product_id,$pu)
+    private function clientProduct($product, $pu,$client_id)
     {
-        $min = $client->products()->where('product_id',$product_id)->first();
+        $min = $product->clients()->where('client_id',$client_id)->first();
         if($min){
-            if ($min->pivot->min_prince > $pu){
+            if($min->pivot->min_prince > $pu){
                 $min->pivot->update([
-                    'min_prince' => $pu
+                    'min_prince' => $pu,
+                    'updated_at' => now()
                 ]);
             }
         }
         else{
-            $client->products()->attach($product_id, ['min_prince' => $pu]);
+            $product->clients()->attach($client_id,['min_prince' => $pu]);
         }
     }
 
-    public function purchased_store_qt($sale)
+    private function purchased_store_qt($sale)
     {
         foreach ($sale->dv->orders as $order) {
             $purchased = $order->bc->purchased;
+            $productAmount = $purchased->productAmount;
+            $this->clientProduct($purchased->product,$order->pu,$sale->dv->client_id);
+            $sqt = $order->bc->qt;
+            $pqt = $productAmount->qt;
+            $lqt = $pqt - $sqt;
+            $total = $productAmount->ttcu * $lqt;
+            $add = $productAmount->total - $total;
+            $productAmount->update([
+                'qt' => $lqt,
+                'total' => $total
+            ]);
+            $product = $productAmount->product;
+            $product->update([
+                'amount' => $product->amount - $add
+            ]);
             $purchased->update([
                 'store_qt' => $purchased->store_qt - $order->bc->qt,
             ]);

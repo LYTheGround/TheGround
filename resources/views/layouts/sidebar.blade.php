@@ -54,6 +54,9 @@
                 <li class="{{ (request()->is('unload') || request()->is('unload/*')) ? 'active' : '' }}">
                     <a href="{{ route('unload.index') }}"><i class="fa fa-adjust"></i> {{ ucfirst(__('validation.attributes.unload')) }}</a>
                 </li>
+                <li class="{{ (request()->is('trade/echeance') || request()->is('trade/echeance/*')) ? 'active' : '' }}">
+                    <a href="{{ route('echeance.index') }}"><i class="fa fa-adjust"></i> {{ ucfirst(__('validation.attributes.echeance')) }}</a>
+                </li>
             </ul>
         </div>
     </div>

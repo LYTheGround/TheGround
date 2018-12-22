@@ -32,59 +32,62 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="panel activity-panel" style="display: none">
-                <div class="panel-body" id="target-list-product"></div>
+        <div class="panel card-box activity-panel" style="display: none">
+                <div class="panel-body row" id="target-list-product"></div>
+        </div>
+        <div class="card-box">
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-striped custom-table">
+                        <thead>
+                        <tr>
+                            <th>{{ ucfirst(__('validation.attributes.products')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.pu')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.qt')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.ht')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.tva')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.ttc')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.tva_payed')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.profit')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.taxes')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.profit_taxes')) }}</th>
+                            <th>{{ __('validation.attributes.action') }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if($sale->dv)
+                            @foreach($sale->dv->orders as $order)
+                                <tr>
+                                    <td>{{ $order->bc->purchased->product->name }}</td>
+                                    <td>{{ $order->pu }}</td>
+                                    <td>{{ $order->bc->qt }}</td>
+                                    <td>{{ $order->ht }}</td>
+                                    <td>{{ $order->tva }}</td>
+                                    <td>{{ $order->ttc }}</td>
+                                    <td>{{ $order->tva_payed }}</td>
+                                    <td>{{ $order->profit }}</td>
+                                    <td>{{ $order->taxes }}</td>
+                                    <td>{{ $order->profit_after_taxes }}</td>
+                                    <td>
+                                        <a href="#"
+                                           onclick="event.preventDefault();document.getElementById('{{"delete-bc-$order->id"}}').submit()"
+                                           class="btn btn-danger">
+                                            <i class="fa fa-trash-o m-r-5"></i> destroy
+                                        </a>
+                                        <form id="delete-bc-{{ $order->id }}" method="post"
+                                              action="{{route('sale_bc.destroy', compact('sale','order')) }}">
+                                            {!! method_field('delete') !!}
+                                            {!! csrf_field() !!}
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <table class="table table-striped custom-table">
-                <thead>
-                <tr>
-                    <th>{{ ucfirst(__('validation.attributes.products')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.pu')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.qt')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.ht')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.tva')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.ttc')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.tva_payed')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.profit')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.taxes')) }}</th>
-                    <th>{{ strtoupper(__('validation.attributes.profit_taxes')) }}</th>
-                    <th>{{ __('validation.attributes.action') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if($sale->dv)
-                    @foreach($sale->dv->orders as $order)
-                        <tr>
-                            <td>{{ $order->bc->purchased->product->name }}</td>
-                            <td>{{ $order->pu }}</td>
-                            <td>{{ $order->bc->qt }}</td>
-                            <td>{{ $order->ht }}</td>
-                            <td>{{ $order->tva }}</td>
-                            <td>{{ $order->ttc }}</td>
-                            <td>{{ $order->tva_payed }}</td>
-                            <td>{{ $order->profit }}</td>
-                            <td>{{ $order->taxes }}</td>
-                            <td>{{ $order->profit_after_taxes }}</td>
-                            <td>
-                                <a href="#"
-                                   onclick="event.preventDefault();document.getElementById('{{"delete-bc-$order->id"}}').submit()"
-                                   class="btn btn-danger">
-                                    <i class="fa fa-trash-o m-r-5"></i> destroy
-                                </a>
-                                <form id="delete-bc-{{ $order->id }}" method="post"
-                                      action="{{route('sale_bc.destroy', compact('sale','order')) }}">
-                                    {!! method_field('delete') !!}
-                                    {!! csrf_field() !!}
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                @endif
-                </tbody>
-            </table>
-        </div>
+
     </div>
 @stop

@@ -6,6 +6,7 @@ use App\Buy;
 use App\Buy_dv;
 use App\Buy_order;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Trade\EcheanceRequest;
 use Illuminate\Http\Request;
 use App\Month;
 use App\Purchased;
@@ -17,25 +18,41 @@ class TradeActionController extends Controller
 {
     private $tva = 0;
 
-    public function echeance(Buy $buy)
+    private function clientProduct($product, $pu,$provider_id)
     {
-        $url = route('buy.show',compact('buy')) . '/tasks/echance';
-        return view('trade.echeance.create',compact('url'));
+        $min = $product->providers()->where('provider_id',$provider_id)->first();
+        if($min){
+            if($min->pivot->min_prince > $pu){
+                $min->pivot->update([
+                    'min_prince' => $pu,
+                    'updated_at' => now()
+                ]);
+            }
+        }
+        else{
+            $product->providers()->attach($provider_id,['min_prince' => $pu]);
+        }
     }
 
-    public function done(Buy $buy)
+    public function echeance(EcheanceRequest $request, Buy $buy)
     {
         $this->authorize('done',$buy);
         // vérifier
-            // si le member à l'accès
-            // si le bc et le dv est déjà eu lieu
+        // si le member à l'accès
+        // si le bc et le dv est déjà eu lieu
         $dv = $buy->dvs->where('selected', true)->first();
+        $buy->echeance()->create([
+            'date'  => $request->date,
+            'prince'    => $dv->ttc,
+            'company_id' => $buy->company_id
+        ]);
         $orders = $dv->orders;
         // marquer comme acheter dans le purchased
         $month = Month::month();
         foreach ($orders as $order){
+            $this->clientProduct($order->bc->product,$order->pu,$dv->provider_id);
             $this->tva += $order->tva;
-            $order->purchased()->create([
+            $purchased = $order->purchased()->create([
                 'slug'          => str_slug('PUR' . $buy->slug. ' '. $order->id),
                 'qt'            => $order->bc->qt,
                 'store_qt'      => 0,
@@ -43,6 +60,19 @@ class TradeActionController extends Controller
                 'product_id'    => $order->bc->product_id,
                 'accounting_id' => $buy->company->accounting->id,
                 'month_id'      => $month->id
+            ]);
+
+            $amount = $purchased->productAmount()->create([
+                'qt'            => $order->bc->qt,
+                'ttcu'          => ($order->ttc / $order->bc->qt),
+                'total'         => $order->ttc,
+                'history'       => $order->ttc,
+                'product_id'    => $order->bc->product_id,
+                'company_id'    => auth()->user()->member->company_id
+            ]);
+            $product = $amount->product;
+            $product->update([
+                'amount' => $product->amount + $order->ttc
             ]);
         }
         // accounting
@@ -63,6 +93,14 @@ class TradeActionController extends Controller
             'tasks'             => json_encode(['next' => ['name' => __('validation.attributes.delivery'),'url'=> route('buy.show',compact('buy')) . '/tasks/delivery'],'progress' => 45]),
         ]);
         return redirect()->route('buy.show',compact('buy'));
+    }
+
+    public function done(Buy $buy)
+    {
+        $this->authorize('done',$buy);
+        $ttc = $buy->dvs->where('selected', true)->first()->ttc;
+        $url = route('buy.show',compact('buy')) . '/echeance';
+        return view('trade.echeance.create',compact('url','ttc'));
     }
 
     public function delivery(Buy $buy)

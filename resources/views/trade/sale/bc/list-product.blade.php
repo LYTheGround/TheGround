@@ -11,7 +11,7 @@
                             @if($purchased->offer_qt == 0)
                             <a href="{{ route('sale.bc.release',['sale' => $sale, 'purchased' => $purchased->purchased_id]) }}" class="btn btn-warning proedit-btn">released</a>
                                 @else
-                                <a href="#" class="btn btn-primary proedit-btn add-product" data-target="{{'#add-product-' . $purchased->id}}">{{ ucfirst(__('validation.attributes.add')) }}</a>
+                                <a href="#" class="btn btn-primary proedit-btn add-product" data-target="{{'#add-product-' . $purchased->purchased_id}}">{{ ucfirst(__('validation.attributes.add')) }}</a>
                             @endif
                         @endif
                     </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        {{ Form::open(['method'=>'POST','url'=> route('sale_bc.store',compact('sale')),'id'=>'add-product-' . $purchased->id,'class'=>'form-horizontal','style'=>'display: none;']) }}
+                        {{ Form::open(['method'=>'POST','url'=> route('sale_bc.store',compact('sale')),'id'=>'add-product-' . $purchased->purchased_id,'class'=>'form-horizontal form-bc','style'=>'display: none;']) }}
                         <div class="form-group text-center">
                             <div class="col-xs-12 m-b-5">
                                 {{ Form::number('qt',null,['class'=>'form-control','placeholder' => __('validation.attributes.qt'),'title' =>  __('validation.attributes.qt'),'min'=>1, 'max'=> $purchased->offer_qt,'required']) }}

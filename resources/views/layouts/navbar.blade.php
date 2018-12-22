@@ -37,30 +37,51 @@
         </form>
         @auth
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i> <span
-                        class="badge bg-primary pull-right">3</span></a>
+                <a href="#" id="notifications_panel" data-t="{{ route('notification.read') }}" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell-o"></i>
+                    @if(isset($count_notifications))
+                        <span class="badge bg-primary pull-right" id="badge_notif">{{ $count_notifications }}</span>
+                    @endif
+                </a>
                 <div class="dropdown-menu notifications">
                     <div class="topnav-dropdown-header">
                         <span>Notifications</span>
                     </div>
                     <div class="drop-scroll">
                         <ul class="media-list">
-                            <li class="media notification-message">
-                                <a href="#">
-                                    <div class="media-left">
-                                        <span class="avatar">V</span>
-                                    </div>
-                                    <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added
-                                            new task <span class="noti-title">Private chat module</span></p>
-                                        <p class="noti-time"><span class="notification-time">2 days ago</span></p>
-                                    </div>
-                                </a>
-                            </li>
+                            @foreach(auth()->user()->unreadNotifications  as $notification)
+                                <li class="media notification-message">
+                                    <a href="#">
+                                        <div class="media-left">
+                                            <span class="avatar">
+                                                @if(isset($notification->data['img']))
+                                                    <img alt="{{ $notification->data['name'] }}"
+                                                         src="{{ asset('storage/' . $notification->data['img']) }}"
+                                                         class="img-responsive img-circle">
+                                                @else
+                                                    <span>{{ substr($notification->data['name'],0,1) }}</span>
+                                                @endif
+
+											</span>
+                                        </div>
+                                        <div class="media-body">
+                                            <p class="noti-details text-warning">
+                                                <span class="noti-title">{{ $notification->data['name'] }}</span>
+                                                <span class="">{{ $notification->data['task'] }}</span>
+                                                <span class="noti-title">{{ $notification->data['msg'] }}</span>
+                                            </p>
+                                            <p class="noti-time">
+                                                <span class="notification-time">
+                                                    Le :{{ \Carbon\Carbon::parse($notification->created_at)->format('d/m/y à H:i:s') }}
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="topnav-dropdown-footer">
-                        <a href="#">View all Notifications</a>
+                        <a href="{{ route('notification.index') }}">View all Notifications</a>
                     </div>
                 </div>
             </li>
@@ -79,17 +100,19 @@
                     <li class="text-left">
                         <a href="{{ route('member.show',['member' => auth()->user()->member]) }}"
                            class="user-link">
-                            <span>{{ __('pages.rh.user.profile') }}</span>
+                            <i class="fa fa-user-plus"></i>  <span>{{ __('pages.rh.user.profile') }}</span>
                         </a>
                     </li>
                     <li class="text-left">
-                        <a href="{{ route('member.params') }}">{{ __('pages.rh.user.params') }}</a>
+                        <a href="{{ route('member.params') }}">
+                           <i class="fa fa-database"></i> <span>{{ __('pages.rh.user.params') }}</span>
+                        </a>
                     </li>
                     <li class="text-left">
                         <a href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            {{ __('pages.auth.logout') }}
+                           <i class="fa fa-power-off"></i> <span>{{ __('pages.auth.logout') }}</span>
                         </a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -110,13 +133,22 @@
             @auth
                 <li class="text-left">
                     <a href="{{ route('member.show',['member' => auth()->user()->member]) }}" class="user-link">
-                        <span>{{ __('pages.rh.user.profile') }}</span>
+                        <i class="fa fa-user-plus"></i> <span>{{ __('pages.rh.user.profile') }}</span>
                     </a>
                 </li>
-                <li class="text-left"><a href="#">{{ __('pages.rh.user.params') }}</a></li>
-                <li class="text-left btn-mobil"><a href="#">{{ __('Notifications') }}</a></li>
+                <li class="text-left"><a href="#"><i class="fa fa-database"></i> {{ __('pages.rh.user.params') }}</a></li>
                 <li class="text-left">
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('pages.auth.logout') }}</a>
+                    <a href="{{ route('notification.index') }}">
+                        <span class=""><i class="fa fa-bell"></i> {{ __('Notifications') }}</span>
+
+                        @if(isset($count_notifications))
+                            <span class="badge bg-primary pull-right">{{ $count_notifications }}</span>
+                        @endif</a>
+                </li>
+                <li class="text-left">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+                        <i class="fa fa-power-off"></i> <span>{{ __('pages.auth.logout') }}</span>
+                    </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>

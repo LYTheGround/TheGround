@@ -27,9 +27,9 @@ class CreateProductsTable extends Migration
             // la quantité actuel dans le stock
             $table->string('qt')->default(0);
             // le minimum de la quantité dans le stock
-            $table->string('qt_min')->nullable();
+            $table->string('qt_min')->default(0);
             // la total des prix d'achat de ce produit en stock actuellement
-            $table->string('amount')->nullable();
+            $table->string('amount')->default(0);
             // le créateur du produit
             $table->integer('member_id')->unsigned()->index()->nullable();
             $table->foreign('member_id')->references('id')->on('members');

@@ -6,12 +6,14 @@ use App\Accounting;
 use App\Admin;
 use App\Buy;
 use App\Client;
+use App\Echeance;
 use App\Member;
 use App\Policies\Accounting\AccountingPolicy;
 use App\Policies\Accounting\UnloadPolicy;
 use App\Policies\Admin\AdminPolicy;
 use App\Policies\Deal\ClientPolicy;
 use App\Policies\Deal\ProviderPolicy;
+use App\Policies\Money\EcheancePolicy;
 use App\Policies\Premium\PremiumPolicy;
 use App\Policies\Premium\TokenPolicy;
 use App\Policies\Rh\MemberPolicy;
@@ -50,6 +52,7 @@ class AuthServiceProvider extends ServiceProvider
         Accounting::class => AccountingPolicy::class,
         Unload::class => UnloadPolicy::class,
         Admin::class => AdminPolicy::class,
+        Echeance::class => EcheancePolicy::class,
     ];
 
     /**
