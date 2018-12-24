@@ -82,6 +82,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                     <ul class="nav nav-tabs tabs nav-tabs-bottom">
                         <li class="col-sm-3 active"><a data-toggle="tab" href="#myprojects" aria-expanded="true">{{ __('validation.attributes.description') }}</a></li>
+                        <li class="col-sm-3"><a data-toggle="tab" href="#dvs" aria-expanded="true">{{ __('validation.attributes.dvs') }}</a></li>
                     </ul>
                 </div>
             </div>
@@ -96,6 +97,36 @@
                                 <p class="text-muted">
                                     {{ ($provider->description) ?: __('validation.attributes.inconnu') }}
                                 </p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dvs" class="tab-pane fade">
+                        <div class="row">
+                            <div class="col-xs-12">
+                            <div class="col-xs-12 card-box">
+                                <table class="table table-striped custom-table">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">{{ strtoupper(__('validation.attributes.dv')) }}</th>
+                                        <th class="text-center">{{ strtoupper(__('validation.attributes.ht')) }}</th>
+                                        <th class="text-center">{{ strtoupper(__('validation.attributes.tva')) }}</th>
+                                        <th class="text-right">{{ strtoupper(__('validation.attributes.ttc')) }}</th>
+                                        <th class="text-right">{{ strtoupper(__('validation.attributes.create')) }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($dvs as $dv)
+                                        <tr>
+                                            <td class="text-center"><a href="{{ route('dv.show',['buy' => $dv->buy, 'dv' => $dv]) }}">{{ '#'.$dv->slug }}</a></td>
+                                            <td class="text-center">{{ $dv->ht }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                            <td class="text-center">{{ $dv->tva }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                            <td class="text-right">{{ $dv->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                            <td class="text-right">{{ Carbon\Carbon::parse($dv->ttc)->format('d/m/Y') }}</td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                             </div>
                         </div>

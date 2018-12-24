@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Token;
 
 use App\Company;
 use App\Http\Requests\Token\TokenRequest;
+use App\Notifications\Company\CompanyUpdate;
+use App\Notifications\Token\TokenNotification;
 use App\Token;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
 
 class TokenController extends Controller
 {
@@ -54,7 +58,7 @@ class TokenController extends Controller
         $premium->update([
             'sold' => $premium->sold - $request->range
         ]);
-        session()->flash('status','token Create');
+        session()->flash('status','Un nouveau jeton a bien été Crée et prêt a être employé');
         return redirect()->route('token.index');
     }
 
@@ -73,7 +77,7 @@ class TokenController extends Controller
                 'sold'  => $premium->sold + $token->range,
             ]);
             $token->delete();
-            session()->flash('status','token deleted');
+            session()->flash('danger','un Jeton a bien été supprimé !');
         }
         else{
             session()->flash('status','vous ne pouvez supprimé que les tokens de votre compagnie');

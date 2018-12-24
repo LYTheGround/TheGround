@@ -7,23 +7,22 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPasswordNotification extends Notification
+class UpdateNotifications extends Notification
 {
     use Queueable;
+
     /**
      * @var
      */
-    private $token;
+    private $data;
 
     /**
      * Create a new notification instance.
-     *
-     * @param $token
+     * @param $data
      */
-    public function __construct($token)
+    public function __construct($data)
     {
-        //
-        $this->token = $token;
+        $this->data = $data;
     }
 
     /**
@@ -46,13 +45,9 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject(__('pages.auth.pswr.send.subject'))
-                    ->greeting(__('pages.auth.pswr.send.greeting'))
-                    ->line(__('pages.auth.pswr.send.line1'))
-                    ->action(__('pages.auth.pswr.send.action'), route('password.reset',['token' => $this->token]))
-                    ->line(__('pages.auth.pswr.send.line2'))
-                    ->salutation(__('pages.auth.pswr.send.salutation'))
-                    ->salutation('LYTheGround');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -65,6 +60,16 @@ class ResetPasswordNotification extends Notification
     {
         return [
             //
+        ];
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'img'               => $this->data['img'],
+            'name'              => $this->data['name'],
+            'task'              => $this->data['task'],
+            'msg'               => $this->data['msg']
         ];
     }
 }

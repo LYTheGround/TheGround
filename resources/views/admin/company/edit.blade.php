@@ -71,7 +71,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group">
                         {{ Form::label('licence','Licence :',['class' => 'control-label']) }}
                         {{ Form::text('licence',null,['class' => 'form-control','placeholder'=>'Licence']) }}
@@ -82,24 +82,13 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group">
                         {{ Form::label('turnover','Turnover :',['class' => 'control-label']) }}
                         {{ Form::number('turnover',null,['class' => 'form-control','step'=> '100','placeholder'=>'Turnover','required']) }}
                         @if($errors->has('turnover'))
                             <span class="text-danger">
                                 {{ $errors->first('turnover') }}
-                            </span>
-                        @endif
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        {{ Form::label('taxes','Taxes :',['class' => 'control-label']) }}
-                        {{ Form::number('taxes',null,['class' => 'form-control','placeholder'=>'Taxes','required']) }}
-                        @if($errors->has('taxes'))
-                            <span class="text-danger">
-                                {{ $errors->first('taxes') }}
                             </span>
                         @endif
                     </div>
@@ -192,14 +181,20 @@
                                 <input type="file" name="brand" id="image1" accept=".gif, .jpg, .png"/>
                                 @if($company->info_box->brand)
                                     <label for="image1"
-                                           class="covimgs" style="background-image: url('{{ asset('storage/' . $company->info_box->brand) }}');" >
-                                        @else
-                                            <label for="image1"
-                                                   class="covimgs" style="background-image: url('{{ asset('img/placeholder.jpg') }}');" >
-                                            @endif
+                                           class="covimgs"
+                                           style="background-image: url('{{ asset('storage/' . $company->info_box->brand) }}');">
+
                                         <span>Select justify image</span>
                                         <i class="fa fa-plus-circle"></i>
                                     </label>
+                                @else
+                                    <label for="image1"
+                                           class="covimgs"
+                                           style="background-image: url('{{ asset('img/placeholder.jpg') }}');">
+                                        <span>Select justify image</span>
+                                        <i class="fa fa-plus-circle"></i>
+                                    </label>
+                                @endif
                             </div>
                             <!-- End Page Wrap -->
                         </div>

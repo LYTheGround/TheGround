@@ -6,7 +6,7 @@
     <div class="content container-fluid">
         <div class="row card-box">
             <div class="card-title text-right">
-                {!! __('validation.attributes.soldLeft') . ' : <b>' . $company->premium->sold . '</b> ' . __('validation.attributes.days') !!}
+                {!! __('validation.attributes.soldLeft') . ' : <b>' . $company->premium->sold . '</b> ' . __('validation.attributes.day') !!}
             </div>
             {{ Form::open(['method' => 'PUT', 'url' => route('company.updateSold',compact('company'))]) }}
             <div class="row">
@@ -20,7 +20,7 @@
                     @endif
                 </div>
                 <div class="col-xs-12 text-right">
-                    <input type="submit" value="{{ __('validation.attributes.add') }}" class="btn btn-primary">
+                    <input type="submit" value="{{ __('validation.attributes.edit') }}" class="btn btn-primary">
                 </div>
             </div>
             {{ Form::close() }}

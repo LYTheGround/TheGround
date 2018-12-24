@@ -72,7 +72,11 @@
         <div class="form-group">
             {{ Form::label('sex',__('validation.attributes.sex'),['class' => 'control-label']) }}
             <select name="sex" title="sex" id="sex" class="form-control" required>
-                @if(!old('sex') && !$info->sex)
+                @if(isset($info))
+                    @if(!$info->sex && !old('sex'))
+                        <option disabled selected value>{{ __('validation.attributes.sex') }}</option>
+                    @endif
+                @elseif(!old('sex'))
                     <option disabled selected value>{{ __('validation.attributes.sex') }}</option>
                 @endif
                 <option

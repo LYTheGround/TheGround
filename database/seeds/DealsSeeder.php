@@ -29,12 +29,12 @@ class DealsSeeder extends Seeder
             ]);
             $info->provider()->create([
                 'slug'          => "provider-$i",
-                'description'   => 'description provider description provider description provider ',
+                'description'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                 'company_id'    => 1,
                 'user_id'       => 1
             ]);
         }
-        for ($i = 1; $i < 3; $i++){
+        for ($i = 1; $i < 4; $i++){
             $info = \App\Info_box::create([
                 'name'      => "client $i",
                 'speaker'   => "client",
@@ -52,7 +52,7 @@ class DealsSeeder extends Seeder
             ]);
             $info->client()->create([
                 'slug'      => "client-$i",
-                'description'   => 'description client description client description client ',
+                'description'   => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                 'company_id'    => 1,
                 'user_id'       => 1
             ]);

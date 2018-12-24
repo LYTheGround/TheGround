@@ -17,10 +17,10 @@
                 </li>
                 <li class="menu-title">Company</li>
                 <li class="{{ request()->is('dashboard') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Tableau de bord</a>
+                    <a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Tableau </a>
                 </li>
                 <li class="{{ (request()->is('token') || request()->is('token/*')) ? 'active' : '' }}">
-                    <a href="{{ route('token.index') }}"><i class="fa fa-lock"></i> {{ __('validation.attributes.token') }}</a>
+                    <a href="{{ route('token.index') }}"><i class="fa fa-lock"></i> {{ ucfirst(__('validation.attributes.tokens')) }}</a>
                 </li>
                 <li class="menu-title">Humans Resource</li>
                 <li class="{{ (request()->is('member/*') || request()->is('member')) ? 'active' : '' }}">

@@ -21,7 +21,7 @@ class Buy_order extends Model
      */
     public function getPuAttribute($value)
     {
-        return (int) $value;
+        return floatval($value) ;
     }
 
     /**
@@ -37,7 +37,7 @@ class Buy_order extends Model
      */
     public function getHtAttribute($value)
     {
-        return (int) $value;
+        return floatval($value) ;
     }
 
     /**
@@ -54,7 +54,7 @@ class Buy_order extends Model
      */
     public function getTvaAttribute($value)
     {
-        return (int)$value;
+        return floatval($value) ;
     }
 
     /**
@@ -71,7 +71,7 @@ class Buy_order extends Model
      */
     public function getTtcAttribute($value)
     {
-        return (int)$value;
+        return floatval($value);
     }
 
     /**

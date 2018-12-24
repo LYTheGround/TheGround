@@ -59,7 +59,10 @@ class ProductController extends Controller
         //$notifiable = User::all();
         //Notification::send($notifiable,new ProductNotification($product));
         $this->authorize('view',auth()->user()->member);
-        return view('store.product.show',compact('product'));
+        $purchaseds = $product->purchaseds()->limit(5)->with('buy_order.dv.buy')->get();
+        $solds = $product->solds()->limit(5)->with('order.dv.sale')->get();
+
+        return view('store.product.show',compact('product','purchaseds','solds'));
     }
 
     public function edit(Product $product)

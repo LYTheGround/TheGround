@@ -14,7 +14,7 @@ class Sale_order extends Model
      */
     public function getPuAttribute($value)
     {
-        return (int) $value;
+        return floatval($value);
     }
 
     /**
@@ -24,13 +24,14 @@ class Sale_order extends Model
     {
         $this->attributes['pu'] = (string) round($value,2);
     }
+
     /**
      * @param $value
      * @return int
      */
     public function getHtAttribute($value)
     {
-        return (int) $value;
+        return floatval($value);
     }
 
     /**
@@ -47,7 +48,7 @@ class Sale_order extends Model
      */
     public function getTvaAttribute($value)
     {
-        return (int)$value;
+        return floatval($value);
     }
 
     /**
@@ -64,7 +65,7 @@ class Sale_order extends Model
      */
     public function getTtcAttribute($value)
     {
-        return (int)$value;
+        return floatval($value);
     }
 
     /**
@@ -78,16 +79,16 @@ class Sale_order extends Model
      * @param $value
      * @return int
      */
-    public function getTva_payedAttribute($value)
+    public function getTvaPayedAttribute($value)
     {
-        return (int)$value;
+        return floatval($value);
     }
 
     /**
      * @param $value
      * @return string
      */
-    public function setTva_payedAttribute($value)
+    public function setTvaPayedAttribute($value)
     {
         return $this->attributes['tva_payed'] = (string) round($value,2);
     }
@@ -98,7 +99,7 @@ class Sale_order extends Model
      */
     public function getProfitAttribute($value)
     {
-        return (int) $value;
+        return floatval($value);
     }
 
     /**
@@ -115,7 +116,7 @@ class Sale_order extends Model
      */
     public function getTaxesAttribute($value)
     {
-        return (int) $value;
+        return floatval($value);
     }
 
     /**
@@ -130,15 +131,15 @@ class Sale_order extends Model
      * @param $value
      * @return int
      */
-    public function getProfit_after_taxesAttribute($value)
+    public function getProfitAfterTaxesAttribute($value)
     {
-        return (int) $value;
+        return floatval($value);
     }
 
     /**
      * @param $value
      */
-    public function setProfit_after_taxesAttribute($value)
+    public function setProfitAfterTaxesAttribute($value)
     {
         $this->attributes['profit_after_taxes'] = (string) round($value,2);
     }

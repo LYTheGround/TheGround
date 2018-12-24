@@ -1,30 +1,15 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Token;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ResetPasswordNotification extends Notification
+class TokenNotification extends Notification
 {
     use Queueable;
-    /**
-     * @var
-     */
-    private $token;
-
-    /**
-     * Create a new notification instance.
-     *
-     * @param $token
-     */
-    public function __construct($token)
-    {
-        //
-        $this->token = $token;
-    }
 
     /**
      * Get the notification's delivery channels.
@@ -34,7 +19,7 @@ class ResetPasswordNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
@@ -46,13 +31,20 @@ class ResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject(__('pages.auth.pswr.send.subject'))
-                    ->greeting(__('pages.auth.pswr.send.greeting'))
-                    ->line(__('pages.auth.pswr.send.line1'))
-                    ->action(__('pages.auth.pswr.send.action'), route('password.reset',['token' => $this->token]))
-                    ->line(__('pages.auth.pswr.send.line2'))
-                    ->salutation(__('pages.auth.pswr.send.salutation'))
-                    ->salutation('LYTheGround');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
+    }
+
+    public function toDatabase($notifiable)
+    {
+        return [
+            'img' => auth()->user()->member->info->face ? asset('storage/' . auth()->user()->member->info->face ): asset('img/user.jpg'),
+            'name' => auth()->user()->member->name,
+            'url' => route('token.index'),
+            'task' => 'a crée un nouveau token',
+            'msg' => 'Un nouveau member v\'as joindre votre group'
+        ];
     }
 
     /**

@@ -4,6 +4,9 @@ use Illuminate\Database\Seeder;
 
 class BuysTableSeeder extends Seeder
 {
+    private $ht = 0;
+    private $tva = 0;
+    private $ttc = 0;
     /**
      * Run the database seeds.
      *
@@ -137,5 +140,92 @@ class BuysTableSeeder extends Seeder
                 'month_id'  => 1
             ]);
         }
+    }
+
+    private function buys()
+    {
+        // new buy and new trade_action
+        $trade = \App\Trade_action::create([
+            'status'    => 'finish'
+        ]);
+        // return buy
+        return $trade->buy()->create([
+            'slug'          => 'B-1',
+            'user_id'       => 1,
+            'company_id'    => 1,
+            'ht'            => 0,
+            'tva'           => 0,
+            'ttc'           => 0
+        ]);
+    }
+
+    private function bc(\App\Buy $buy)
+    {
+        for ($i = 0; $i < 5; $i++) {
+            $buy->bcs()->create([
+                'qt'    => 10,
+                'product_id' => $i
+            ]);
+        }
+        $buy->trade_action()->update([
+
+            'bc'                => 1,
+            'bc_member_id'      => 4,
+            'bc_time'           => Carbon\Carbon::now(),
+        ]);
+    }
+
+    private function dv_orders(\App\Buy $buy,$i)
+    {
+        $dv = $buy->dvs()->create([
+            'slug'          => 'DV-' . $i,
+            'provider_id'   => 1,
+        ]);
+        foreach ($buy->bcs as $bc){
+            $pu = rand(1,120);
+            $ht = $pu * $bc->qt;
+            $tva = $ht * 0.2;
+            $ttc = $ht + $tva;
+            $bc->order()->create([
+                'pu'        => 10,
+                'ht'        => $ht,
+                'tva'       => $tva,
+                'ttc'       => $ttc,
+                'buy_dv_id' => $dv->id
+            ]);
+            $dv->update([
+                'ht'    => $dv->ht + $ht,
+                'tva'   => $dv->tva + $tva,
+                'ttc'   => $dv->ttc + $ttc
+            ]);
+        }
+        $dv->update(['selected' => true]);
+        $buy->trade_action()->update([
+            'dv'                => 1,
+            'dv_member_id'      => 4,
+            'dv_time'           => Carbon\Carbon::now(),
+        ]);
+    }
+
+    private function done(\App\Buy $buy)
+    {
+
+    }
+    private function l()
+    {
+        // foreach buy with $i
+        // buy. -
+        // bc(buy). -
+        // dv_order(buy)
+        // selected_confirm (buy)
+        // done(buy)
+        // store (buy)
+        // delivery ()
+        for ($i = 1; $i < 5; $i++){
+            $buy = $this->buys();
+            $this->bc($buy);
+            $this->dv_orders($buy,$i);
+        }
+
     }
 }

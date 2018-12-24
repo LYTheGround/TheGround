@@ -65,6 +65,6 @@ class BcController extends Controller
             'bc_time'       => Carbon::now(),
             'tasks'         => json_encode(['prev' => null,'next' => null,'progress' => 15]),
         ]);
-        return redirect()->route('buy.show',compact('buy'));
+        return redirect()->route('dv.create',compact('buy'));
     }
 }
