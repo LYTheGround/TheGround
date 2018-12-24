@@ -19,6 +19,8 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
+        $dd = auth()->user()->member->company->ass;
+        dd($dd->info);
         // members
         $members = $this->members();
         // positions
