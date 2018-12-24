@@ -125,4 +125,15 @@ class Company extends Model
         return $this->hasMany(Amount_product::class);
     }
 
+    public function getAssAttribute()
+    {
+        $r = [
+            'members' => $this->members,
+            'positions' => $this->positions,
+            'products' => $this->products,
+            'buys'
+        ];
+        return $this->members[0];
+    }
+
 }
