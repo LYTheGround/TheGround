@@ -17,7 +17,7 @@ class CompaniesTableSeeder extends Seeder
             'name'      => 'company S.A.R.L',
             'licence'   => '123456798',
             'turnover'  => '10000',
-            'taxes'     => 32,
+            'taxes'     => 10,
             'fax'       => '0522663399',
             'speaker'   => 'yasser',
             'address'   => 'BD Zerktouni 18',

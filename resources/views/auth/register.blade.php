@@ -156,10 +156,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('pages.auth.register.registered') }}
-                        </button>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p class="text-dark text-justify">
+                                En vous inscrivant sur ce système vous confirment que vous acceptez
+                                <a href="{{ route('conditions') }}">les Conditions et les termes d'enguagement</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 text-right">
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('pages.auth.register.registered') }}
+                            </button>
+                        </div>
+
                     </div>
                 </div>
                 {{ Form::close() }}

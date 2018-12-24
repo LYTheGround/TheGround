@@ -92,7 +92,7 @@
                             <div class="form-group">
                                 {{ Form::label('birth',__('validation.attributes.birth'), ['class' => 'col-lg-3 control-label']) }}
                                 <div class="col-lg-9">
-                                    {{ Form::date('birth',(old('birth')) ? old('birth') : gmdate('Y-m-d',strtotime("-18 years")),['class' => 'form-control','placeholder' => 'birth', 'required']) }}
+                                    {{ Form::date('birth',(old('birth') || ($member->info->birth)) ? (old('birth')) ?: $member->info->birth : gmdate('Y-m-d',strtotime("-18 years")),['class' => 'form-control','placeholder' => 'birth', 'required']) }}
                                     @if($errors->has('birth'))
                                         <span class="text-danger">{{ $errors->first('birth') }}</span>
                                     @endif

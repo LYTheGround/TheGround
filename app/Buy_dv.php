@@ -22,7 +22,7 @@ class Buy_dv extends Model
      */
     public function getHtAttribute($value)
     {
-        return (int)$value;
+        return floatval($value) ;
     }
 
     /**
@@ -39,7 +39,7 @@ class Buy_dv extends Model
      */
     public function getTvaAttribute($value)
     {
-        return (int)$value;
+        return floatval($value) ;
     }
 
     /**
@@ -56,7 +56,7 @@ class Buy_dv extends Model
      */
     public function getTtcAttribute($value)
     {
-        return (int) $value;
+        return floatval($value) ;
     }
 
     /**

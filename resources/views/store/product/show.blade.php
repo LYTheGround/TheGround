@@ -25,7 +25,7 @@
                             <div class="pro-image" id="pro_popup">
                                 <a href="#" title="{{ $product->name }}">
                                     <img class="img-responsive"
-                                         src="{{(isset($product->imgs[0])) ? asset('storage/'.$product->imgs[0]->img) : asset('img/user.jpg') }}"
+                                         src="{{(isset($product->imgs[0])) ? asset('storage/'.$product->imgs[0]->img) : asset('img/placeholder.jpg') }}"
                                          alt="{{ $product->name }}" title="{{ $product->name }}">
                                 </a>
                             </div>
@@ -73,6 +73,84 @@
                                 </p>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="panel panel-table">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ strtoupper(__('pages.trade.buy.index.title')) }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table m-b-0">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-3">{{ __('validation.attributes.name') }}</th>
+                                    <th class="col-md-3">{{ __('validation.attributes.progress') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($purchaseds as $purchased)
+                                    <?php $tasks = json_decode($purchased->buy_order->dv->buy->trade_action->tasks); ?>
+                                    <tr>
+                                        <td>
+                                            <h2><a href="#">{{ $purchased->buy_order->dv->buy->slug }}</a></h2>
+                                        </td>
+                                        <td>
+                                            <div class="progress progress-xs progress-striped">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                     data-toggle="tooltip" title="{{$tasks->progress}}%" style="width: {{$tasks->progress}}%"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="{{ route('buy.index') }}" class="text-primary">View all buy</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-table">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ strtoupper(__('pages.trade.sale.index.title')) }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped custom-table m-b-0">
+                                <thead>
+                                <tr>
+                                    <th class="col-md-3">{{ __('validation.attributes.name') }}</th>
+                                    <th class="col-md-3">{{ __('validation.attributes.progress') }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($solds as $sold)
+                                    <?php $tasks = json_decode($sold->order->dv->sale->trade_action->tasks); ?>
+                                    <tr>
+                                        <td>
+                                            <h2><a href="#">{{ $sold->order->dv->sale->slug }}</a></h2>
+                                        </td>
+                                        <td>
+                                            <div class="progress progress-xs progress-striped">
+                                                <div class="progress-bar bg-success" role="progressbar"
+                                                     data-toggle="tooltip" title="{{$tasks->progress}}%" style="width: {{$tasks->progress}}%"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="{{ route('sale.index') }}" class="text-primary">View all sales</a>
                     </div>
                 </div>
             </div>

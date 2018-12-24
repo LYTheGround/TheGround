@@ -5,7 +5,7 @@
 @section('content')
     <div class="content container-fluid">
         <div class="row">
-            <h4>{{ucfirst(__('validation.attributes.create'))  }}</h4>
+            <h3>{{ucfirst(__('validation.attributes.create'))  }}</h3>
         </div>
         <div class="row">
             <div class="col-md-6 col-md-offset-6">

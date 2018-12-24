@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+
     public function __invoke()
     {
         // members
@@ -44,7 +45,7 @@ class DashboardController extends Controller
             ->take(5)
             ->orderBy('id',"desc")
             ->with('info')
-            ->with('premium')
+            ->with('premium.category')
             ->get();
     }
 
@@ -53,7 +54,7 @@ class DashboardController extends Controller
         return Position::where('company_id',auth()->user()->member->company_id)
             ->take(5)
             ->orderBy('id',"desc")
-            ->with('info')
+            ->with('info.city')
             ->get();
     }
 
@@ -62,7 +63,7 @@ class DashboardController extends Controller
         return Provider::where('company_id',auth()->user()->member->company_id)
             ->take(5)
             ->orderBy('id',"desc")
-            ->with('info_box')
+            ->with('info_box.city')
             ->get();
     }
 
@@ -71,7 +72,7 @@ class DashboardController extends Controller
         return Client::where('company_id',auth()->user()->member->company_id)
             ->take(5)
             ->orderBy('id',"desc")
-            ->with('info_box')
+            ->with('info_box.city')
             ->get();
     }
 
