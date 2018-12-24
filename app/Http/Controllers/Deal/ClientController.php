@@ -11,7 +11,6 @@ use App\Http\Controllers\Controller;
 
 class ClientController extends Controller
 {
-    
     public function index()
     {
         $clients = auth()->user()->member->company->clients;
@@ -49,8 +48,7 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         $this->authorize('view',$client);
-        $dvs = $client->dvs()->with('sale')->limit(5)->get();
-        return view('deal.client.show',compact('client','dvs'));
+        return view('deal.client.show',compact('client'));
     }
 
     public function edit(Client $client)

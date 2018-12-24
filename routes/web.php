@@ -9,10 +9,6 @@ Auth::routes();
 // Change Language
 Route::post('language/', array('before' => 'csrf', 'as' => 'language-chooser', 'uses' => 'LanguageController@changeLanguage'));
 
-// conditions
-Route::get('/conditions', function (){
-    return view('conditions');
-})->name('conditions');
 // auth APP
 Route::middleware('auth')->group(function () {
     // notifications
@@ -139,8 +135,6 @@ Route::middleware('auth')->group(function () {
         Route::put('company/{company}/sold', 'Admin\CompanyController@updateSold')->name('company.updateSold');
         Route::get('company/{company}/status', 'Admin\CompanyController@status')->name('company.status');
         Route::put('company/{company}/status', 'Admin\CompanyController@updateStatus')->name('company.updateStatus');
-        Route::get('company/{company}/is','Admin\TaxesController@editTaxes')->name('taxes.edit');
-        Route::put('company/{company}/is','Admin\TaxesController@updateTaxes')->name('taxes.update');
 
         Route::resource('admin', 'Admin\AdminController')->except(['edit','update']);
         Route::get('params','Admin\AdminController@edit')->name('admin.params');

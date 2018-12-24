@@ -11,7 +11,6 @@ class UnloadsTableSeeder extends Seeder
      */
     public function run()
     {
-
         $accounting = \App\Accounting::where('id',1)->first();
         $accounting->unloads()->create([
             'name'      => 'name unload',
@@ -23,12 +22,7 @@ class UnloadsTableSeeder extends Seeder
             'description' => 'description description description description description '
         ]);
         $accounting->update([
-            'taxes_after_unload' => (floatval($accounting->taxes_after_unload) - 1000)
+            'tva_after_unload' => $accounting->tva_after_unload - 1000
         ]);
-        $month = $accounting->months[0];
-        $month->update([
-            'taxes_after_unload' => (floatval($month->taxes_after_unload) - 1000)
-        ]);
-
     }
 }

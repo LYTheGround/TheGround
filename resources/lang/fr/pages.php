@@ -13,7 +13,7 @@ return [
             "Forgot your password"  => "Mot de passe oublier ?",
             "don't active" => "votre Compte n'est pas active veuillez contacter votre compagnie ou appeler le support technique"
         ],
-        'logout' => 'déconnexion',
+        'logout' => 'logout',
         'pswr' => [
             'email' => [
                 'title' => 'Password Reset',

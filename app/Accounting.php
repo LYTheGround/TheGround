@@ -23,56 +23,6 @@ class Accounting extends Model
         'updated_at' => 'datetime:d-m-Y',
         ];
 
-    public function getTvaAttribute($value)
-    {
-        return floatval($value);
-    }
-
-    public function setTvaAttribute($value)
-    {
-        $this->attributes['tva'] = (string) round($value,2);
-    }
-
-    public function getTaxesAttribute($value)
-    {
-        return floatval($value);
-    }
-
-    public function setTaxesAttribute($value)
-    {
-        $this->attributes['taxes'] = (string) round($value,2);
-    }
-
-    public function getProfitAttribute($value)
-    {
-        return floatval($value);
-    }
-
-    public function setProfitAttribute($value)
-    {
-        $this->attributes['profit'] = (string) round($value,2);
-    }
-
-    public function getTaxesAfterUnloadAttribute($value)
-    {
-        return floatval($value);
-    }
-
-    public function setTaxesAfterUnloadAttribute($value)
-    {
-        $this->attributes['taxes_after_unload'] = (string) round($value,2);
-    }
-
-    public function getTvaAfterUnloadAttribute($value)
-    {
-        return floatval($value);
-    }
-
-    public function setTvaAfterUnloadAttribute($value)
-    {
-        $this->attributes['tva_after_unload'] = (string) round($value,2);
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

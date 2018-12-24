@@ -71,7 +71,38 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
+                <div class="panel activity-panel">
+                    <div class="panel-heading">
+                        <h6 class="panel-title">Activities</h6>
+                    </div>
+                    <div class="panel-body">
+                        <div class="activity-box">
+                            <ul class="activity-list">
+                                <li>
+                                    <div class="activity-user">
+                                        <a href="#" title="Lesley Grauer" data-toggle="tooltip" class="avatar">
+                                            <img alt="Lesley Grauer" src="{{ asset('img/user.jpg') }}"
+                                                 class="img-responsive img-circle">
+                                        </a>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="timeline-content">
+                                            <a href="#" class="name">Lesley Grauer</a> added new task <a href="#">Hospital
+                                                Administration</a>
+                                            <span class="time">4 mins ago</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel-footer text-center bg-white">
+                        <a href="#" class="text-primary">View all activities</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
                 <div class="panel panel-table">
                     <div class="panel-heading">
                         <h3 class="panel-title">Stores</h3>
@@ -311,4 +342,26 @@
             </div>
         </div>
     </div>
+    <script>
+        var trade_bar = document.getElementById("trade_bar").getContext('2d');
+        var myChart = new Chart(trade_bar, {
+            type: 'line',
+            data: {
+                datasets: [{
+                    label: "{{ ucfirst(__('pages.trade.buy.index.title')) }}",
+                    data: [10, 20, 30, 40, 65, 10, 20, 30, 40, 65, 40, 65],
+                    borderColor:
+                        'rgb(54, 162, 235)'
+                }],
+                labels: ['janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'september', 'october', 'November', 'December']
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
+    </script>
 @stop

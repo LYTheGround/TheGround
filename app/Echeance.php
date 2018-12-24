@@ -13,7 +13,7 @@ class Echeance extends Model
 
     public function getPrinceAttribute($value)
     {
-        return floatval($value);
+        return (int) $value;
     }
 
     public function setPrinceAttribute($value)

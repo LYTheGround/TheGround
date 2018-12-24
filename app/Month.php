@@ -11,7 +11,7 @@ class Month extends Model
 
     public function getProfitAttribute($value)
     {
-        return floatval($value);
+        return (int)$value;
     }
 
     public function setProfitAttribute($value)
@@ -21,7 +21,7 @@ class Month extends Model
 
     public function getTvaAttribute($value)
     {
-        return floatval($value);
+        return (int)$value;
     }
 
     public function setTvaAttribute($value)
@@ -31,7 +31,7 @@ class Month extends Model
 
     public function getTaxesAttribute($value)
     {
-        return floatval($value);
+        return (int)$value;
     }
 
     public function setTaxesAttribute($value)
@@ -39,22 +39,22 @@ class Month extends Model
         $this->attributes['taxes'] = (string) round($value,2);
     }
 
-    public function getTvaAfterUnloadAttribute($value)
+    public function getTva_after_unloadAttribute($value)
     {
-        return floatval($value);
+        return (int)$value;
     }
 
-    public function setTvaAfterUnloadAttribute($value)
+    public function setTva_after_unloadAttribute($value)
     {
         $this->attributes['tva_after_unload'] = (string) round($value,2);
     }
 
-    public function getTaxesAfterUnloadAttribute($value)
+    public function getTaxes_after_unloadAttribute($value)
     {
-        return floatval($value);
+        return (int)$value;
     }
 
-    public function setTaxesAfterUnloadAttribute($value)
+    public function setTaxes_after_unloadAttribute($value)
     {
         $this->attributes['taxes_after_unload'] = (string) round($value,2);
     }

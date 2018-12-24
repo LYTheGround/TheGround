@@ -42,6 +42,14 @@ class Member extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notices()
+    {
+        return $this->hasMany(Notice::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function company()
@@ -65,9 +73,6 @@ class Member extends Model
         return $this->belongsTo(Premium::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function unloads()
     {
         return $this->hasMany(Unload::class);
@@ -88,56 +93,5 @@ class Member extends Model
             return 'tel';
         }
         return 'name';
-    }
-
-    public function buys()
-    {
-        /*
-        return $this->company->buys()
-            ->with('trade_action.dv_member')
-            ->get()->map(function ($r){
-            return $r->trade_action()->where('bc_member_id',$this->id)
-                ->where('bc_member_id',$this->id)
-                ->orWhere('dv_member_id',$this->id)
-                ->orWhere('done_member_id',$this->id)
-                ->orWhere('delivery_member_id',$this->id)
-                ->orWhere('store_member_id',$this->id)
-                ->orWhere('bl_member_id',$this->id)
-                ->orWhere('fc_member_id',$this->id)
-                ->limit(5)
-                ->latest()
-                ->get();
-        });
-        */
-        return DB::table('trade_actions')
-            ->where('trade_actions.dv_member_id','=',$this->id)
-            ->orWhere('trade_actions.bc_member_id','=',$this->id)
-            ->orWhere('trade_actions.done_member_id',$this->id)
-            ->orWhere('trade_actions.delivery_member_id',$this->id)
-            ->orWhere('trade_actions.store_member_id',$this->id)
-            ->orWhere('trade_actions.bl_member_id',$this->id)
-            ->orWhere('trade_actions.fc_member_id',$this->id)
-            ->join('buys','buys.trade_action_id','trade_actions.id')
-            ->select('buys.*', 'trade_actions.tasks')
-            ->limit(5)
-            ->latest()
-            ->get();
-    }
-
-    public function sales()
-    {
-        return DB::table('trade_actions')
-            ->where('trade_actions.dv_member_id','=',$this->id)
-            ->orWhere('trade_actions.bc_member_id','=',$this->id)
-            ->orWhere('trade_actions.done_member_id',$this->id)
-            ->orWhere('trade_actions.delivery_member_id',$this->id)
-            ->orWhere('trade_actions.store_member_id',$this->id)
-            ->orWhere('trade_actions.bl_member_id',$this->id)
-            ->orWhere('trade_actions.fc_member_id',$this->id)
-            ->join('sales','sales.trade_action_id','trade_actions.id')
-            ->select('sales.*', 'trade_actions.tasks')
-            ->limit(5)
-            ->latest()
-            ->get();
     }
 }

@@ -14,7 +14,7 @@ class Unload extends Model
      */
     public function getPrinceAttribute($value)
     {
-        return floatval($value);
+        return (int) $value;
     }
 
     /**

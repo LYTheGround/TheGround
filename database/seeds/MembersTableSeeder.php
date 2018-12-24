@@ -15,7 +15,6 @@ class MembersTableSeeder extends Seeder
         $company->activate();
         $tokens = $company->tokens;
         foreach ($tokens as $token) {
-            // members
             $user = \App\User::create([
                 'login'      => $token->category->category,
                 'email'     => $token->category->category . '@ly.ly',
@@ -55,7 +54,6 @@ class MembersTableSeeder extends Seeder
             ]);
             $token->delete();
         }
-        // admin
         $user = \App\User::create([
             'login'     => 'admin',
             'email'     => 'admin@ly.ly',

@@ -14,7 +14,6 @@
                 @can('view',\App\Admin::class)
                 <a href="{{ route('company.sold',compact('company')) }}" class="btn btn-primary"><i class="fa fa-money"></i> {{ __('validation.attributes.sold') }}</a>
                 <a href="{{ route('company.status',compact('company')) }}" class="btn btn-danger"><i class="fa fa-flag"></i> {{ __('validation.attributes.status') }}</a>
-                <a href="{{ route('taxes.edit',compact('company')) }}" class="btn btn-warning"><i class="fa fa-tasks"></i> {{ __('validation.attributes.taxes') }}</a>
                 @endcan
             </div>
         </div>

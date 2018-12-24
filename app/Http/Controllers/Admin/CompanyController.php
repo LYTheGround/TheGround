@@ -9,7 +9,6 @@ use App\Http\Requests\Company\CompanyRequest;
 use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Http\Requests\Company\SoldRequest;
 use App\Http\Requests\Company\StatusRequest;
-use App\Http\Requests\Company\TaxesRequest;
 use App\Info_box;
 use App\Member;
 use App\Notifications\Company\CompanyUpdate;
@@ -126,6 +125,7 @@ class CompanyController extends Controller
             'name'      => $request->name,
             'licence'   => $request->licence,
             'turnover'  => $request->turnover,
+            'taxes'     => $request->taxes,
             'fax'       => $request->fax,
             'speaker'   => $request->speaker,
             'address'   => $request->address,
@@ -178,6 +178,5 @@ class CompanyController extends Controller
         // archived
         return back();
     }
-
 
 }

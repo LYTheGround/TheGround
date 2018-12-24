@@ -48,8 +48,7 @@ class ProviderController extends Controller
     public function show(Provider $provider)
     {
         $this->authorize('view',$provider);
-        $dvs = $provider->dvs()->limit(5)->get();
-        return view('deal.provider.show', compact('provider','dvs'));
+        return view('deal.provider.show', compact('provider'));
     }
 
     public function edit(Provider $provider)

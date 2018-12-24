@@ -21,7 +21,25 @@ class Buy extends Model
      */
     public function getHtAttribute($value)
     {
-        return floatval($value);
+        return (int)$value;
+    }
+
+    /**
+     * @param $value
+     * @return int
+     */
+    public function getTvaAttribute($value)
+    {
+        return (int)$value;
+    }
+
+    /**
+     * @param $value
+     * @return int
+     */
+    public function getTtcAttribute($value)
+    {
+        return (int)$value;
     }
 
     /**
@@ -35,29 +53,11 @@ class Buy extends Model
 
     /**
      * @param $value
-     * @return int
-     */
-    public function getTvaAttribute($value)
-    {
-        return floatval($value);
-    }
-
-    /**
-     * @param $value
      * @return string
      */
     public function setTvaAttribute($value)
     {
         return $this->attributes['tva'] = (string) round($value,2);
-    }
-
-    /**
-     * @param $value
-     * @return int
-     */
-    public function getTtcAttribute($value)
-    {
-        return floatval($value);
     }
 
     /**

@@ -26,10 +26,7 @@ class MemberController extends Controller
     public function show(Member $member)
     {
         $this->authorize('view',$member);
-        $buys = $member->buys();
-        //dd($buys);
-        $sales = $member->sales();
-        return view('rh.member.show',compact('member','buys','sales'));
+        return view('rh.member.show',compact('member'));
     }
 
     public function params()

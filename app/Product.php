@@ -39,25 +39,25 @@ class Product extends Model
     {
         $this->attributes['qt'] = (string) $value;
     }
-    public function getQtMinAttribute($value)
+    public function getQt_minAttribute($value)
     {
         return (int) $value;
     }
-    public function setQtMinAttribute($value)
+    public function setQt_minAttribute($value)
     {
         $this->attributes['qt_min'] = (string) $value;
     }
-    public function getMinPrinceAttribute($value)
+    public function getMin_princeAttribute($value)
     {
-        return floatval($value);
+        return (int) $value;
     }
-    public function setMinPrinceAttribute($value)
+    public function setMin_princeAttribute($value)
     {
         $this->attributes['min_prince'] = (string) round($value,2);
     }
     public function getAmountAttribute($value)
     {
-        return floatval($value);
+        return (int) $value;
     }
     public function setAmountAttribute($value)
     {

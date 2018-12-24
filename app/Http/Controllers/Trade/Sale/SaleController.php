@@ -44,10 +44,10 @@ class SaleController extends Controller
             'taxes'                 => false,
             'profit_after_taxes'    => false
         ]);
-        $sale->update(['slug' => 'S-'.$sale->id]);
+        $sale->update(['slug' => '#S-'.$sale->id]);
         $dv = $sale->dv()->create(['client_id' => $request->client]);
         $dv->update(['slug' => 'DV-' . $dv->id]);
-        return redirect()->route('sale_bc.create',compact('sale'));
+        return redirect()->route('sale.show',compact('sale'));
     }
 
     public function show(Sale $sale)

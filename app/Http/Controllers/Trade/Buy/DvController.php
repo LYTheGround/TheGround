@@ -80,7 +80,7 @@ class DvController extends Controller
         // indiquez en session flash que l'insertion du devi a bien est inséré avec succès
         session()->flash('status', __('pages.trade.buy.dv.create.success'));
         // returner une redirection vers le show buy en lui transmettant la variable buy
-        return redirect()->route('dv.show', compact('buy','dv'));
+        return redirect()->route('buy.show', compact('buy'));
     }
 
     private function validated(DvRequest $request, Buy $buy)

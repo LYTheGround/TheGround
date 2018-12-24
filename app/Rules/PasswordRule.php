@@ -25,6 +25,6 @@ class PasswordRule implements Rule
      */
     public function message()
     {
-        return trans('passwords.password',['password']);
+        return trans('validation.password',['password']);
     }
 }
