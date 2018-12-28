@@ -39,7 +39,7 @@ class LimitAccount extends Notification
     public function __construct($data)
     {
         //
-        $this->days = $data;
+        $this->data = $data;
         $this->notifiable();
     }
 
@@ -75,7 +75,7 @@ class LimitAccount extends Notification
             'name'              => $this->data['name'],
             'task'              => $this->data['task'],
             'msg'               => $this->data['msg'],
-            'notification_id'   => $this->notification_id
+            'notification_id'   => $this->data['limit'] . '-' . $this->data['days']
         ];
     }
 

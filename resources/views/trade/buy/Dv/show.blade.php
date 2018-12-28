@@ -15,7 +15,7 @@
                         class="fa fa-hand-o-left m-r-5"></i> {{ __('validation.attributes.selected') }}</a>
                <a href="#" onclick="event.preventDefault();
                     document.getElementById('{{ 'delete-dv-' . $dv->id }}').submit();" class="btn btn-danger m-b-5"><i
-                        class="fa fa-trash-o m-r-5"></i> {{ __('validation.attributes.delete') }}</a>
+                        class="fa fa-trash-o m-r-5"></i> {{ ucfirst(__('validation.attributes.delete')) }}</a>
                 {{ Form::open(['method'=>'DELETE','url'=>route('dv.destroy',compact('buy','dv')),'id' => "delete-dv-$dv->id",'style'=>"display:none;"]) }}
                 {{ Form::close() }}
             </div>

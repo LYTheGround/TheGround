@@ -1,12 +1,9 @@
 @extends('layouts.app')
-
-@section('title_page')
-    {{ __('pages.rh.user.params') }}
+@section('page-title')
+    {{ __('pages.rh.user.params')}}
 @stop
 @section('content')
     <div class="container-fluid content">
-        <h1>{{ ucfirst(__('pages.rh.user.params')) }}</h1>
-
         <div class="row">
             <div class="col-md-12">
                 {{ Form::model($member->info,['method' => 'PUT', 'url' => route('member.params.update'),'class' => 'form-horizontal','enctype'=> 'multipart/form-data']) }}
@@ -102,12 +99,12 @@
                                 {{ Form::label('sex',__('validation.attributes.sex'),['class' => 'col-lg-3 control-label']) }}
                                 <div class="col-lg-9">
                                     <select name="sex" id="sex" title="sex" class="form-control" >
-                                        @if(!old('sex'))
+                                        @if(!old('sex') || !isset($member->info->sex))
                                             <option disabled selected value>{{ __('validation.attributes.sex') }}</option>
                                         @endif
-                                        <option value="homme" {{ (old('sex') == 'homme') ? 'selected' : '' }}>Homme
+                                        <option value="homme" {{ (old('sex') == 'homme') ? 'selected' : (isset($member->info->sex) && $member->info->sex == 'homme') ? 'selected' : '' }}>Homme
                                         </option>
-                                        <option value="femme" {{ (old('sex') == 'femme') ? 'selected' : '' }}>Femme
+                                        <option value="femme" {{ (old('sex') == 'femme') ? 'selected' : (isset($member->info->sex) && $member->info->sex == 'femme') ? 'selected' : '' }}>Femme
                                         </option>
                                     </select>
                                     @if($errors->has('sex'))

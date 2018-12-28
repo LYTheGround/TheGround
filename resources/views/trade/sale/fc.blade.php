@@ -31,7 +31,7 @@
                                     <li>{{ $sale->company->info_box->city->city }}</li>
                                     <li>{{ $sale->company->info_box->emails[0]->email }}</li>
                                     <li>{{ $sale->company->info_box->tels[0]->tel }}</li>
-                                    <li>Patent n° : {{ $sale->company->info_box->licence }}</li>
+                                    <li>{{ ucfirst(__('validation.attributes.licence')) }} : {{ $sale->company->info_box->licence }}</li>
                                 </ul>
                             </div>
                             <div class="col-xs-6 m-b-20">
@@ -39,19 +39,19 @@
                                     <div class="invoice-details">
                                         <h3 class="text-uppercase">{{ '#INV-' . $sale->id }}</h3>
                                         <ul class="list-unstyled">
-                                            <li>VENDU Le : <span>{{ Carbon\Carbon::parse($sale->trade_action->done_time)->format('d/m/Y') }}</span></li>
-                                            <li>Rédigé Le : <span>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</span></li>
+                                            <li>{{ ucfirst(__('validation.attributes.sale_date')) }} : <span>{{ Carbon\Carbon::parse($sale->trade_action->done_time)->format('d/m/Y') }}</span></li>
+                                            <li>{{ ucfirst(__('validation.attributes.due_at')) }} : <span>{{ \Carbon\Carbon::now()->format('d/m/Y') }}</span></li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 text-right">
                                     <div class="col-md-12 col-lg-12 m-b-20 text-right">
-                                        <h5>Facturé Au :</h5>
+                                        <h5>{{ ucfirst(__('validation.attributes.inv_to')) }} :</h5>
                                         <ul class="list-unstyled">
                                             <li>
                                                 <h5><strong>{{ $sale->dv->client->info_box->name }}</strong></h5></li>
                                             <li>{{ ($sale->dv->client->info_box->zip) ? $sale->dv->client->info_box->zip . ', ' : '' }} {{ ($sale->dv->client->info_box->address) ?:'' }}</li>
-                                            <li>{{ ($sale->dv->client->info_box->build) ? 'n° :' . $sale->dv->client->info_box->build . ', ' : ''}}{{ ($sale->dv->client->info_box->floor) ? 'étage : ' . $sale->dv->client->info_box->floor . ', n° ' . $sale->dv->client->info_box->apt_nbr . ',' :'' }}</li>
+                                            <li>{{ ($sale->dv->client->info_box->build) ? 'n° :' . $sale->dv->client->info_box->build . ', ' : ''}}{{ ($sale->dv->client->info_box->floor) ? ' ' . __('validation.attributes.floor') . ' : ' . $sale->dv->client->info_box->floor . ', n° ' . $sale->dv->client->info_box->apt_nbr . ',' :'' }}</li>
                                             <li>{{ $sale->dv->client->info_box->city->city }}</li>
                                             <li>{{ $sale->dv->client->info_box->tels[0]->tel }}</li>
                                             <li>{{ $sale->dv->client->info_box->emails[0]->email }}</li>

@@ -6,11 +6,11 @@
                     <table class="display datatable table table-stripped">
                         <thead>
                         <tr>
-                            <th>Produit</th>
-                            <th>REF</th>
-                            <th class="hidden-xs hidden-sm">TVA</th>
-                            <th class="hidden-xs hidden-sm">Date De création</th>
-                            <th class="hidden-xs hidden-sm">Status</th>
+                            <th>{{ strtoupper(__('pages.product.index.title')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.ref')) }}</th>
+                            <th class="hidden-xs hidden-sm">{{ strtoupper(__('validation.attributes.tva')) }}</th>
+                            <th class="hidden-xs hidden-sm">{{ strtoupper(__('validation.attributes.created_at')) }}</th>
+                            <th class="hidden-xs hidden-sm">{{ strtoupper(__('validation.attributes.status')) }}</th>
                             <th class="hidden-xs hidden-sm text-right">{{__('validation.attributes.action')}}</th>
                         </tr>
                         </thead>
@@ -33,13 +33,13 @@
                                 <td class="hidden-xs hidden-sm">{{ Carbon\Carbon::parse($product->created_at)->format('d-m-Y') }}</td>
                                 <td class="hidden-xs hidden-sm">
                                     @if((int) $product->qt > (int) $product->qt_min)
-                                        <span class="label label-success-border">In Stock</span>
+                                        <span class="label label-success-border">{{ strtoupper(__('validation.attributes.in_stock')) }}</span>
                                     @elseif((int) $product->qt == (int) $product->qt_min)
-                                        <span class="label label-warning-border text-primary">Just min Stock</span>
+                                        <span class="label label-warning-border text-primary">{{ strtoupper(__('validation.attributes.just_stock')) }}</span>
                                     @elseif((int)$product->qt < (int) $product->qt_min and (int) $product->qt > 0)
-                                        <span class="label label-warning-border">Low of Stock</span>
+                                        <span class="label label-warning-border">{{ strtoupper(__('validation.attributes.low_stock')) }}</span>
                                     @else
-                                        <span class="label label-danger-border">Out of Stock</span>
+                                        <span class="label label-danger-border">{{ strtoupper(__('validation.attributes.out_stock')) }}</span>
                                     @endif
                                 </td>
                                 <td class="hidden-xs hidden-sm text-right">

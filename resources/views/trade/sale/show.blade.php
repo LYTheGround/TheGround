@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('page-title')
-    {{ $sale->slug }}
+    {{ '#' . $sale->slug }}
 @stop
 
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h3>{{ $sale->slug }}</h3>
+                <h3>{{ '#'.$sale->slug }}</h3>
             </div>
             <div class="col-xs-5 text-right">
                 @can('delete',$sale)
@@ -281,7 +281,7 @@
                     {!! __('pages.trade.sale.delete.modal_delete') !!}
                     <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
                         <span onclick="event.preventDefault();document.getElementById('delete-sale').submit()"
-                              class="btn btn-danger">{{ __('validation.attributes.delete') }}</span>
+                              class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                         <form action="{{route('sale.destroy',compact('sale'))}}" method="POST" id="delete-sale">
                             @csrf
                             @method('DELETE')

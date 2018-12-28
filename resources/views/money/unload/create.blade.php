@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('page-title')
-    unload create
+    {{ ucfirst(__('pages.money.unload.create')) }}
 @stop
 @section('content')
     <div class="content .container-fluid">
         <div class="row">
-            <h1>Unload Create</h1>
+            <h1>{{ ucfirst(__('pages.money.unload.create')) }}</h1>
         </div>
         <div class="card-box">
             {{ Form::open(['method' => 'POST', 'url' => route('unload.store'),'class' => 'form-horizontal','enctype' => 'multipart/form-data']) }}
@@ -15,7 +15,7 @@
                         <div class="form-group">
                             <label for="name">{{ ucfirst(__('validation.attributes.name')) }} : </label>
                             <input type="text" name="name" title="name" id="name" class="form-control"
-                                   placeholder="Nom de la charge" required>
+                                   placeholder="{{ ucfirst(__('validation.attributes.name')) }}" required>
                         </div>
                     </div>
                     <div class="col-md-4">

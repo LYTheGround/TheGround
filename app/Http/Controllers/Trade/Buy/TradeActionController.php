@@ -41,6 +41,11 @@ class TradeActionController extends Controller
         // si le member à l'accès
         // si le bc et le dv est déjà eu lieu
         $dv = $buy->dvs->where('selected', true)->first();
+        $buy->update([
+            'ht'    => $dv->ht,
+            'tva'   => $dv->tva,
+            'ttc'   => $dv->ttc
+        ]);
         $buy->echeance()->create([
             'date'  => $request->date,
             'prince'    => $dv->ttc,

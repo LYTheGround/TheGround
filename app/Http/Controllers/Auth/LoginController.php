@@ -72,17 +72,6 @@ class LoginController extends Controller
         if(isset($user->admin)){
             return redirect()->route('company.index');
         }
-        $plan = new PlanController();
-        // la vérification de la date limit et le status du compte
-        $p = $plan->UserPlan(auth()->user());
-        if($p){
-            return redirect()->route('home');
-        }
-        // si non déconnecté le et affiché un message d'errure
-        else{
-            $this->guard()->logout();
-            $request->session()->invalidate();
-            return back()->withInput($request->only('email'));
-        }
+        return redirect()->route('home');
     }
 }

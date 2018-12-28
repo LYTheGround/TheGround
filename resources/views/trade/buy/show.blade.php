@@ -11,7 +11,7 @@
             @can('delete',$buy)
                 <div class="col-xs-5 text-right">
                     <a href="#" data-toggle="modal" data-target="#delete_buy" class="btn btn-danger"><i
-                            class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            class="fa fa-trash-o m-r-5"></i> {{ ucfirst(__('validation.attributes.delete')) }}</a>
                 </div>
             @endcan
         </div>
@@ -311,7 +311,7 @@
                             <a href="{{ route('bc.create',compact('buy')) }}" class="btn btn-success">update</a>
                             @if(isset($buy->bcs[0]))
                                 <a href="{{ route('buy.bc.confirm',compact('buy')) }}"
-                                   class="btn btn-primary m-b-5">confirm</a>
+                                   class="btn btn-primary m-b-5">{{ ucfirst(__('validation.attributes.confirm')) }}</a>
                             @endif
                         </div>
                     @endif
@@ -320,9 +320,9 @@
                     <table class="table table-striped custom-table">
                         <thead>
                         <tr>
-                            <th>product</th>
-                            <th>REF</th>
-                            <th class="text-right">Qt</th>
+                            <th>{{ strtoupper(__('pages.product.index.title')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.ref')) }}</th>
+                            <th class="text-right">{{ strtoupper(__('validation.attributes.qt')) }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -418,9 +418,9 @@
                     <div class="modal-body card-box">
                         <p>{{ __('pages.diver.sure') }}</p>
                         {!! __('pages.trade.buy.delete.modal_delete') !!}
-                        <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                        <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
                             <span onclick="event.preventDefault();document.getElementById('delete-buy').submit()"
-                                  class="btn btn-danger">{{ __('validation.attributes.delete') }}</span>
+                                  class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                             <form action="{{route('buy.destroy',compact('buy'))}}" method="POST" id="delete-buy">
                                 @csrf
                                 @method('DELETE')

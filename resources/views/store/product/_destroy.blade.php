@@ -7,7 +7,7 @@
             <div class="modal-body card-box">
                 <p>{{ __('pages.diver.sure') }}</p>
                 {!! __('pages.product.delete.modal_delete') !!}
-                <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">{{ __('validation.attributes.close') }}</a>
                     <span onclick="event.preventDefault();document.getElementById('{{ 'delete-product-' . $product->id }}').submit()" class="btn btn-danger">Delete</span>
                     <form action="{{route('product.destroy',compact('product'))}}" method="POST" id="{{ 'delete-product-' . $product->id }}">
                         @csrf

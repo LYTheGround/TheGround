@@ -1,22 +1,22 @@
 @extends('layouts.app')
 @section('page-title')
-    Echeance
+    {{ ucfirst(__('validation.attributes.echeance')) }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h4>Echeance</h4>
+                <h4>{{ ucfirst(__('validation.attributes.echeance')) }}</h4>
             </div>
         </div>
         <div class="row card-box">
             <div class="row card-title">
                 <div class="col-xs-12 text-right m-b-5">
-                    <span class="text-dark">Prix TTC : </span>
+                    <span class="text-dark">{{ strtoupper(__('validation.attributes.ttc')) }} : </span>
                     <span class="label label-success-border">{{ $ttc }}</span>
                 </div>
                 <div class="col-xs-12">
-                    <p>Veuillez indiquez la date de paiement.</p>
+                    <p>{{ ucfirst(__('pages.money.echeance.pay_date')) }}</p>
                 </div>
             </div>
             {{ Form::open(['method' => 'POST', 'url' => $url]) }}

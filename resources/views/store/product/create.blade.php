@@ -12,7 +12,7 @@
         <div class="card-box">
             <div class="row">
                 <div class="col-xs-12">
-                    @include('store.product._form',['submit' => __('validation.attributes.create')])
+                    @include('store.product._form',['submit' => __('validation.attributes.create'), 'fa' => 'fa fa-plus'])
                 </div>
             </div>
         </div>

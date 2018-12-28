@@ -25,7 +25,9 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-12 text-right">
-                        <a href="#"  class="btn btn-primary" data-toggle="modal" data-target="#edit_status">{{ __('validation.attributes.edit') }}</a>
+                        <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#edit_status">
+                            <i class="fa fa-edit"></i> {{ __('validation.attributes.edit') }}
+                        </a>
                     </div>
                 </div>
                 <div id="edit_status" class="modal custom-modal fade" role="dialog">

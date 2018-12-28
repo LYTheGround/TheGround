@@ -2,26 +2,21 @@
 
 namespace App\Http\Controllers\Store;
 
-//use App\Notifications\ProductNotification;
-use App\Http\Requests\Store\ProductRequest;
 use App\Product;
 use App\Product_img;
 use App\Rules\TvaRule;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
-
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
-        $this->authorize('view',auth()->user()->member);
         $products = auth()->user()->member->company->products;
         return view('store.product.index',compact('products'));
     }
@@ -42,6 +37,7 @@ class ProductController extends Controller
         $product = auth()->user()->member->company->products()->create($request->all(['name','tva','description','size','qt_min']));
         $product->slug = str_slug($request->name . ' ' .$product->id, '-');
         $product->ref = '#PROD-' . $product->id;
+        $product->member_id = auth()->user()->member->id;
         $product->save();
         if(request()->img){
             foreach ($request->img as $file){
@@ -56,8 +52,6 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        //$notifiable = User::all();
-        //Notification::send($notifiable,new ProductNotification($product));
         $this->authorize('view',auth()->user()->member);
         $purchaseds = $product->purchaseds()->limit(5)->with('buy_order.dv.buy')->get();
         $solds = $product->solds()->limit(5)->with('order.dv.sale')->get();
@@ -67,13 +61,13 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $this->authorize('view',auth()->user()->member);
+        $this->authorize('view',$product);
         return view('store.product.edit',compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
-        $this->authorize('view',auth()->user()->member);
+        $this->authorize('view',$product);
         $validator = $this->validator($request->all());
         if($validator->fails()){
             return redirect()->route('product.edit')->withErrors($validator)->withInput();
@@ -93,10 +87,10 @@ class ProductController extends Controller
 
     public function destroy(Product $product,User $user)
     {
-        $this->authorize('view',auth()->user()->member);
+        $this->authorize('view',$product);
         $user = $user->where('id',auth()->user()->id)->first();
         if($user->cant('delete',$product)){
-            session()->flash('danger', 'vous ne pouvez pas supprimé ce produit il est encore dans votre cour de travaille');
+            session()->flash('danger', __('pages.product.delete.cant_delete'));
             return back();
         }
         $product->delete();

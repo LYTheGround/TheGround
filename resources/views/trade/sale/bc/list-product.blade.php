@@ -9,7 +9,7 @@
                         <a href="{{ route('product.show',['product' => $purchased->slug]) }}" class="btn btn-info addcart-btn">Access</a>
                         @if($purchased->store_qt > 0)
                             @if($purchased->offer_qt == 0)
-                            <a href="{{ route('sale.bc.release',['sale' => $sale, 'purchased' => $purchased->purchased_id]) }}" class="btn btn-warning proedit-btn">released</a>
+                            <a href="{{ route('sale.bc.release',['sale' => $sale, 'purchased' => $purchased->purchased_id]) }}" class="btn btn-warning proedit-btn">{{ __('pages.trade.sale.release') }}</a>
                                 @else
                                 <a href="#" class="btn btn-primary proedit-btn add-product" data-target="{{'#add-product-' . $purchased->purchased_id}}">{{ ucfirst(__('validation.attributes.add')) }}</a>
                             @endif

@@ -1,13 +1,10 @@
 @extends("layouts.app")
 @section('page-title')
-    {{ $product->name }}
+    {{ ucfirst($product->name) }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
-            <div class="col-xs-7">
-                <h4 class="page-title">{{ $product->name }}</h4>
-            </div>
             <div class="col-xs-5 text-right">
                 <a href="{{ route('product.edit', compact('product')) }}" class="btn btn-primary m-b-5">
                     <i class="fa fa-edit"></i>{{__('validation.attributes.edit')}}
@@ -43,14 +40,15 @@
                 <div class="col-sm-6 col-xs-12">
                     <div class="product-info">
                         <h2>{{$product->name}}</h2>
-                        <p>@if((int) $product->qt > (int) $product->qt_min)
-                                <span class="label label-success-border">In Stock</span>
+                        <p>
+                            @if((int) $product->qt > (int) $product->qt_min)
+                                <span class="label label-success-border">{{ strtoupper(__('validation.attributes.in_stock')) }}</span>
                             @elseif((int) $product->qt == (int) $product->qt_min)
-                                <span class="label label-warning-border text-primary">Just min Stock</span>
+                                <span class="label label-warning-border text-primary">{{ strtoupper(__('validation.attributes.just_stock')) }}</span>
                             @elseif((int)$product->qt < (int) $product->qt_min and (int) $product->qt > 0)
-                                <span class="label label-warning-border">Low of Stock</span>
+                                <span class="label label-warning-border">{{ strtoupper(__('validation.attributes.low_stock')) }}</span>
                             @else
-                                <span class="label label-danger-border">Out of Stock</span>
+                                <span class="label label-danger-border">{{ strtoupper(__('validation.attributes.out_stock')) }}</span>
                             @endif
                         </p>
                         <p><b>{{__('validation.attributes.ref')}}</b> : {{ $product->ref }}</p>
@@ -63,13 +61,13 @@
                 </div>
                 <div class="col-xs-12">
                     <ul class="nav nav-tabs nav-tabs-bottom">
-                        <li class="active"><a href="#product_desc" data-toggle="tab">Description</a></li>
+                        <li class="active"><a href="#product_desc" data-toggle="tab">{{ ucfirst(__('validation.attributes.description')) }}</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="product_desc">
                             <div class="product-content">
                                 <p class="text-justify">
-                                    {{ ($product->description) ?: 'description inconnu' }}
+                                    {{ ($product->description) ?: __('validation.attributes.inconnu') }}
                                 </p>
                             </div>
                         </div>
@@ -112,7 +110,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <a href="{{ route('buy.index') }}" class="text-primary">View all buy</a>
+                        <a href="{{ route('buy.index') }}" class="text-primary">{{ __('validation.attributes.view_all') . ' ' . __('pages.trade.buy.index.title') }}</a>
                     </div>
                 </div>
             </div>
@@ -150,7 +148,7 @@
                         </div>
                     </div>
                     <div class="panel-footer">
-                        <a href="{{ route('sale.index') }}" class="text-primary">View all sales</a>
+                        <a href="{{ route('sale.index') }}" class="text-primary">{{ __('validation.attributes.view_all') . ' ' . __('pages.trade.sale.index.title') }}</a>
                     </div>
                 </div>
             </div>

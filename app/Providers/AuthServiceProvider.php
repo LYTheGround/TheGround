@@ -14,23 +14,16 @@ use App\Policies\Admin\AdminPolicy;
 use App\Policies\Deal\ClientPolicy;
 use App\Policies\Deal\ProviderPolicy;
 use App\Policies\Money\EcheancePolicy;
-use App\Policies\Premium\PremiumPolicy;
-use App\Policies\Premium\TokenPolicy;
 use App\Policies\Rh\MemberPolicy;
 use App\Policies\Rh\PositionPolicy;
 use App\Policies\Store\ProductPolicy;
 use App\Policies\Trade\BuyPolicy;
 use App\Policies\Trade\SalePolicy;
-use App\Policies\UserPolicy;
 use App\Position;
-use App\Premium;
 use App\Product;
 use App\Provider;
 use App\Sale;
-use App\Token;
 use App\Unload;
-use App\User;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -43,7 +36,6 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Position::class => PositionPolicy::class,
         Member::class => MemberPolicy::class,
-        Token::class => TokenPolicy::class,
         Product::class => ProductPolicy::class,
         Provider::class => ProviderPolicy::class,
         Client::class => ClientPolicy::class,

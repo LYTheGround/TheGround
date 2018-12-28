@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Token;
 
-use App\Company;
 use App\Http\Requests\Token\TokenRequest;
-use App\Notifications\Company\CompanyUpdate;
-use App\Notifications\Token\TokenNotification;
 use App\Token;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Notification;
 
 class TokenController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Liste des jetons pour les nouveaux utilisateurs.
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,6 +42,7 @@ class TokenController extends Controller
     public function store(TokenRequest $request)
     {
         $this->authorize('token',auth()->user()->member);
+        // create new token
         $request->company->tokens()->create([
             'token'         => md5(sha1(rand())),
             'range'         => $request->range,
@@ -58,7 +54,7 @@ class TokenController extends Controller
         $premium->update([
             'sold' => $premium->sold - $request->range
         ]);
-        session()->flash('status','Un nouveau jeton a bien été Crée et prêt a être employé');
+        session()->flash('status',__('pages.premium.token.created'));
         return redirect()->route('token.index');
     }
 
@@ -77,10 +73,10 @@ class TokenController extends Controller
                 'sold'  => $premium->sold + $token->range,
             ]);
             $token->delete();
-            session()->flash('danger','un Jeton a bien été supprimé !');
+            session()->flash('danger',__('pages.premium.token.deleted'));
         }
         else{
-            session()->flash('status','vous ne pouvez supprimé que les tokens de votre compagnie');
+            session()->flash('status',__('pages.premium.token.cant_delete'));
         }
         return redirect()->route('token.index');
     }

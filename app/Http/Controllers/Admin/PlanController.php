@@ -21,6 +21,7 @@ class PlanController extends Controller
     // session flash et retourne false
     // si oui
     // return true
+    private $send = null;
 
     public function UserPlan($user)
     {
@@ -30,6 +31,7 @@ class PlanController extends Controller
                 return false;
             }
             else {
+                /*
                 if ($user->member->premium->limit <= gmdate('Y-m-d', strtotime("+1 days"))) {
                     $this->notifications($user, $user->member->premium->limit, 1);
                 }
@@ -39,23 +41,26 @@ class PlanController extends Controller
 
                     $this->notifications($user, $user->member->premium->limit, 10);
                 }
+                */
                 return true;
             }
         }
         else{
-            session()->flash('status',trans("pages.auth.login.don't active"));
+            session()->flash('danger',trans("pages.auth.login.don't active"));
             return false;
         }
     }
 
     public function archived($premium)
     {
+        $companyP = $premium->member->company->premium->limit;
         $p = new Premium();
-        if ($premium->category->category == 'pdg') {
-            session()->flash('danger', 'votre Compagnie a été archivez');
+        if ($premium->category->category == 'pdg' || $companyP < gmdate('Y-m-d')) {
+            session()->flash('danger', 'pages.auth.login.don\'t active company');
             $p->updateStatus(3, $premium->member->company);
-        } else {
-            session()->flash('danger', 'votre Compte a été archivez');
+        }
+        else {
+            session()->flash('danger', 'pages.auth.login.don\'t active');
             $p->updateStatusMember(3, $premium->member->company, $premium);
         }
     }

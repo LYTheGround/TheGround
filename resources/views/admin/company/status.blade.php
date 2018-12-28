@@ -1,6 +1,6 @@
 @extends('layouts.admin.admin')
 @section('page-title')
-    Sold
+    {{ ucfirst(__('validation.attributes.status')) }}
 @stop
 @section('content')
     <div class="content container-fluid">
@@ -21,7 +21,9 @@
                     @endif
                 </div>
                 <div class="col-xs-12 text-right">
-                    <input type="submit" value="Add" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-edit"></i> {{ __('validation.attributes.edit') }}
+                    </button>
                 </div>
             </div>
             {{ Form::close() }}

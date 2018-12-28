@@ -6,12 +6,12 @@
     <div class="container">
         <h3 class="account-title">{{ ucfirst(__($page . 'login')) }}</h3>
         <div class="account-box">
+            @if (session()->has('danger'))
+                <div class="alert alert-danger" role="alert">
+                    {{ session('danger') }}
+                </div>
+            @endif
             <div class="account-wrapper">
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
                 <div class="account-logo">
                     <a href="{{ route('home') }}">
                         <img src="{{ asset('img/logo_.png') }}" alt="Preadmin">
@@ -38,7 +38,8 @@
                 </div>
 
                 <div class="form-group text-center">
-                    <button class="btn btn-primary btn-block account-btn" type="submit">{{ __($page . 'login') }}</button>
+                    <button class="btn btn-primary btn-block account-btn"
+                            type="submit">{{ __($page . 'login') }}</button>
                 </div>
 
                 <div class="text-center">

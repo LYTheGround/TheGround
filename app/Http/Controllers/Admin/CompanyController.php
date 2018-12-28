@@ -6,44 +6,66 @@ use App\Admin;
 use App\City;
 use App\Company;
 use App\Http\Requests\Company\CompanyRequest;
-use App\Http\Requests\Company\CompanyUpdateRequest;
 use App\Http\Requests\Company\SoldRequest;
 use App\Http\Requests\Company\StatusRequest;
-use App\Http\Requests\Company\TaxesRequest;
 use App\Info_box;
-use App\Member;
 use App\Notifications\Company\CompanyUpdate;
 use App\Premium;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-use Dotenv\Validator;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
-
+/**
+ * seuls les admin A et B ont accès a cette class
+ *
+ * Class CompanyController
+ * @package App\Http\Controllers\Admin
+ */
 class CompanyController extends Controller
 {
+
+    /**
+     * la list de toutes les company sans exception.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $companies = Company::all();
         return view('admin.company.index',compact('companies'));
     }
 
+    /**
+     * le profil de la compagnie
+     *
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Company $company)
     {
         $token = $company->tokens()->where('category_id',2)->first();
         return view('admin.company.show',compact('company','token'));
     }
 
+    /**
+     * le formulaire de creation
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $cities = City::all();
         return view('admin.company.create',compact('cities'));
     }
 
+    /**
+     * Créer une nouvel company.
+     * Auto premium sold = 10 range = 5.
+     * Le month est créer automatiquement avec le premier achat.
+     *
+     * @param CompanyRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(CompanyRequest $request)
     {
         $brand = null;
@@ -103,6 +125,12 @@ class CompanyController extends Controller
         return redirect()->route('company.show',compact('company'));
     }
 
+    /**
+     * Modification des info's de base de la compagnie.
+     *
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function edit(Company $company)
     {
         $cities = City::all();
@@ -146,7 +174,6 @@ class CompanyController extends Controller
         Notification::send($admin,new CompanyUpdate($data));
         return redirect()->route('company.show',compact('company'));
     }
-
 
     public function sold(Company $company)
     {

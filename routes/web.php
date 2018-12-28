@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('notifications','notificationController@destroy')->name('notification.destroy');
 
 
-    Route::middleware('admin')->group(function (){
+    Route::middleware('admin')->middleware('premium')->group(function (){
         // home
         Route::get('/', 'HomeController@index')->name('home');
         // Dashboard
@@ -40,11 +40,11 @@ Route::middleware('auth')->group(function () {
                         // range member
                         Route::get('/range', 'MemberController@range')->name('member.range');
                         Route::put('/range', 'MemberController@updateRange')->name('member.range.update');
-                        // status member
-                        Route::get('/status', 'MemberController@status')->name('member.status');
-                        Route::put('/status', 'MemberController@updateStatus')->name('member.status.update');
 
                     });
+                    // status member
+                    Route::get('/status', 'MemberController@status')->name('member.status');
+                    Route::put('/status', 'MemberController@updateStatus')->name('member.status.update');
                 });
             });
             // params members

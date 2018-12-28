@@ -41,8 +41,8 @@ class CompanyRequest extends FormRequest
             'zip'       => 'required|int|min:1000|max:40000',
             'city'      => 'required|int|exists:cities,id'
         ];
-        if($this->company){
-            $r['taxes'] = 'required|int|min:0|max:1';
+        if(!$this->company){
+            $r['taxes'] = 'required|int|min:0|max:100';
         }
         return $r;
     }

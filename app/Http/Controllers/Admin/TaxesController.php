@@ -17,12 +17,21 @@ class TaxesController extends Controller
     private $profit = 0;
     private $taxes = 0;
 
+    /**
+     * @param Company $company
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editTaxes(Company $company)
     {
         $this->authorize('view',Admin::class);
         return view('admin.company.taxes', compact('company'));
     }
 
+    /**
+     * @param TaxesRequest $request
+     * @param Company $company
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function updateTaxes(TaxesRequest $request,Company $company)
     {
         $this->authorize('view',Admin::class);
@@ -34,8 +43,6 @@ class TaxesController extends Controller
         $sales = $company->sales()->with('dv.orders')->get();
         $this->sales($sales);
         $this->unloads($company);
-
-
         return redirect()->route('company.show',compact('company'));
     }
 
@@ -106,6 +113,11 @@ class TaxesController extends Controller
         return $accounting;
     }
 
+    /**
+     * recalculé tous les mois de cette années
+     * @param $sale
+     * @return mixed
+     */
     private function month($sale)
     {
         $month = $sale->dv->orders[0]->sold->month;
@@ -125,6 +137,10 @@ class TaxesController extends Controller
         return $accounting;
     }
 
+    /**
+     * recalculé tous les charges de cette année
+     * @param Company $company
+     */
     private function unloads(Company $company)
     {
         $accounting = Accounting::find($company->accounting->id);

@@ -98,10 +98,10 @@
                     </div>
                     <div class="modal-body card-box">
                         <p>{{ __('pages.diver.sure') }}</p>
-                        <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">{{ __('validation.attributes.close') }}</a>
+                        <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
                             <span
                                 onclick="event.preventDefault();document.getElementById('delete-unload-form').submit()"
-                                class="btn btn-danger">{{ __('validation.attributes.delete') }}</span>
+                                class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                             {{ Form::open(['method' => 'delete', 'url' => route('unload.destroy',compact('unload')),'id' => 'delete-unload-form', 'style' => "display:none"  ]) }}
                             {{ Form::close() }}
                         </div>

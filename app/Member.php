@@ -3,11 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 
 class Member extends Model
 {
-
     /**
      * Les attributes assigner en masse
      *
@@ -92,23 +92,6 @@ class Member extends Model
 
     public function buys()
     {
-        /*
-        return $this->company->buys()
-            ->with('trade_action.dv_member')
-            ->get()->map(function ($r){
-            return $r->trade_action()->where('bc_member_id',$this->id)
-                ->where('bc_member_id',$this->id)
-                ->orWhere('dv_member_id',$this->id)
-                ->orWhere('done_member_id',$this->id)
-                ->orWhere('delivery_member_id',$this->id)
-                ->orWhere('store_member_id',$this->id)
-                ->orWhere('bl_member_id',$this->id)
-                ->orWhere('fc_member_id',$this->id)
-                ->limit(5)
-                ->latest()
-                ->get();
-        });
-        */
         return DB::table('trade_actions')
             ->where('trade_actions.dv_member_id','=',$this->id)
             ->orWhere('trade_actions.bc_member_id','=',$this->id)

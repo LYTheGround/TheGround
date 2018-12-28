@@ -72,7 +72,7 @@
                                         <a href="#"
                                            onclick="event.preventDefault();document.getElementById('{{"delete-bc-$order->id"}}').submit()"
                                            class="btn btn-danger">
-                                            <i class="fa fa-trash-o m-r-5"></i> destroy
+                                            <i class="fa fa-trash-o m-r-5"></i> {{ ucfirst(__('validation.attributes.delete')) }}
                                         </a>
                                         <form id="delete-bc-{{ $order->id }}" method="post"
                                               action="{{route('sale_bc.destroy', compact('sale','order')) }}">

@@ -54,6 +54,7 @@
                                                        data-toggle="dropdown" aria-expanded="false"><i
                                                             class="fa fa-ellipsis-v"></i></a>
                                                     <ul class="dropdown-menu pull-right">
+                                                        @can('update',$position)
                                                         <li><a href="#" data-toggle="modal"
                                                                data-target="#edit_position{{$position->id}}"><i
                                                                     class="fa fa-pencil m-r-5"></i> {{ __('validation.attributes.edit') }}
@@ -62,6 +63,7 @@
                                                                data-target="#delete_position{{ $position->id }}"><i
                                                                     class="fa fa-trash-o m-r-5"></i> {{ __('validation.attributes.delete') }}
                                                             </a></li>
+                                                            @endcan
                                                     </ul>
                                                 </div>
                                             </td>

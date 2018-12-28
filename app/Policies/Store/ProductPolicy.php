@@ -20,30 +20,7 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        //
-    }
-
-    /**
-     * Determine whether the user can create products.
-     *
-     * @param  \App\User  $user
-     * @return mixed
-     */
-    public function create(User $user)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can update the product.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Product  $product
-     * @return mixed
-     */
-    public function update(User $user, Product $product)
-    {
-        //
+        return $user->member->company_id === $product->company_id;
     }
 
     /**
@@ -62,7 +39,8 @@ class ProductPolicy
         if($product->qt == 0){
             if(isset($product->solds[0])){
                 return false;
-            }else{
+            }
+            else{
                 if(isset($product->purchaseds[0])){
                     return false;
                 }
@@ -70,29 +48,5 @@ class ProductPolicy
             }
         }
         return false;
-    }
-
-    /**
-     * Determine whether the user can restore the product.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Product  $product
-     * @return mixed
-     */
-    public function restore(User $user, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Determine whether the user can permanently delete the product.
-     *
-     * @param  \App\User  $user
-     * @param  \App\Product  $product
-     * @return mixed
-     */
-    public function forceDelete(User $user, Product $product)
-    {
-        //
     }
 }

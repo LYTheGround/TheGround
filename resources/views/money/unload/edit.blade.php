@@ -16,7 +16,7 @@
                             <label for="name">{{ ucfirst(__('validation.attributes.name')) }} : </label>
                             <input type="text" name="name" title="name" value="{{ $unload->name }}" id="name"
                                    class="form-control"
-                                   placeholder="Nom de la charge" required>
+                                   placeholder="{{ ucfirst(__('validation.attributes.name')) }}" required>
                             @if($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
@@ -62,7 +62,7 @@
                                 <div class="wrap-custom-file">
                                         <input type="file" name="justify" id="image4" accept=".gif, .jpg, .png" />
                                         <label  for="image4" class="covimgs" {{isset($unload->justify) ? 'style=background-image:'."url(".asset("storage/". $unload->justify).")" : '' }}>
-                                            <span>Select Justify</span>
+                                            <span>{{ __('pages.product.form.selectImg') }}</span>
                                             <i class="fa fa-plus-circle"></i>
                                         </label>
                                 </div>

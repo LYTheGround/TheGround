@@ -1,9 +1,9 @@
 @extends('layouts.guest')
 
-@section('title_page'){{ __($page . 'register') }}@stop
+@section('title_page'){{ strtoupper(__($page . 'register')) }}@stop
 @section('content')
     <div class="container">
-        <h3 class="account-title">{{ __($page . 'register') }}</h3>
+        <h3 class="account-title">{{ strtoupper(__($page . 'register')) }}</h3>
 
         <div class="row">
             <div class="col-md-12">

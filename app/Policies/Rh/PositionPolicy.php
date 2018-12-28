@@ -31,7 +31,18 @@ class PositionPolicy
      */
     public function update(User $user, Position $position)
     {
-        return $user->member->company_id == $position->company_id;
+        if($user->member->company_id == $position->company_id){
+            if($user->member->id == $position->member_id){
+                return true;
+            }
+            else{
+                $category = $user->member->premium->category->category;
+                if($category == 'pdg' || $category == 'manager'){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -43,6 +54,17 @@ class PositionPolicy
      */
     public function delete(User $user, Position $position)
     {
-        return $user->member->company_id == $position->company_id;
+        if($user->member->company_id == $position->company_id){
+            if($user->member->id == $position->member_id){
+                return true;
+            }
+            else{
+                $category = $user->member->premium->category->category;
+                if($category == 'pdg' || $category == 'manager'){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

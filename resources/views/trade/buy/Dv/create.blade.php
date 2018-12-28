@@ -16,7 +16,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="form-group">
-                                <select name="provider" title="provider" id="provider" class="form-control">
+                                <select name="provider" title="provider" id="provider" class="form-control" required>
                                     <option  disabled selected value>{{ ucfirst(__('pages.deal.provider.index.title')) }}</option>
                                     @foreach($providers as $provider)
                                         <option value="{{ $provider->id }}">{{ $provider->info_box->name }}</option>

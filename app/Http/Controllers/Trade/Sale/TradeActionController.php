@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Trade\Sale;
 
 use App\Accounting;
 use App\Client;
-use App\Http\Controllers\Admin\ArchiveTradeController;
 use App\Http\Requests\Trade\EcheanceRequest;
 use App\Month;
 use App\Product;
@@ -21,7 +20,7 @@ class TradeActionController extends Controller
 
     public function echeance(EcheanceRequest $request, Sale $sale)
     {
-        //$this->authorize('done',$sale);
+        $this->authorize('done',$sale);
         $sale->echeance()->create([
             'date'  => $request->date,
             'prince'    => $sale->ttc,
@@ -79,7 +78,7 @@ class TradeActionController extends Controller
                 'month_id'  => $month->id
             ]);
             $sold->update(['slug' => '#SOLD-' . $sold->id]);
-            $this->min_prince($dv->client,$order->bc->purchased->product_id,$order->pu);
+            $this->clientProduct($order->bc->purchased->product,$order->pu,$dv->client_id);
         }
     }
 

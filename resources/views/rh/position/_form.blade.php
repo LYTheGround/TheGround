@@ -156,6 +156,6 @@
 </div>
 
 <div class="m-t-20 text-right">
-    <button class="btn btn-primary btn-lg">{{ $submit }}</button>
+    <button class="btn btn-primary">{{ $submit }}</button>
 </div>
 {{ Form::close() }}

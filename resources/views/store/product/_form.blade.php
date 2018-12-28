@@ -45,7 +45,7 @@
     <div class="col-md-6">
         <div class="form-group">
             {{ Form::label('qt_min',ucfirst(__('validation.attributes.qt_min')),['class'=> 'control-label']) }}
-            {{ Form::number('qt_min',null,['class' => 'form-control', 'placeholder' => ucfirst(__('validation.attributes.qt_min'))]) }}
+            {{ Form::number('qt_min',null,['class' => 'form-control', 'placeholder' => ucfirst(__('validation.attributes.qt_min')), 'required']) }}
             @if ($errors->has('qt_min'))
                 <div class="text-danger">{{ $errors->first('qt_min') }}</div>
             @endif
@@ -150,7 +150,9 @@
 </div>
 
 <div class="m-t-20 text-right">
-    <button class="btn btn-primary btn-lg">{{ $submit }}</button>
+    <button class="btn btn-primary">
+        <i class="{{ $fa }}"></i> {{ $submit }}
+    </button>
 </div>
 
 {{ Form::close() }}

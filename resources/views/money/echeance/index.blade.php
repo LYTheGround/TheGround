@@ -1,12 +1,12 @@
 @extends('layouts.app')
 @section('page-title')
-    list echeances
+    {{ ucfirst(__('validation.attributes.echeancesList')) }}
 @stop
 @section('content')
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h3>List écheances</h3>
+                <h3>{{ ucfirst(__('validation.attributes.echeancesList')) }}</h3>
             </div>
         </div>
         <div class="row">
@@ -97,10 +97,10 @@
                         <div class="modal-body card-box">
                             <p>{{ __('pages.diver.sure') }}</p>
                             {!! __('validation.attributes.modal_delete') !!}
-                            <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                            <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
                                 <span
                                     onclick="event.preventDefault();document.getElementById('delete-echeance-{{$echeance->id}}').submit()"
-                                    class="btn btn-danger">{{ __('validation.attributes.delete') }}</span>
+                                    class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                                 <form action="{{ route('echeance.destroy',compact('echeance')) }}" method="POST"
                                       id="delete-echeance-{{$echeance->id}}">
                                     @csrf
@@ -121,7 +121,7 @@
                         <div class="modal-body card-box">
                             <p>{{ __('pages.diver.sure') }}</p>
                             {!! __('validation.attributes.modal_delete') !!}
-                            <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
+                            <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
                                 <span
                                     onclick="event.preventDefault();document.getElementById('payed-echeance-{{$echeance->id}}').submit()"
                                     class="btn btn-danger">{{ __('validation.attributes.payed') }}</span>

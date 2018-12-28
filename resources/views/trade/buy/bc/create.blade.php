@@ -45,9 +45,9 @@
                     <table class="table table-striped custom-table ">
                         <thead>
                         <tr>
-                            <th>product</th>
-                            <th>Qt</th>
-                            <th class="text-right">Action</th>
+                            <th>{{ strtoupper(__('pages.product.index.title')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.qt')) }}</th>
+                            <th class="text-right">{{ strtoupper(__('validation.attributes.action')) }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,7 +64,7 @@
                                            aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                         <ul class="dropdown-menu pull-right">
                                             <li>
-                                                <a href="#" onclick="event.preventDefault();document.getElementById('{{ 'delete-bc-' .$bc->id }}').submit()"><i class="fa fa-trash"></i> {{ __('validation.attributes.delete') }}</a>
+                                                <a href="#" onclick="event.preventDefault();document.getElementById('{{ 'delete-bc-' .$bc->id }}').submit()"><i class="fa fa-trash"></i> {{ ucfirst(__('validation.attributes.delete')) }}</a>
                                                 <form action="{{route('bc.destroy',compact('buy','bc'))}}" method="POST" id='{{ "delete-bc-$bc->id" }}' style="display: none;">
                                                     @csrf
                                                     @method('DELETE')

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Rh;
 
 use App\City;
-use App\Http\Requests\Rh\PositionStoreRequest;
 use App\Info;
 use App\Position;
 use App\Rules\BirthRule;
@@ -13,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Info_box;
 
 /**
  * Les Positions sont les membres qui occupe des poste dans la compagnie, et qui n'ont pas
@@ -75,8 +73,8 @@ class PositionController extends Controller
         $data = $request->all();
         if($request->face){
             $data = array_merge($data, ['face' => $request->file('face')->store('positions')]);
-            $data = array_merge($data, ['city_id' => $request->city]);
         }
+        $data = array_merge($data, ['city_id' => $request->city]);
         // créer la position
         $info = Info::create($data);
         $info->emails()->create(['email' => $data['email'], 'default' => 1]);

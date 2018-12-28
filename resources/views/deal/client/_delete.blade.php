@@ -7,8 +7,8 @@
             <div class="modal-body card-box">
                 <p>{{ __('pages.diver.sure') }}</p>
                 {!! __('pages.deal.client.delete.modal_delete') !!}
-                <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                    <span onclick="event.preventDefault();document.getElementById('{{ 'delete-client-' . $client->id }}').submit()" class="btn btn-danger">Delete</span>
+                <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
+                    <span onclick="event.preventDefault();document.getElementById('{{ 'delete-client-' . $client->id }}').submit()" class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                     <form action="{{route('client.destroy',compact('client'))}}" method="POST" id="{{ 'delete-client-' . $client->id }}">
                         @csrf
                         @method('DELETE')

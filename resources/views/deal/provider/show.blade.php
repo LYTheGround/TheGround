@@ -122,7 +122,7 @@
                                             <td class="text-center">{{ $dv->ht }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
                                             <td class="text-center">{{ $dv->tva }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
                                             <td class="text-right">{{ $dv->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
-                                            <td class="text-right">{{ Carbon\Carbon::parse($dv->ttc)->format('d/m/Y') }}</td>
+                                            <td class="text-right">{{ Carbon\Carbon::parse($dv->created_at)->format('d/m/Y') }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -144,8 +144,8 @@
                 <div class="modal-body card-box">
                     <p>{{ __('pages.diver.sure') }}</p>
                     {!! __('pages.deal.provider.delete.modal_delete') !!}
-                    <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                        <span onclick="event.preventDefault();document.getElementById('{{ 'delete-provider-' . $provider->id }}').submit()" class="btn btn-danger">Delete</span>
+                    <div class="m-t-20"> <a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
+                        <span onclick="event.preventDefault();document.getElementById('{{ 'delete-provider-' . $provider->id }}').submit()" class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                         <form action="{{route('provider.destroy',compact('provider'))}}" method="POST" id="{{ 'delete-provider-' . $provider->id }}">
                             @csrf
                             @method('DELETE')

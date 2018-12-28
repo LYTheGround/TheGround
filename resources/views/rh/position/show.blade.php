@@ -6,16 +6,20 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h4 class="page-title">{{__('pages.rh.position.show.title')}}</h4>
+                <h4 class="page-title">{{ ucfirst(__('pages.rh.position.show.title')) . ' : '}}</h4>
             </div>
-            <div class="col-xs-5 text-right m-b-30">
-                <a href="#" data-toggle="modal" data-target="#edit_position{{ $position->id }}" class="btn btn-primary m-b-10">
-                    <i class="fa fa-edit"></i> {{__('validation.attributes.edit')}}
-                </a>
-                <a href="#" data-toggle="modal" data-target="#delete_position{{ $position->id }}" class="btn btn-danger m-b-10">
-                    <i class="fa fa-trash"></i> {{__('validation.attributes.delete')}}
-                </a>
-            </div>
+            @can('update',$position)
+                <div class="col-xs-5 text-right m-b-30">
+                    <a href="#" data-toggle="modal" data-target="#edit_position{{ $position->id }}"
+                       class="btn btn-primary m-b-10">
+                        <i class="fa fa-edit"></i> {{__('validation.attributes.edit')}}
+                    </a>
+                    <a href="#" data-toggle="modal" data-target="#delete_position{{ $position->id }}"
+                       class="btn btn-danger m-b-10">
+                        <i class="fa fa-trash"></i> {{__('validation.attributes.delete')}}
+                    </a>
+                </div>
+            @endcan
         </div>
         <div class="card-box m-b-0 ">
             <div class="row">
@@ -40,10 +44,14 @@
                                 <div class="col-md-5">
                                     <div class="profile-info-left">
                                         <h3 class="user-name m-t-0">{{$position->info->first_name .' '.$position->info->last_name}}</h3>
-                                        <div class="staff-id">{{__('validation.attributes.position')}} : {{$position->position}}</div>
-                                        <div class="staff-id">{{__('validation.attributes.cin')}} : {{($position->info->cin) ?: 'inconnu'}}</div>
-                                        <div class="staff-id">{{__('validation.attributes.birth')}} : {{($position->info->birth) ? \Carbon\Carbon::parse($position->info->birth)->format('d-m') : 'inconnu'}}</div>
-                                        <div class="staff-id">{{__('validation.attributes.sex')}} : {{($position->info->sex) ?__('validation.attributes.' . $position->info->sex) : 'inconnu'}}</div>
+                                        <div class="staff-id">{{__('validation.attributes.position')}}
+                                            : {{$position->position}}</div>
+                                        <div class="staff-id">{{__('validation.attributes.cin')}}
+                                            : {{($position->info->cin) ?: 'inconnu'}}</div>
+                                        <div class="staff-id">{{__('validation.attributes.birth')}}
+                                            : {{($position->info->birth) ? \Carbon\Carbon::parse($position->info->birth)->format('d-m') : 'inconnu'}}</div>
+                                        <div class="staff-id">{{__('validation.attributes.sex')}}
+                                            : {{($position->info->sex) ?__('validation.attributes.' . $position->info->sex) : 'inconnu'}}</div>
 
                                     </div>
                                 </div>
@@ -63,7 +71,8 @@
                                         </li>
                                         <li class="row">
                                             <span class="title">{{__('validation.attributes.city')}} :</span>
-                                            <span class="text"><span>{{($position->info->city->city)?: 'inconnu'}}</span></span>
+                                            <span
+                                                class="text"><span>{{($position->info->city->city)?: 'inconnu'}}</span></span>
                                         </li>
                                     </ul>
                                 </div>
