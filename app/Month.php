@@ -79,6 +79,15 @@ class Month extends Model
         return $this->hasMany(Purchased::class);
     }
 
+    public function sales()
+    {
+        return $this->hasMany(Sale::class);
+    }
+    public function buys()
+    {
+        return $this->hasMany(Buy::class);
+    }
+
     public static function month(): Month
     {
         $accounting = auth()->user()->member->company->accounting;

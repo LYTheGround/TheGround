@@ -5,7 +5,7 @@
 @section('content')
     <div class="content container-fluid">
         <div class="row">
-            <div class="col-xs-5 text-right">
+            <div class="col-xs-5 col-xs-offset-7 text-right">
                 <a href="{{ route('product.edit', compact('product')) }}" class="btn btn-primary m-b-5">
                     <i class="fa fa-edit"></i>{{__('validation.attributes.edit')}}
                 </a>

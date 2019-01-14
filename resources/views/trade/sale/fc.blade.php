@@ -32,6 +32,7 @@
                                     <li>{{ $sale->company->info_box->emails[0]->email }}</li>
                                     <li>{{ $sale->company->info_box->tels[0]->tel }}</li>
                                     <li>{{ ucfirst(__('validation.attributes.licence')) }} : {{ $sale->company->info_box->licence }}</li>
+                                    <li>{{ ucfirst(__('validation.attributes.ice')) }} : {{ $sale->company->info_box->ice }}</li>
                                 </ul>
                             </div>
                             <div class="col-xs-6 m-b-20">

@@ -52,7 +52,7 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $this->authorize('view',auth()->user()->member);
+        $this->authorize('view',$product);
         $purchaseds = $product->purchaseds()->limit(5)->with('buy_order.dv.buy')->get();
         $solds = $product->solds()->limit(5)->with('order.dv.sale')->get();
 
@@ -102,7 +102,7 @@ class ProductController extends Controller
                 $file->delete();
             }
         }
-        session()->flash('status',__('pages.product.delete_success'));
+        session()->flash('status',__('pages.product.delete.success'));
         return redirect()->route('product.index');
 
     }

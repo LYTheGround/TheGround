@@ -15,75 +15,69 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * la liste des administrateurs.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $admins = Admin::all();
-        return view('admin.admin.index',compact('admins'));
+
+        return view('admin.admin.index',['admins' => Admin::with('user')->get()]);
+
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Le formulaire de la création d'un nouveau administrateur.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $cities = City::all();
-        return view('admin.admin.create',compact('cities'));
+
+        return view('admin.admin.create',['cities' => City::all()]);
+
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param AdminCreateRequest|Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(AdminCreateRequest $request)
     {
-        //dd($request);
-        $user = User::create([
-            'login' => $request->login,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+        return redirect()->route('admin.show',[
+            'admin' =>  User::create([
+                'login' => $request->login,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ])->admin()->create([
+                'type' => 'B',
+                'city_id' => $request->city
+            ])
         ]);
-        $admin = $user->admin()->create([
-            'type' => 'B',
-            'city_id' => $request->city
-        ]);
-        return redirect()->route('admin.show',compact('admin'));
     }
 
     /**
-     * Display the specified resource.
-     *
      * @param  \App\Admin  $admin
      * @return \Illuminate\Http\Response
      */
     public function show(Admin $admin)
     {
-        $companies = Company::where('user_id',$admin->user->id)->get();
-        return view('admin.admin.show',compact('admin','companies'));
+
+        return view('admin.admin.show',compact('admin'));
+
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function edit()
     {
-        $admin = auth()->user()->admin;
-        $cities = City::all();
-        return view('admin.admin.edit',compact('admin','cities'));
+
+        return view('admin.admin.edit');
+
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param AdminUpdateRequest $request
      * @param  \App\Admin $admin
      * @return \Illuminate\Http\Response

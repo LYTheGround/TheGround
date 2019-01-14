@@ -102,7 +102,12 @@ class Premium extends Model
                     $end = strtotime($premium->limit);
                     $start = strtotime(gmdate('Y-m-d'));
                     $diff = $end - $start;
-                    $days = $diff / (60 * 60 * 24);
+                    if($diff < 0){
+                        $diff = 0;
+                        $days = $diff / (60 * 60 * 24);
+                    }else{
+                        $days = $diff / (60 * 60 * 24);
+                    }
                     $premium->update([
                         'range' => $days,
                         'limit' => null,
@@ -114,7 +119,12 @@ class Premium extends Model
                     $end = strtotime($premium->limit);
                     $start = strtotime(gmdate('Y-m-d'));
                     $diff = $end - $start;
-                    $days = $diff / (60 * 60 * 24);
+                    if($diff < 0){
+                        $diff = 0;
+                        $days = $diff / (60 * 60 * 24);
+                    }else{
+                        $days = $diff / (60 * 60 * 24);
+                    }
                     $company->premium->update([
                         'sold'  => $company->premium->sold + $days
                     ]);
@@ -177,7 +187,12 @@ class Premium extends Model
                     $end = strtotime($premium->limit);
                     $start = strtotime(gmdate('Y-m-d'));
                     $diff = $end - $start;
-                    $days = $diff / (60 * 60 * 24);
+                    if($diff < 0){
+                        $diff = 0;
+                        $days = $diff / (60 * 60 * 24);
+                    }else{
+                        $days = $diff / (60 * 60 * 24);
+                    }
                     $premium->update([
                         'range' => $days,
                         'limit' => null,
@@ -198,12 +213,12 @@ class Premium extends Model
                     $premium->update([
                         'range' => 1,
                         'status_id' => 1,
-                        'update_status' => gmdate('Y-m-d',strtotime("+7 days"))
+                        'update_status' => gmdate('Y-m-d', strtotime("+7 days"))
                     ]);
                 }
                 elseif ($status == 2){
                     $premium->update([
-                        'limit' => $this->addDate(1,date('Y-m-d')),
+                        'limit' => $this->addDate(1, date('Y-m-d')),
                         'status_id' => 2
                     ]);
                 }
@@ -228,4 +243,5 @@ class Premium extends Model
         $diff = $end - $start;
         return $diff / (60 * 60 * 24);
     }
+
 }

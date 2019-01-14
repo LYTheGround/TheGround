@@ -41,16 +41,20 @@ class BcController extends Controller
             ->where('products.name','LIKE','%'.$request->product.'%')
             ->where('products.company_id','=',$company->id)
             ->get();
+       // dd($purchaseds[0]->purchased_id);
         return view('trade.sale.bc.list-product',compact('purchaseds','sale'));
     }
 
     public function store(Request $request, Sale $sale)
     {
-        //dd($request);
-        // new bc
-        $bc = $sale->bcs()->create($request->all(['qt','purchased_id']));
         // new order
         $purchased = Purchased::where('id',$request->purchased_id)->first();
+        if($purchased->offer_qt < $request->qt){
+            session()->flash('danger',__('pages.trade.sale.bc.qt_danger'));
+            return back();
+        }
+        // new bc
+        $bc = $sale->bcs()->create($request->all(['qt','purchased_id']));
         // update purchased offer
         $purchased->update(['offer_qt' => $purchased->offer_qt - $request->qt]);
         // pu qt ht tva ttc tva_payed profit taxes profit_after_taxes
@@ -114,6 +118,7 @@ class BcController extends Controller
         $purchased->update([
             'offer_qt' => $purchased->offer_qt + $order->bc->qt
         ]);
+        $order->bc()->delete();
         $order->delete();
         $this->orders($sale);
         $sale->update([
@@ -132,7 +137,7 @@ class BcController extends Controller
     {
         $sale->trade_action()->update([
             'dv'            => true,
-            'dv_member_id'  => auth()->user()->id,
+            'dv_member_id'  => auth()->user()->member->id,
             'dv_time'       => Carbon::now(),
             'tasks'         => json_encode(['prev' => null,'next' => ['name' => 'vendre','url'=> route('sale.show',compact('sale')) . '/tasks/done'],'progress' => 30]),
 

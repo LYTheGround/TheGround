@@ -54,10 +54,10 @@ class Unload extends Model
         // avec ces influences aux autre table "Month, Accounting"
         if($taxes){
             $month->update([
-                'taxes_after_unload' => (int) $month->taxes_after_unload + (int) $this->prince
+                'taxes_after_unload' => $month->taxes_after_unload + $this->prince
             ]);
             $accounting->update([
-                'taxes_after_unload' => (int) $accounting->taxes_after_unload + (int) $this->prince
+                'taxes_after_unload' => $accounting->taxes_after_unload + $this->prince
             ]);
         }
         else{
@@ -95,12 +95,12 @@ class Unload extends Model
         $accounting = $this->accounting;
         // avec ces influences aux autre table "Month, Accounting"
         if($taxes == true){
-            $ac = (int) $month->taxes_after_unload - (int) $data['prince'];
+            $ac =  $month->taxes_after_unload - $data['prince'];
             $month->update([
                 'taxes_after_unload' => $ac
             ]);
             $accounting->update([
-                'taxes_after_unload' => (int) $accounting->taxes_after_unload - (int) $data['prince']
+                'taxes_after_unload' =>  $accounting->taxes_after_unload -  $data['prince']
             ]);
         }
         else{

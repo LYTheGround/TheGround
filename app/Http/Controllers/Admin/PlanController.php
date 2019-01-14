@@ -31,17 +31,20 @@ class PlanController extends Controller
                 return false;
             }
             else {
-                /*
+
                 if ($user->member->premium->limit <= gmdate('Y-m-d', strtotime("+1 days"))) {
                     $this->notifications($user, $user->member->premium->limit, 1);
                 }
+
                 elseif ($user->member->premium->limit <= gmdate('Y-m-d', strtotime("+5 days"))) {
                     $this->notifications($user, $user->member->premium->limit, 5);
-                } elseif ($user->member->premium->limit <= gmdate('Y-m-d', strtotime("+10 days"))) {
+                }
+
+                elseif ($user->member->premium->limit <= gmdate('Y-m-d', strtotime("+10 days"))) {
 
                     $this->notifications($user, $user->member->premium->limit, 10);
                 }
-                */
+
                 return true;
             }
         }
@@ -56,11 +59,11 @@ class PlanController extends Controller
         $companyP = $premium->member->company->premium->limit;
         $p = new Premium();
         if ($premium->category->category == 'pdg' || $companyP < gmdate('Y-m-d')) {
-            session()->flash('danger', 'pages.auth.login.don\'t active company');
+            session()->flash('danger', trans("pages.auth.login.don't active"));
             $p->updateStatus(3, $premium->member->company);
         }
         else {
-            session()->flash('danger', 'pages.auth.login.don\'t active');
+            session()->flash('danger', trans("pages.auth.login.don't active company"));
             $p->updateStatusMember(3, $premium->member->company, $premium);
         }
     }

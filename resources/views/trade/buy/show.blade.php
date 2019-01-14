@@ -11,7 +11,7 @@
             @can('delete',$buy)
                 <div class="col-xs-5 text-right">
                     <a href="#" data-toggle="modal" data-target="#delete_buy" class="btn btn-danger"><i
-                            class="fa fa-trash-o m-r-5"></i> {{ ucfirst(__('validation.attributes.delete')) }}</a>
+                                class="fa fa-trash-o m-r-5"></i> {{ ucfirst(__('validation.attributes.delete')) }}</a>
                 </div>
             @endcan
         </div>
@@ -22,7 +22,7 @@
                         <div class="col-xs-7">
                             <h4 class="text-center">{{ ucfirst(__('validation.attributes.activity')) }}</h4>
                             <p class="m-b-5">{{ __('validation.attributes.progress') }} <span
-                                    class="text-success pull-right">{{ $tasks->progress }}
+                                        class="text-success pull-right">{{ $tasks->progress }}
                                     %</span></p>
                             <div class="progress progress-xs m-b-0">
                                 <div class="progress-bar progress-bar-success" role="progressbar" data-toggle="tooltip"
@@ -49,7 +49,7 @@
                                             <a href="#" class="name">{{ $buy->trade_action->bc_member->name }}</a>
                                             {{ __('validation.attributes.buy_bc_task') }}
                                             <span
-                                                class="time">{{ __('validation.attributes.tasks_time',['date' => \Carbon\Carbon::parse($buy->trade_action->bc_time)->format('d-m'),'hour' => \Carbon\Carbon::parse($buy->trade_action->bc_time)->format('H'),'min' => \Carbon\Carbon::parse($buy->trade_action->bc_time)->format('m')]) }}</span>
+                                                    class="time">{{ __('validation.attributes.tasks_time',['date' => \Carbon\Carbon::parse($buy->trade_action->bc_time)->format('d-m'),'hour' => \Carbon\Carbon::parse($buy->trade_action->bc_time)->format('H'),'min' => \Carbon\Carbon::parse($buy->trade_action->bc_time)->format('m')]) }}</span>
                                         </div>
                                     </div>
                                 </li>
@@ -201,104 +201,106 @@
                     </div>
                 @endif
             </div>
-            @if($buy->trade_action->store)
-                <div class="col-md-6">
-                    <div class="col-xs-6 card-box">
-                        @if(!$buy->trade_action->bl)
-                            {{ Form::open(['method' => 'POST', 'url' => route('buy.bl',compact('buy')), 'enctype'=>"multipart/form-data"]) }}
-                            <div class="row m-b-0">
-                                <div class="form-group text-center">
-                                    <div class="wrap-custom-file">
-                                        <input type="file" name="bl" id="bl" accept=".gif, .jpg, .png" required/>
-                                        <label for="bl" class="covimgs"
-                                               style="background-image: url({{ asset('img/placeholder.jpg') }})">
-                                            <span>{{ __('pages.trade.buy.dv.bl.select')}}</span>
-                                            <i class="fa fa-plus-circle"></i>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        @if($errors->has('bl'))
-                                            <span class="text-danger">{{ $errors->first('bl') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="form-group text-right">
-                                    {{ Form::submit(__('validation.attributes.upload'),['class' => 'btn btn-primary']) }}
-                                </div>
-                            </div>
-                            {{ Form::close() }}
-                        @else
-                            <div class="row">
-                                {{ Form::open(['method' => 'delete', 'url' => route('buy.bl.destroy',compact('buy'))]) }}
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-group text-right">
-                                            {{ Form::submit(__('validation.attributes.delete'),['class' => 'btn btn-danger']) }}
+            @can('bl',$buy)
+                @if($buy->trade_action->store)
+                    <div class="col-md-6">
+                        <div class="col-xs-6 card-box">
+                            @if(!$buy->trade_action->bl)
+                                {{ Form::open(['method' => 'POST', 'url' => route('buy.bl',compact('buy')), 'enctype'=>"multipart/form-data"]) }}
+                                <div class="row m-b-0">
+                                    <div class="form-group text-center">
+                                        <div class="wrap-custom-file">
+                                            <input type="file" name="bl" id="bl" accept=".gif, .jpg, .png" required/>
+                                            <label for="bl" class="covimgs"
+                                                   style="background-image: url({{ asset('img/placeholder.jpg') }})">
+                                                <span>{{ __('pages.trade.buy.dv.bl.select')}}</span>
+                                                <i class="fa fa-plus-circle"></i>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            @if($errors->has('bl'))
+                                                <span class="text-danger">{{ $errors->first('bl') }}</span>
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <a href="{{ asset('storage/' . $buy->trade_action->bl) }}"
-                                           title="{{ __('validation.attributes.bl') }}">
-                                            <img src="{{ asset('storage/' . $buy->trade_action->bl) }}"
-                                                 class="col-xs-12" alt="{{ __('validation.attributes.bl') }}">
-                                        </a>
+                                    <div class="form-group text-right">
+                                        {{ Form::submit(__('validation.attributes.upload'),['class' => 'btn btn-primary']) }}
                                     </div>
                                 </div>
                                 {{ Form::close() }}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-xs-6 card-box">
-                        @if(!$buy->trade_action->fc)
-                            {{ Form::open(['method' => 'POST', 'url' => route('buy.fc',compact('buy')), 'enctype'=>"multipart/form-data"]) }}
-                            <div class="row m-b-0">
-                                <div class="form-group text-center">
-                                    <div class="wrap-custom-file">
-                                        <input type="file" name="fc" id="fc" accept=".gif, .jpg, .png" required/>
-                                        <label for="fc" class="covimgs"
-                                               style="background-image: url({{ asset('img/placeholder.jpg') }})">
-                                            <span>{{ __('pages.trade.buy.dv.fc.select')}}</span>
-                                            <i class="fa fa-plus-circle"></i>
-                                        </label>
-                                    </div>
-                                    <div>
-                                        @if($errors->has('fc'))
-                                            <span class="text-danger">{{ $errors->first('fc') }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="form-group text-right">
-                                    {{ Form::submit(__('validation.attributes.upload'),['class' => 'btn btn-primary']) }}
-                                </div>
-                            </div>
-                            {{ Form::close() }}
-                        @else
-                            <div class="row">
-                                {{ Form::open(['method' => 'delete', 'url' => route('buy.fc.destroy',compact('buy'))]) }}
+                            @else
                                 <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="form-group text-right">
-                                            {{ Form::submit(__('validation.attributes.delete'),['class' => 'btn btn-danger']) }}
+                                    {{ Form::open(['method' => 'delete', 'url' => route('buy.bl.destroy',compact('buy'))]) }}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group text-right">
+                                                {{ Form::submit(__('validation.attributes.delete'),['class' => 'btn btn-danger']) }}
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <a href="{{ asset('storage/' . $buy->trade_action->bl) }}"
+                                               title="{{ __('validation.attributes.bl') }}">
+                                                <img src="{{ asset('storage/' . $buy->trade_action->bl) }}"
+                                                     class="col-xs-12" alt="{{ __('validation.attributes.bl') }}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {{ Form::close() }}
                                 </div>
-                                <div class="row">
-                                    <div class="col-xs-12 text-center">
-                                        <a href="{{ asset('storage/' . $buy->trade_action->fc) }}"
-                                           title="{{ __('validation.attributes.fc') }}">
-                                            <img src="{{ asset('storage/' . $buy->trade_action->fc) }}"
-                                                 class="col-xs-12" alt="{{ __('validation.attributes.fc') }}">
-                                        </a>
+                            @endif
+                        </div>
+                        <div class="col-xs-6 card-box">
+                            @if(!$buy->trade_action->fc)
+                                {{ Form::open(['method' => 'POST', 'url' => route('buy.fc',compact('buy')), 'enctype'=>"multipart/form-data"]) }}
+                                <div class="row m-b-0">
+                                    <div class="form-group text-center">
+                                        <div class="wrap-custom-file">
+                                            <input type="file" name="fc" id="fc" accept=".gif, .jpg, .png" required/>
+                                            <label for="fc" class="covimgs"
+                                                   style="background-image: url({{ asset('img/placeholder.jpg') }})">
+                                                <span>{{ __('pages.trade.buy.dv.fc.select')}}</span>
+                                                <i class="fa fa-plus-circle"></i>
+                                            </label>
+                                        </div>
+                                        <div>
+                                            @if($errors->has('fc'))
+                                                <span class="text-danger">{{ $errors->first('fc') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-right">
+                                        {{ Form::submit(__('validation.attributes.upload'),['class' => 'btn btn-primary']) }}
                                     </div>
                                 </div>
                                 {{ Form::close() }}
-                            </div>
-                        @endif
+                            @else
+                                <div class="row">
+                                    {{ Form::open(['method' => 'delete', 'url' => route('buy.fc.destroy',compact('buy'))]) }}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="form-group text-right">
+                                                {{ Form::submit(__('validation.attributes.delete'),['class' => 'btn btn-danger']) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-center">
+                                            <a href="{{ asset('storage/' . $buy->trade_action->fc) }}"
+                                               title="{{ __('validation.attributes.fc') }}">
+                                                <img src="{{ asset('storage/' . $buy->trade_action->fc) }}"
+                                                     class="col-xs-12" alt="{{ __('validation.attributes.fc') }}">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {{ Form::close() }}
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                </div>
-            @endif
+                @endif
+            @endcan
         </div>
         <div class="row">
             <div class="col-md-6 card-box">
@@ -308,7 +310,8 @@
                     </div>
                     @if(!$buy->trade_action->bc)
                         <div class="col-xs-5 text-right">
-                            <a href="{{ route('bc.create',compact('buy')) }}" class="btn btn-success">update</a>
+                            <a href="{{ route('bc.create',compact('buy')) }}" class="btn btn-success"><i
+                                        class="fa fa-edit"></i> {{ ucfirst(__('validation.attributes.edit')) }}</a>
                             @if(isset($buy->bcs[0]))
                                 <a href="{{ route('buy.bc.confirm',compact('buy')) }}"
                                    class="btn btn-primary m-b-5">{{ ucfirst(__('validation.attributes.confirm')) }}</a>
@@ -376,7 +379,8 @@
                                 <td>
                                     <a href="{{ route('dv.show',compact('buy','dv')) }}">{{ $dv->slug }}</a>
                                 </td>
-                                <td class="{{ ($dv->selected) ? 'text-primary' :'' }}">{{ $dv->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                <td class="{{ ($dv->selected) ? 'text-primary' :'' }}">{{ $dv->ttc }}<b
+                                            data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
                                 <td class="{{ ($dv->selected) ? 'text-primary' :'' }}">{{ ($dv->selected) ? ucfirst(__('validation.attributes.selected')) : 'null' }}</td>
 
                                 @if(!$buy->trade_action->dv)
@@ -387,13 +391,13 @@
                                             <ul class="dropdown-menu pull-right">
                                                 <li>
                                                     <a href="{{ route('buy.dv.selected',['buy' => $buy, 'dv' => $dv]) }}"><i
-                                                            class="fa fa-hand-o-left m-r-5"></i> {{ __('validation.attributes.selected') }}
+                                                                class="fa fa-hand-o-left m-r-5"></i> {{ __('validation.attributes.selected') }}
                                                     </a>
                                                 </li>
                                                 <li>
                                                     <a href="#" onclick="event.preventDefault();
-                                                        document.getElementById('{{ 'delete-dv-' . $dv->id }}').submit();"><i
-                                                            class="fa fa-trash-o m-r-5"></i> {{ __('validation.attributes.delete') }}
+                                                            document.getElementById('{{ 'delete-dv-' . $dv->id }}').submit();"><i
+                                                                class="fa fa-trash-o m-r-5"></i> {{ __('validation.attributes.delete') }}
                                                     </a>
                                                     {{ Form::open(['method'=>'DELETE','url'=>route('dv.destroy',compact('buy','dv')),'id' => "delete-dv-$dv->id",'style'=>"display:none;"]) }}
                                                     {{ Form::close() }}
@@ -418,7 +422,8 @@
                     <div class="modal-body card-box">
                         <p>{{ __('pages.diver.sure') }}</p>
                         {!! __('pages.trade.buy.delete.modal_delete') !!}
-                        <div class="m-t-20"><a href="#" class="btn btn-default" data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
+                        <div class="m-t-20"><a href="#" class="btn btn-default"
+                                               data-dismiss="modal">{{ ucfirst(__('validation.attributes.close')) }}</a>
                             <span onclick="event.preventDefault();document.getElementById('delete-buy').submit()"
                                   class="btn btn-danger">{{ ucfirst(__('validation.attributes.delete')) }}</span>
                             <form action="{{route('buy.destroy',compact('buy'))}}" method="POST" id="delete-buy">

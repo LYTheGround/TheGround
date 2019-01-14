@@ -7,7 +7,7 @@ use Closure;
 class Admin
 {
     /**
-     * Handle an incoming request.
+     * Filter the admins and redirect them to their space area.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

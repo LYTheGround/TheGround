@@ -61,7 +61,7 @@ class RegisterController extends Controller
             'city'          => 'bail|required|int|exists:cities,id',
             'birth'         => 'bail|nullable|date|before:' . date('d-m-Y',strtotime("-18 years")),
             'token'         => 'required|min:20|exists:tokens,token',
-            'name'          => 'bail|required|string|max:25|unique:members',
+            'name'          => 'bail|required|string|max:25|unique:members,login',
             'email'         => 'required|string|email|max:80|unique:emails,email',
             'password'      => ['required','string','min:6','max:18','confirmed',new PasswordRule()],
             'cin'           => 'nullable|string|min:6,unique:infos,cin'
@@ -87,6 +87,7 @@ class RegisterController extends Controller
             'last_name'     => $data['last_name'],
             'first_name'    => $data['first_name'],
             'birth'         => $data['birth'],
+            'tel'           => $data['tel'],
             'address'       => $data['address'],
             'cin'           => $data['cin'],
             'city_id'       => $data['city']
@@ -112,11 +113,14 @@ class RegisterController extends Controller
             'user_id'   => $user->id,
             'company_id'=> $token->company_id
         ]);
+
         $member->update(['slug'=> str_slug($data['name'] . '-' . $member->id)]);
+
         // activate company
         if($token->category->category == 'pdg'){
             $token->company->activate();
         }
+
         $token->delete();
 
         return $user;

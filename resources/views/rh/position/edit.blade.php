@@ -1,5 +1,5 @@
 @extends("layouts.app")
-@section('title')
+@section('page-title')
     {{__('pages.rh.position.edit.title')}}
 @stop
 @section('content')

@@ -238,6 +238,7 @@
                         <thead>
                         <tr>
                             <th>{{ ucfirst(__('validation.attributes.products')) }}</th>
+                            <th>{{ strtoupper(__('validation.attributes.pu')) }}</th>
                             <th>{{ strtoupper(__('validation.attributes.qt')) }}</th>
                             <th>{{ strtoupper(__('validation.attributes.ht')) }}</th>
                             <th>{{ strtoupper(__('validation.attributes.tva')) }}</th>
@@ -249,6 +250,7 @@
                             @foreach($sale->dv->orders as $order)
                                 <tr>
                                     <td>{{ $order->bc->purchased->product->name }}</td>
+                                    <td>{{ $order->pu }}</td>
                                     <td>{{ $order->bc->qt }}</td>
                                     <td>{{ $order->ht }}</td>
                                     <td>{{ $order->tva }}</td>
@@ -256,7 +258,7 @@
                                 </tr>
                             @endforeach
                             <tr>
-                                <td colspan="2"
+                                <td colspan="3"
                                     class="bg-primary">{{ strtoupper(__('validation.attributes.total')) }}</td>
                                 <td class="bg-warning">{{ $sale->ht }}</td>
                                 <td class="bg-warning">{{ $sale->tva }}</td>

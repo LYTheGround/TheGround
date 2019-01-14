@@ -84,6 +84,11 @@ class User extends Authenticatable
         return $this->hasMany(Buy::class);
     }
 
+    public function companies()
+    {
+        return $this->hasMany(Company::class);
+    }
+
     /**
      * @param string $token
      */

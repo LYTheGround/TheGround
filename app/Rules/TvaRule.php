@@ -16,7 +16,7 @@ class TvaRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        return ($value == '0' || $value == '7' || $value == '14' || $value == '20');
+        return ($value == '0' || $value == '7' || $value == '10' ||  $value == '14' || $value == '20');
     }
 
     /**

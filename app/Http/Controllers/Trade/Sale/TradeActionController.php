@@ -55,6 +55,7 @@ class TradeActionController extends Controller
             'taxes_after_unload'    => $month->taxes_after_unload + $sale->taxes,
             'tva_after_unload'      => $month->tva_after_unload + $sale->tva_payed
         ]);
+        $sale->update(['month_id' => $month->id]);
         // redirect show sale
         return redirect()->route('sale.show',compact('sale'));
     }

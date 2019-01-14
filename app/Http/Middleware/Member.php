@@ -7,7 +7,7 @@ use Closure;
 class Member
 {
     /**
-     * Handle an incoming request.
+     * Filter members and redirect them to their space area.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next

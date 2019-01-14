@@ -57,7 +57,7 @@ class DvController extends Controller
         // tous les provider de la compagnie
         $providers = Provider::where('company_id', auth()->user()->member->company_id)->with('info_box')->get();
         // return la vus "create" en transmettant les variable "buy - bcs - providers"
-        return view('trade.buy.dv.create', compact('buy', 'bcs', 'providers'));
+        return view('trade.buy.Dv.create', compact('buy', 'bcs', 'providers'));
     }
 
     public function store(DvRequest $request, Buy $buy)
@@ -78,7 +78,7 @@ class DvController extends Controller
         // modifier les prix dans dv (ht-tva-ttc) d'pré les variable privé
         $dv->update(['ht' => $this->ht, 'tva' => $this->tva, 'ttc' => $this->ttc]);
         // indiquez en session flash que l'insertion du devi a bien est inséré avec succès
-        session()->flash('status', __('pages.trade.buy.dv.create.success'));
+        session()->flash('status', __('pages.trade.dv.create.success'));
         // returner une redirection vers le show buy en lui transmettant la variable buy
         return redirect()->route('dv.show', compact('buy','dv'));
     }
@@ -87,7 +87,7 @@ class DvController extends Controller
     {
         foreach ($buy->bcs as $bc) {
             if (!isset($request->pu[$bc->id])) {
-                session()->flash('danger', __('pages.trade.buy.dv.create.danger'));
+                session()->flash('danger', __('pages.trade.dv.create.danger'));
                 return true;
             }
         }
@@ -117,7 +117,7 @@ class DvController extends Controller
             $i = $buy->dvs()->where('id', $dv->id)->first();
             if ($i) {
                 if ($buy->trade_action->dv) {
-                    session()->flash('status', __('pages.trade.buy.dv.delete.danger'));
+                    session()->flash('status', __('pages.trade.dv.delete.danger'));
                     return redirect()->route('buy.show', compact('buy'));
                 } else {
                     if ($dv->selected) {
@@ -127,7 +127,7 @@ class DvController extends Controller
                         }
                     }
                     $dv->delete();
-                    session()->flash('status', __('pages.trade.buy.dv.delete.success'));
+                    session()->flash('status', __('pages.trade.dv.delete.success'));
                     return redirect()->route('buy.show', compact('buy'));
                 }
             }
@@ -150,7 +150,7 @@ class DvController extends Controller
     {
         $this->authorize('dv', $buy);
         $buy->trade_action->update(['dv' => true, 'dv_member_id' => auth()->user()->member->id, 'dv_time' => Carbon::now(), 'tasks' => json_encode(['prev' => null, 'next' => ['name' => __('validation.attributes.buyed'), 'url' => route('buy.show', compact('buy')) . '/tasks/done'], 'progress' => 30]),]);
-        session()->flash('status', __('pages.trade.buy.dv.confirm.success'));
+        session()->flash('status', __('pages.trade.dv.confirm.success'));
         return redirect()->route('buy.show', compact('buy'));
     }
 }

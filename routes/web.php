@@ -2,6 +2,7 @@
 // Auth
 
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
@@ -13,6 +14,7 @@ Route::post('language/', array('before' => 'csrf', 'as' => 'language-chooser', '
 Route::get('/conditions', function (){
     return view('conditions');
 })->name('conditions');
+
 // auth APP
 Route::middleware('auth')->group(function () {
     // notifications
@@ -21,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('notifications','notificationController@destroy')->name('notification.destroy');
 
 
-    Route::middleware('admin')->middleware('premium')->group(function (){
+    Route::middleware(['admin','premium'])->group(function (){
         // home
         Route::get('/', 'HomeController@index')->name('home');
         // Dashboard

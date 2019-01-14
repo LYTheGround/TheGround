@@ -11,10 +11,12 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $cities = ['casablanca', 'rabat'];
+        $cities = [
+            'Agadir', 'Casablanca', 'Marrakech', 'Rabat', 'tanger'
+        ];
         foreach ($cities as $city) {
             \App\City::create([
-                'city'  => $city
+                'city' => $city
             ]);
         }
     }

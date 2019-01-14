@@ -67,8 +67,10 @@ return [
             'create'        => ['title' => 'Ajouter une nouvelle Position'],
             'edit'          => ['title' => 'Modifier Position'],
             'show'          => ['title' => 'Position'],
-            'edit_success'  => 'La position a été mis a jour avec succès',
-            'modal_delete'  => '<p>La suppression de ce poste sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>'
+            'edit_success'  => 'La position a été mis ajour avec succès',
+            'modal_delete'  => '<p>La suppression de ce poste sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
+            'delete_success'=> 'La position a été mis ajour avec succès',
+            'create_success'=> 'La position a bien été crée avec succès',
         ],
     ],
     'premium' => [
@@ -101,7 +103,7 @@ return [
             'success'  => 'Le Produit a été supprimé avec succès',
             'modal_delete'  => '<p>La suppression de ce produit sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
             'modal_img_delete'  => '<p>La suppression de cette image sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
-            'cant_delete'       => 'Ce produit est ne être supprimé il est engagé dans votre historique d\'activité'
+            'cant_delete'       => 'Ce produit est ne être supprimé il est engagé dans votre historique d\'activité',
         ],
         'form'  => [
             'selectImg' => 'select img',
@@ -137,7 +139,7 @@ return [
             ],
             'delete' => [
                 'danger'  => 'Ce Client ne peux pas être supprimé il est engagé dans un (des) historique(s) de(s) vente(s)',
-                'success'  => 'Le Client a été supprimé avec succès',
+                'success'  => 'Le Client a bien été supprimé avec succès',
                 'modal_delete'  => '<p>La suppression de ce client sera definitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
                 ],
             ]
@@ -164,13 +166,17 @@ return [
                 'title'     => 'création d\'une nouvel vente',
                 'success'   => 'une nouvel vente a bien été créer avec succès'
             ],
+            'bc' => [
+                'qt_danger' => 'veuillez spécifier une quantité valide.'
+            ],
             'delete' => [
                 'danger'  => 'Vous n\'avez malheureusement pas les autorisations nécessaire pour supprimé cette vente',
                 'success'  => 'La vente a bien été supprimé avec succès',
                 'modal_delete'  => '<p>La suppression de cette vente sera définitive</p><p>Veuillez étudier soigneusement les conséquences de votre Choix</p>',
             ],
             'release' => [
-                'title' => 'liste des vente non Confirmé'
+                'title' => 'liste des vente non Confirmé',
+                'btn'   => 'release'
             ]
         ],
         'bc' => 'Bon de Commande',

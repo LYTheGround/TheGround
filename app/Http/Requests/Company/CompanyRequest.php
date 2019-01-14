@@ -33,6 +33,7 @@ class CompanyRequest extends FormRequest
             'fax'       => ['nullable','min:10','max:10',new FaxRule()],
             'speaker'   => 'required|string|min:3|max:15',
             'licence'   => 'nullable|string|min:5|max:25',
+            'ice'       => 'nullable|string|min:9',
             'turnover'  => 'required|int|min:3|max:100000000',
             'address'   => 'required|string|min:10|max:80',
             'build'     => 'required|int|min:1|max:10000',

@@ -51,9 +51,9 @@
                     <div class="form-group">
                         {{ Form::label('fax','Fax :',['class' => 'control-label']) }}
                         {{ Form::tel('fax',null,['class'=>'form-control','placeholder' => 'Fax']) }}
-                        @if($errors->has('tel'))
+                        @if($errors->has('fax'))
                             <span class="text-danger">
-                                {{ $errors->first('tel') }}
+                                {{ $errors->first('fax') }}
                             </span>
                         @endif
                     </div>
@@ -100,6 +100,19 @@
                         @if($errors->has('taxes'))
                             <span class="text-danger">
                                 {{ $errors->first('taxes') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        {{ Form::label('ice','Ice :',['class' => 'control-label']) }}
+                        {{ Form::number('ice',null,['class' => 'form-control','placeholder'=>'Ice','required']) }}
+                        @if($errors->has('ice'))
+                            <span class="text-danger">
+                                {{ $errors->first('ice') }}
                             </span>
                         @endif
                     </div>
@@ -169,7 +182,7 @@
                     <div class="form-group">
                         {{ Form::label('city_id','Ville :',['class' => 'control-label']) }}
                         <select name="city" id="city" title="city" class="form-control">
-                            @foreach($cities as $city)
+                            @foreach(\App\City::all() as $city)
                                 <option value="{{ $city->id }}" {{ (old('city_id') == $city->id) ? 'selected' : '' }}>{{ $city->city }}</option>
                             @endforeach
                         </select>

@@ -14,14 +14,14 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="name">{{ ucfirst(__('validation.attributes.name')) }} : </label>
-                            <input type="text" name="name" title="name" id="name" class="form-control"
+                            <input type="text" name="name" title="name" id="name" value="{{ old('name') }}" class="form-control"
                                    placeholder="{{ ucfirst(__('validation.attributes.name')) }}" required>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="prince">{{ __('validation.attributes.prince') }} :</label>
-                            <input type="text" name="prince" title="prince" id="prince" class="form-control"
+                            <input type="text" name="prince" value="{{ old('prince') }}" title="prince" id="prince" class="form-control"
                                    placeholder="{{ __('validation.attributes.prince') }}" required>
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="description">{{ __('validation.attributes.description') }} : </label>
                             <textarea name="description" class="form-control" id="description" cols="30"
-                                      rows="10"></textarea>
+                                      rows="10">{{ old('description') }}</textarea>
                         </div>
                     </div>
                     <div class="col-md-5 col-md-offset-1">
@@ -60,7 +60,7 @@
                                 <!-- End Page Wrap -->
                             </div>
                             @if ($errors->has('justify'))
-                                <div class="help-block">{{ $errors->first('justify') }}</div>
+                                <div class="text-danger">{{ $errors->first('justify') }}</div>
                             @endif
                         </div>
                     </div>

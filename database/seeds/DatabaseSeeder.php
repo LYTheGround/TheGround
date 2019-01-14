@@ -25,5 +25,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnloadsTableSeeder::class);
         // test
         $this->call(DevSeeder::class);
+        //$this->call(AdminTableSeeder::class);
     }
 }

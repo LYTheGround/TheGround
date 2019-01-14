@@ -19,6 +19,7 @@ class CreateInfoBoxesTable extends Migration
             $table->string('brand')->unique()->nullable();
             $table->string('name');
             $table->string('licence')->nullable();
+            $table->string('ice')->nullable();
             $table->string('turnover')->nullable();
             $table->string('taxes')->nullable();
             $table->string('fax')->nullable();

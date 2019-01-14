@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sale extends Model
 {
-    protected $fillable = ['slug', 'ht', 'tva', 'ttc', 'tva_payed', 'profit', 'taxes', 'profit_after_taxes', 'company_id', 'trade_action_id'];
+    protected $fillable = ['slug', 'ht', 'tva', 'ttc', 'tva_payed', 'profit', 'taxes', 'profit_after_taxes', 'company_id', 'trade_action_id', 'month_id'];
 
     /**
      * @param $value
@@ -161,5 +161,10 @@ class Sale extends Model
     public function echeance()
     {
         return $this->hasOne(Echeance::class);
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
     }
 }

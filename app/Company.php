@@ -109,12 +109,6 @@ class Company extends Model
         return $this->hasOne(Accounting::class);
     }
 
-    public function activate()
-    {
-        $premium = $this->premium;
-        $date = (int)$premium->range;
-        $premium->update(['range' => 0, 'limit' => gmdate("Y-m-d", strtotime("+$date days")), 'status_id' => Status::where('status', 'active')->first()->id]);
-    }
     public function echeances()
     {
         return $this->hasMany(Echeance::class);
@@ -125,15 +119,17 @@ class Company extends Model
         return $this->hasMany(Amount_product::class);
     }
 
-    public function getAssAttribute()
+    public function user()
     {
-        $r = [
-            'members' => $this->members,
-            'positions' => $this->positions,
-            'products' => $this->products,
-            'buys'
-        ];
-        return $this->members[0];
+        return $this->belongsTo(User::class);
     }
+
+    public function activate()
+    {
+        $premium = $this->premium;
+        $date = (int)$premium->range;
+        $premium->update(['range' => 0, 'limit' => gmdate("Y-m-d", strtotime("+$date days")), 'status_id' => Status::where('status', 'active')->first()->id]);
+    }
+
 
 }

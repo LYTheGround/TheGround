@@ -61,7 +61,7 @@ class LoginController extends Controller
 
 
     /**
-     * The user has been authenticated.
+     * redirect all clouded to home page.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  mixed  $user
@@ -69,9 +69,6 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if(isset($user->admin)){
-            return redirect()->route('company.index');
-        }
         return redirect()->route('home');
     }
 }

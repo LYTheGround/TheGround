@@ -31,7 +31,11 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Company::all();
+        (auth()->user()->admin->type === "A")?
+            $companies = Company::all()
+        :
+            $companies = auth()->user()->companies;
+        ;
         return view('admin.company.index',compact('companies'));
     }
 
@@ -54,8 +58,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $cities = City::all();
-        return view('admin.company.create',compact('cities'));
+        return view('admin.company.create');
     }
 
     /**
@@ -78,6 +81,7 @@ class CompanyController extends Controller
             'brand'     => $brand,
             'name'      => $request->name,
             'licence'   => $request->licence,
+            'ice'       => $request->ice,
             'turnover'  => $request->turnover,
             'taxes'     => $request->taxes,
             'fax'       => $request->fax,
@@ -109,9 +113,9 @@ class CompanyController extends Controller
         ]);
         // company
         $company = $premium->company()->create([
-            'slug'      => str_slug($request->name . ' ' . $info_box->id),
+            'slug'          => str_slug($request->name . ' ' . $info_box->id),
             'info_box_id'   => $info_box->id,
-            'user_id'   => auth()->user()->id
+            'user_id'       => auth()->id(),
         ]);
         // pdg
         $company->tokens()->create([

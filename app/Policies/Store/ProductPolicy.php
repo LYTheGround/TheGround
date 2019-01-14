@@ -41,7 +41,7 @@ class ProductPolicy
                 return false;
             }
             else{
-                if(isset($product->purchaseds[0])){
+                if(isset($product->buy_bcs[0])){
                     return false;
                 }
                 return true;

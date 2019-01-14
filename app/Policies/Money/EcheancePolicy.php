@@ -18,6 +18,7 @@ class EcheancePolicy
         }
         return false;
     }
+
     public function update(User $user,Echeance $echeance)
     {
         $category = $user->member->premium->category->category;

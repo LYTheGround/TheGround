@@ -20,15 +20,15 @@
                             <table class="display datatable table table-stripped">
                                 <thead>
                                 <tr>
-                                    <th>name</th>
-                                    <th>tel</th>
-                                    <th>speaker</th>
-                                    <th>email</th>
+                                    <th>{{ __('validation.attributes.name') }}</th>
+                                    <th>{{ __('validation.attributes.phone') }}</th>
+                                    <th>{{ __('validation.attributes.speaker') }}</th>
+                                    <th>{{ __('validation.attributes.email') }}</th>
                                     <th>status</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($companies as $company)
+                                @foreach($admin->user->companies as $company)
 
                                     <tr>
                                         <td><a href="{{ route('company.show',compact('company')) }}">{{ $company->info_box->name }}</a></td>

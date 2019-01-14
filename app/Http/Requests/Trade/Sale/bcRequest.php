@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Trade\sale;
 
-use App\Rules\PasswordRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminUpdateRequest extends FormRequest
+class bcRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +24,8 @@ class AdminUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'     => 'required|email|unique:users,email,' . auth()->id(),
-            'login'     => 'required|string|unique:users,login,' . auth()->id(),
-            'password'  => ['bail','nullable','string','min:6','max:18','confirmed',new PasswordRule()],
+            'qt'            => 'required|int|',
+            'purchased_id'  => 'required|int|exists:purchaseds,id'
         ];
     }
 }

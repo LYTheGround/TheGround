@@ -43,7 +43,7 @@
                                     <td>{{ $member->info->emails[0]->email }}</td>
                                     <td>{{ $member->info->tels[0]->tel }}</td>
                                     <td><span
-                                            class="label {{ ($member->premium->status->status != 'active') ? ($member->premium->status->status != 'inactive') ? 'label-danger-border' : 'label-warning-border' : 'label-success-border'}}">{{ ucfirst(__('pages.premium.statuses.' . $member->premium->status->status)) }}</span>
+                                                class="label {{ ($member->premium->status->status != 'active') ? ($member->premium->status->status != 'inactive') ? 'label-danger-border' : 'label-warning-border' : 'label-success-border'}}">{{ ucfirst(__('pages.premium.statuses.' . $member->premium->status->status)) }}</span>
                                     </td>
                                     @can('range',auth()->user()->member)
                                         <td class="text-right">
@@ -51,10 +51,14 @@
                                                 <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown"
                                                    aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                                                 <ul class="dropdown-menu pull-right">
-                                                    <li><a href="{{ route('member.status',compact('member')) }}"><i
-                                                                class="fa fa-plus m-r-5"></i> Range</a></li>
-                                                    <li><a href="{{ route('member.status',compact('member')) }}"><i
-                                                                class="fa fa-pencil m-r-5"></i> Status</a></li>
+                                                    @if($member->premium->status->status == 'active')
+                                                        <li><a href="{{ route('member.range',compact('member')) }}"><i
+                                                                        class="fa fa-plus m-r-5"></i> Range</a></li>
+                                                    @endif
+                                                    @if($member->premium->update_status < gmdate('Y-m-d'))
+                                                        <li><a href="{{ route('member.status',compact('member')) }}"><i
+                                                                        class="fa fa-pencil m-r-5"></i> Status</a></li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </td>

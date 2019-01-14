@@ -4,6 +4,7 @@ namespace App\Policies\Trade;
 
 use App\Buy;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class BuyPolicy
@@ -33,7 +34,10 @@ class BuyPolicy
                 if($category == 'pdg' || $category == 'manager' || $category == 'accounting'){
                     return true;
                 }
-                return false;
+                elseif(Carbon::parse($buy->trade_action->updated_at)->format('Y-m') == gmdate('Y-m')){
+                    return true;
+                }
+                 return false;
             }
         }
         return false;

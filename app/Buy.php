@@ -4,9 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 /**
- * Class Buy
- * @package App
+ * @property array $fillable
+ * @property int $id
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property mixed $attributes
+ * @property float $ht
+ * @property float $tva
+ * @property float $ttc
+ * @property Company $company
+ * @property Trade_action $trade_action
+ * @property Buy_bc $bcs
+ * @property Buy_dv $dvs
+ * @property User $user
+ * @property Echeance $echeance
  */
 class Buy extends Model
 {
@@ -109,7 +122,9 @@ class Buy extends Model
         return $this->hasMany(Buy_dv::class);
     }
 
-
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function finish()
     {
         return $this->belongsTo(Trade_action::class)->where('status', '=', 'finish');
@@ -124,8 +139,16 @@ class Buy extends Model
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function echeance()
     {
         return $this->hasOne(Echeance::class);
+    }
+
+    public function month()
+    {
+        return $this->belongsTo(Month::class);
     }
 }

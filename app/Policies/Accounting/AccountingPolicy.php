@@ -12,6 +12,7 @@ class AccountingPolicy
     public function view(User $user)
     {
         $category = $user->member->premium->category->category;
+
         if($category == 'pdg' || $category == 'manager' || $category == 'accounting'){
             return true;
         }

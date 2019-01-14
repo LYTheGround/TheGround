@@ -80,7 +80,7 @@ class ClientController extends Controller
             $client->info_box->tels()->delete();
             $client->info_box->delete();
             $client->delete();
-            session()->flash('status', __('pages.deal.client.delete.delete_success'));
+            session()->flash('status', __('pages.deal.client.delete.success'));
             return redirect()->route('client.index');
         }
         session()->flash('danger', __('pages.deal.client.delete.danger'));

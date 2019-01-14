@@ -84,6 +84,7 @@ class PositionController extends Controller
             'member_id' => auth()->user()->member->id,
             'company_id' => auth()->user()->member->company->id
         ]);
+        session()->flash('status',__('pages.rh.position.create_success'));
         // redirect vers le profil de position just créer
         return redirect()->route('position.show',compact('position'));
     }
@@ -168,7 +169,7 @@ class PositionController extends Controller
             }
         }
         $position->delete();
-        session()->flash('status', __('pages.position.delete_success'));
+        session()->flash('status', __('pages.rh.position.delete_success'));
         return redirect()->route('position.index');
     }
 

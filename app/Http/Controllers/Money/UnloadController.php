@@ -40,6 +40,7 @@ class UnloadController extends Controller
             $taxes = true;
         }
         $month = Month::month();
+        $a = $month->accounting;
         $unload = $month->unloads()->create([
             'name'  => $request->name,
             'prince' => $request->prince,
@@ -53,11 +54,11 @@ class UnloadController extends Controller
         ]);
         if ($request->charge == 'tva') {
             $month->update(['tva_after_unload' => $month->tva_after_unload - $request->prince,]);
-            $month->accounting->update(['tva_after_unload' => $month->tva_after_unload - $request->prince,]);
+            $a->update(['tva_after_unload' => $a->tva_after_unload - $request->prince,]);
         }
         else {
             $month->update(['taxes_after_unload' => $month->taxes_after_unload - $request->prince,]);
-            $month->accounting->update(['taxes_after_unload' => $month->taxes_after_unload - $request->prince,]);
+            $a->update(['taxes_after_unload' => $a->taxes_after_unload - $request->prince,]);
         }
         session()->flash('success',__('pages.money.unload.create_success'));
         return redirect()->route('unload.show', compact('unload'));

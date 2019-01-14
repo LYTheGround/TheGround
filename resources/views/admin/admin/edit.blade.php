@@ -6,11 +6,11 @@
     <div class="content container-fluid">
         <div class="row">
             <div class="col-xs-7">
-                <h1>{{ $admin->user->login }}</h1>
+                <h1>{{ auth()->user()->login }}</h1>
             </div>
         </div>
         <div class="card-box">
-            {{ Form::model($admin->user,['method' => 'PUT', 'url' => route('admin.params.update',compact('admin')),'enctype' => 'multipart/form-data' ]) }}
+            {{ Form::model(auth()->user(),['method' => 'PUT', 'url' => route('admin.params.update',['admin' => auth()->user()->admin]) ]) }}
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         {{ Form::label('city','Ville :',['class' => 'control-label']) }}
                         <select name="city" id="city" title="city" class="form-control">
-                            @foreach($cities as $city)
+                            @foreach(\App\City::all() as $city)
                                 <option
                                     value="{{ $city->id }}" {{ (old('city_id') == $city->id) ? 'selected' : '' }}>{{ $city->city }}</option>
                             @endforeach

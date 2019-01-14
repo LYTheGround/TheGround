@@ -28,7 +28,7 @@
         <div class="card-box">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="profile-view">
+                    <div class="profile-view m-b-15">
                         <div class="profile-img-wrap">
                             <div class="profile-img">
                                 <a href="#">
@@ -55,7 +55,7 @@
                                                 <span class="label label-danger-border">{{ ucfirst(__($member->premium->status->status)) }}</span>
                                             @endif
                                         </div>
-                                        <div class="staff-msg"></div>
+                                        <div class="staff-id">Date limite : {{ Carbon\Carbon::parse($member->premium->limit)->format('d-m-Y') }}</div>
                                     </div>
                                 </div>
                                 <div class="col-md-7">
@@ -82,10 +82,18 @@
                                                 {{ $member->info->address . ', ' . ucfirst($member->info->city->city) }}
                                             </span>
                                         </li>
-                                        <li class="row text-left">
-                                            <span class="title">{{ __('validation.attributes.sex') }} :</span>
-                                            <span class="text">{{ ($member->info->sex) ?: 'inconnu' }}</span>
-                                        </li>
+                                        @if($member->info->sex)
+                                            <li class="row text-left">
+                                                <span class="title">{{ __('validation.attributes.sex') }} :</span>
+                                                <span class="text">{{ $member->info->sex }}</span>
+                                            </li>
+                                        @endif
+                                        @if($member->info->cin)
+                                            <li class="row text-left">
+                                                <span class="title">{{ __('validation.attributes.cin') }} :</span>
+                                                <span class="text">{{ $member->info->cin }}</span>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>

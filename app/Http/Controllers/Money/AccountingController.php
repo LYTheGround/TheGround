@@ -15,6 +15,7 @@ class AccountingController extends Controller
 
     public function index()
     {
+        $this->authorize('view',Accounting::class);
         $accounting = auth()->user()->member->company->accounting;
         //$months = $accounting->months->orderBy('date', 'desc')->get();
         $months = Month::where('accounting_id',$accounting->id)->orderBy('date', 'desc')->get();
@@ -23,12 +24,15 @@ class AccountingController extends Controller
 
     public function show(Month $month)
     {
+        $this->authorize('view',Accounting::class);
         // purchased
        $purchaseds =  $month->purchaseds;
+        //dd($purchaseds);
         // solds
-        $solds = $month->solds;
+        $sales = $month->sales;
+        $s = "WPj8G4D..7o0rt";
         // unloads
         $unloads = $month->unloads;
-        return view('money.accounting.show',compact('solds','purchaseds','unloads'));
+        return view('money.accounting.show',compact('sales','purchaseds','unloads'));
     }
 }

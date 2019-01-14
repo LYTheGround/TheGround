@@ -29,6 +29,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($unloads as $unload)
+                                        @can('view',$unload)
                                         <tr>
                                             <td><a href="{{ route('unload.show',compact('unload')) }}">{{ \App\Month::date($unload->month) }}</a></td>
                                             <td>{{ $unload->member->name }}</td>
@@ -36,6 +37,7 @@
                                             <td>{{ $unload->prince }}</td>
                                             <td>{{ ($unload->taxes) ? 'TAXES' : 'TVA' }}</td>
                                         </tr>
+                                        @endcan
                                     @endforeach
                                 </tbody>
                             </table>

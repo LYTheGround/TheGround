@@ -28,6 +28,9 @@ class CreateBuysTable extends Migration
             $table->integer('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');
 
+            $table->integer('month_id')->unsigned()->index()->nullable();
+            $table->foreign('month_id')->references('id')->on('months');
+
             $table->integer('trade_action_id')->unsigned()->index();
             $table->foreign('trade_action_id')->references('id')->on('trade_actions');
 

@@ -14,7 +14,16 @@ class Info_box extends Model
     /**
      * @var array
      */
-    protected $fillable = ['brand', 'name', 'slug', 'licence', 'turnover', 'taxes', 'fax', 'speaker', 'address', 'build', 'floor', 'apt_nbr', 'zip', 'city_id'];
+    protected $fillable = ['brand', 'name', 'slug', 'licence', 'ice', 'turnover', 'taxes', 'fax', 'speaker', 'address', 'build', 'floor', 'apt_nbr', 'zip', 'city_id'];
+
+    public function getIceAttribute($value)
+    {
+        return (int) $value;
+    }
+    public function setIceAttribute($value)
+    {
+        $this->attributes['ice'] = (string) $value;
+    }
 
     public function getTurnoverAttribute($value)
     {

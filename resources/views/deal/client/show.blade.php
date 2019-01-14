@@ -116,9 +116,9 @@
                                     @foreach($dvs as $dv)
                                         <tr>
                                             <td class="text-center"><a href="{{ route('sale.show',['sale' => $dv->sale]) }}">{{ '#'.$dv->slug }}</a></td>
-                                            <td class="text-center">{{ $dv->ht }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
-                                            <td class="text-center">{{ $dv->tva }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
-                                            <td class="text-right">{{ $dv->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                            <td class="text-center">{{ $dv->sale->ht }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                            <td class="text-center">{{ $dv->sale->tva }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
+                                            <td class="text-right">{{ $dv->sale->ttc }}<b data-target="tooltip" title="Maroc Dirham"> ~M</b></td>
                                             <td class="text-right">{{ Carbon\Carbon::parse($dv->ttc)->format('d/m/Y') }}</td>
                                         </tr>
                                     @endforeach
